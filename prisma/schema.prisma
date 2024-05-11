@@ -18,3 +18,122 @@ model Post {
 
     @@index([name])
 }
+
+model Project {
+  project_id String @id @unique @default(uuid())
+  createdAt DateTime @default(now())
+  published Boolean  @default(false)
+  title String  @default("title")
+  status Status @default(NOTSTART)
+  owner Owner @default(ETC)
+  students Project_Student[]
+  parcels Parcel_Project[]
+}
+
+model Student {
+  student_id String @id @unique @default(uuid())
+  email String @unique
+  line_id String  @unique
+  department Department
+  project Project_Student[]
+}
+
+model Project_Student {
+  id String @id @unique @default(uuid())
+  student_id String 
+  project_id String
+  image_url String
+  student   Student   @relation(fields: [student_id], references: [student_id])
+  project   Project   @relation(fields: [project_id], references: [project_id])
+}
+
+model Parcel {
+  parcel_id String @id @unique @default(uuid())
+  title String @default("")
+  amount Int @default(1)
+  type PARCEL_TYPE
+  group PARCEL_GROUP
+  department Department?
+  project Parcel_Project[]
+}
+
+model Parcel_Project {
+  id String @id @unique @default(uuid())
+  parcel_id String
+  project_id String
+  amount Int
+  status BORROWING_STATUS @default(PENDING)
+  project Project @relation(fields: [project_id], references: [project_id])
+  parcel Parcel @relation(fields: [parcel_id], references: [parcel_id])
+}
+
+enum BORROWING_STATUS {
+  PENDING
+  BORROWING
+  RETURN
+}
+
+enum PARCEL_TYPE {
+  NORMAL
+  DURABLE
+}
+
+enum PARCEL_GROUP {
+  OFFICE
+  ELECTRONIC
+  HOME
+  BUILDING
+  FUEL
+  MEDICAL_SCI
+  ADS
+  MUSICAL
+  CLOTHING
+  COMPUTER
+}
+
+enum Department {
+  MATHCOM
+  MARINE
+  CHEM
+  CHEMTECH
+  BIO
+  BIOCHEM
+  BSAC
+  BBTECH
+  FOODTECH
+  MATSCI
+  PHYSICS
+  BOTGEN
+  MICROBIO
+  PHOTO
+  GEO
+  ENVI
+  NISIT_OFFICER
+}
+
+enum Status {
+  NOTSTART
+  INPROGRESS
+  EVALUATE
+  COMPLETE
+}
+
+enum Owner {
+  PRESSIDENT
+  VICE1
+  VICE2
+  SECRETARY
+  TRASURER
+  STUDENT_RELATION
+  ARTS
+  ACADEMIC
+  SPORT
+  SOCIAL_DEVELOPMENT
+  KORKOR_CLUB
+  SCIREN_CLUB
+  VATA_CLUB
+  EDUCATION_CLUB
+  ANURAK_CLUB
+  ASA_CLUB
+  ETC
+}
