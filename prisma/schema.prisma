@@ -42,7 +42,6 @@ model Project_Student {
   id String @id @unique @default(uuid())
   student_id String 
   project_id String
-  image_url String
   student   Student   @relation(fields: [student_id], references: [student_id])
   project   Project   @relation(fields: [project_id], references: [project_id])
 }
@@ -51,6 +50,7 @@ model Parcel {
   parcel_id String @id @unique @default(uuid())
   title String @default("")
   amount Int @default(1)
+  image_url String
   type PARCEL_TYPE
   group PARCEL_GROUP
   department Department?
@@ -61,7 +61,7 @@ model Parcel_Project {
   id String @id @unique @default(uuid())
   parcel_id String
   project_id String
-  amount Int
+  amount Int @default(0)
   status BORROWING_STATUS @default(PENDING)
   project Project @relation(fields: [project_id], references: [project_id])
   parcel Parcel @relation(fields: [parcel_id], references: [parcel_id])
