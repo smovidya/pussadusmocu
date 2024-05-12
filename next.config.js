@@ -5,6 +5,10 @@
 await import("./src/env.js");
 
 /** @type {import("next").NextConfig} */
-const config = {};
+const config = {
+    images:{
+        domains:['smo-api.bunyawatapp37204.workers.dev']
+    }
+};
 
 export default config;

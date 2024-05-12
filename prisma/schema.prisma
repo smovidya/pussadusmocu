@@ -49,6 +49,7 @@ model Project_Student {
 model Parcel {
   parcel_id String @id @unique @default(uuid())
   title String @default("")
+  description String?
   amount Int @default(1)
   available Boolean @default(true)
   image_url String
