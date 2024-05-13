@@ -9,6 +9,7 @@ import { Button } from "~/components/ui/button";
 import { Label } from "~/components/ui/label";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogHeader,
@@ -20,6 +21,8 @@ import { useAppContext } from "~/context";
 import { Types } from "./combobox/type";
 import { Group } from "./combobox/group";
 import { Department } from "./combobox/department";
+import { api } from "~/trpc/react";
+import { useRouter } from "next/navigation";
 
 const FormSchema = z.object({
   parcel_id: z.string().min(10, {
@@ -38,62 +41,153 @@ const FormSchema = z.object({
   description: z.string(),
   type: z.string(),
   group: z.string(),
-  amount: z.number(),
+  amount: z.string(),
   available: z.boolean(),
   department: z.string(),
 });
 
 const types = [
   {
-    value: "next.js",
-    label: "Next.js",
+    value: "NORMAL",
+    label: "ทั่วไป",
   },
   {
-    value: "sveltekit",
-    label: "SvelteKit",
-  },
-  {
-    value: "nuxt.js",
-    label: "Nuxt.js",
-  },
-  {
-    value: "remix",
-    label: "Remix",
-  },
-  {
-    value: "astro",
-    label: "Astro",
+    value: "DURABLE",
+    label: "ครุภัณฑ์",
   },
 ];
 
 const groups = [
   {
-    value: "next.js",
-    label: "Next.js",
+    value: "OFFICE",
+    label: "สำนักงาน",
   },
   {
-    value: "sveltekit",
-    label: "SvelteKit",
+    value: "ELECTRONIC",
+    label: "เครื่องใช้ไฟฟ้า",
   },
   {
-    value: "nuxt.js",
-    label: "Nuxt.js",
+    value: "HOME",
+    label: "งานบ้าน",
   },
   {
-    value: "remix",
-    label: "Remix",
+    value: "BUILDING",
+    label: "งานก่อสร้าง",
   },
   {
-    value: "astro",
-    label: "Astro",
+    value: "FUEL",
+    label: "เชื้อเพลิง",
+  },
+  {
+    value: "MEDICAL_SCI",
+    label: "อุปกรณ์วิทยาศาสตร์และการแพทย์",
+  },
+  {
+    value: "ADS",
+    label: "งานโฆษณา",
+  },
+  {
+    value: "MUSICAL",
+    label: "งานเพลง",
+  },
+  {
+    value: "CLOTHING",
+    label: "เสื้อผ้า",
+  },
+  {
+    value: "COMPUTER",
+    label: "คอมพิวเตอร์",
+  },
+];
+
+const departments = [
+  {
+    value: "SMO",
+    label: "สโม",
+  },
+  {
+    value: "MATHCOM",
+    label: "คณิตศาสตรและวิทยาการคอม",
+  },
+  {
+    value: "MARINE",
+    label: "Marine",
+  },
+  {
+    value: "CHEM",
+    label: "เคมี",
+  },
+  {
+    value: "CHEMTECH",
+    label: "เคมีเทคนิค",
+  },
+  {
+    value: "BIO",
+    label: "ชีววิทยา",
+  },
+  {
+    value: "BIOCHEM",
+    label: "ชีวเคมี",
+  },
+  {
+    value: "BSAC",
+    label: "BSAC",
+  },
+  {
+    value: "BBTECH",
+    label: "BBTECH",
+  },
+  {
+    value: "FOODTECH",
+    label: "Food Tech",
+  },
+  {
+    value: "MATSCI",
+    label: "วัสดุศาสตร์",
+  },
+  {
+    value: "PHYSICS",
+    label: "ฟิสิกส์",
+  },
+  {
+    value: "BOTGEN",
+    label: "พฤษศาสตร์และพันธุกรรม",
+  },
+  {
+    value: "MICROBIO",
+    label: "Micro biology",
+  },
+  {
+    value: "PHOTO",
+    label: "Photo",
+  },
+  {
+    value: "GEO",
+    label: "ธรณีวิทยา",
+  },
+  {
+    value: "ENVI",
+    label: "สิ่งแวดล้อม",
+  },
+  {
+    value: "NISIT_OFFICER",
+    label: "กิจการนิสิต",
   },
 ];
 
 export function CreateParcel() {
+  const router = useRouter();
   const [image_url, setImageUrl] = useState("");
+  const [close, setClose] = useState(false);
   const { type } = useAppContext();
   const { group } = useAppContext();
-
+  const { department } = useAppContext();
+  const createPost = api.parcel.create.useMutation({
+    onSuccess: () => {
+      setClose(true);
+      router.refresh();
+    },
+  });
 
   const form = useForm({
     resolver: zodResolver(FormSchema),
@@ -103,7 +197,7 @@ export function CreateParcel() {
       description: "",
       type: "",
       group: "",
-      amount: 1,
+      amount: "0",
       available: true,
       department: "",
       image: undefined,
@@ -132,13 +226,40 @@ export function CreateParcel() {
     };
   }
 
-  function onSubmit(data: any) {
-    console.log(type);
-    console.log(type);
-
-    data.parcel_id = "44";
-    console.log(data);
-    //console.log(image_url);
+  async function onSubmit(data: any) {
+    try {
+      const response = await fetch(
+        "https://smo-api.bunyawatapp37204.workers.dev/images/upload",
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            body: image_url,
+            width: 100,
+            height: 100,
+          }),
+        },
+      );
+      const _data = await response.json();
+      const img =
+        "https://smo-api.bunyawatapp37204.workers.dev/images/" + _data.key;
+      const _amount = (data.amount as string) ?? "";
+      createPost.mutate({
+        amount: parseInt(_amount),
+        available: data.available,
+        department: department,
+        type: type,
+        group: group,
+        image_url: img,
+        id: data.parcel_id,
+        name: data.parcel_title,
+        description: data.description,
+      });
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   }
 
   return (
@@ -220,7 +341,7 @@ export function CreateParcel() {
                   จำนวน
                 </Label>
                 <Input
-                  type="number"
+                  type="text"
                   {...form.register("amount")}
                   className="col-span-3"
                 />
@@ -231,7 +352,7 @@ export function CreateParcel() {
                   หน่วยงาน
                 </Label>
                 <Department
-                  options={groups}
+                  options={departments}
                   {...form.register("department")}
                 />
               </div>
@@ -247,9 +368,21 @@ export function CreateParcel() {
               </div>
             </div>
 
-            <Button type="submit">สร้างเลย !!</Button>
+            {!close && (
+              <Button type="submit">
+                {" "}
+                {createPost.isPending ? "กำลังสร้าง..." : "สร้างเลย!!!"}
+              </Button>
+            )}
           </div>
         </form>
+        {close && (
+          <DialogClose asChild>
+            <Button type="submit" onClick={() => setClose(false)}>
+              ปิด
+            </Button>
+          </DialogClose>
+        )}
       </DialogContent>
     </Dialog>
   );

@@ -33,7 +33,7 @@ export function Department({options}:Props) {
   const {department, setDepartment} = useAppContext();
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
+    <Popover open={open} onOpenChange={setOpen} >
       <PopoverTrigger asChild>
         <Button
           variant="outline"
@@ -47,7 +47,7 @@ export function Department({options}:Props) {
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
+      <PopoverContent className="w-[200px] p-0 top-0">
         <Command>
           <CommandInput placeholder="Search framework..." />
           <CommandEmpty>No framework found.</CommandEmpty>
@@ -57,7 +57,7 @@ export function Department({options}:Props) {
                 key={option.value}
                 value={option.value}
                 onSelect={(currentValue) => {
-                  setDepartment(currentValue === department ? "" : currentValue);
+                  setDepartment(option.value);
                   setOpen(false);
                 }}
               >

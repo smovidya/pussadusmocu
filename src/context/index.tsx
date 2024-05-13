@@ -5,9 +5,9 @@ import { createContext, ReactNode, useContext, useState } from "react";
 const AppContext = createContext<any>(undefined);
 
 export function AppWrapper({ children }: { children: ReactNode }) {
-  const [type, setType] = useState("Normal");
-  const [group, setGroup] = useState("Normal");
-  const [department, setDepartment] = useState("Normal");
+  const [type, setType] = useState("NORMAL");
+  const [group, setGroup] = useState("OFFICE");
+  const [department, setDepartment] = useState("SMO");
 
   return (
     <AppContext.Provider

@@ -15,6 +15,27 @@ const ParcelGroupSchema = z.enum([
   "COMPUTER",
 ]);
 
+const ParcelDepartmentSchema = z.enum([
+  "SMO",
+  "MATHCOM",
+  "MARINE",
+  "CHEM",
+  "CHEMTECH",
+  "BIO",
+  "BIOCHEM",
+  "BSAC",
+  "BBTECH",
+  "FOODTECH",
+  "MATSCI",
+  "PHYSICS",
+  "BOTGEN",
+  "MICROBIO",
+  "PHOTO",
+  "GEO",
+  "ENVI",
+  "NISIT_OFFICER",
+]);
+
 const ParcelTypeSchema = z.enum(["NORMAL", "DURABLE"]);
 
 export const parcelRouter = createTRPCRouter({
@@ -27,8 +48,14 @@ export const parcelRouter = createTRPCRouter({
     .input(
       z.object({
         name: z.string().min(1),
+        description: z.string(),
+        id: z.string().min(10),
+        image_url: z.string(),
+        amount: z.number().positive(),
+        department: ParcelDepartmentSchema,
         group: ParcelGroupSchema,
         type: ParcelTypeSchema,
+        available: z.boolean()
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -36,12 +63,15 @@ export const parcelRouter = createTRPCRouter({
       await new Promise((resolve) => setTimeout(resolve, 1000));
       return ctx.db.parcel.create({
         data: {
-          parcel_id: input.name,
+          parcel_id: input.id,
           title: input.name,
-          description: input.name,
-          image_url: input.name,
+          description: input.description,
+          image_url: input.image_url,
           group: input.group,
           type: input.type,
+          department: input.department,
+          amount:input.amount,
+          available: input.available
         },
       });
     }),

@@ -94,6 +94,7 @@ enum PARCEL_GROUP {
 }
 
 enum Department {
+  SMO
   MATHCOM
   MARINE
   CHEM
