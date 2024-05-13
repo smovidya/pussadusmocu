@@ -1,6 +1,7 @@
 import type { Parcel } from "@prisma/client";
 import Image from "next/image";
 import Blog from "~/app/_components/Blog";
+import { CreateParcel } from "~/app/_components/create-parcel";
 import { Input } from "~/components/ui/input";
 import { api } from "~/trpc/server";
 
@@ -39,8 +40,8 @@ const Home = async () => {
             <Blog key={parcel.parcel_id} parcel={parcel} />
           ))}
         </div>
-        <div className="flex w-24 flex-col items-end gap-1">
-          <h1>Hello</h1>
+        <div className="flex w-24 flex-col items-end gap-1 font-noto-sans">
+          <CreateParcel />
         </div>
       </div>
     </div>
