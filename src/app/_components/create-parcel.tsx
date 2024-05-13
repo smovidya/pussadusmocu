@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -11,14 +11,15 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTrigger,
 } from "~/components/ui/dialog";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import { Textarea } from "~/components/ui/textarea";
-import { ComboboxDemo } from "./combobox";
 import { useAppContext } from "~/context";
+import { Types } from "./combobox/type";
+import { Group } from "./combobox/group";
+import { Department } from "./combobox/department";
 
 const FormSchema = z.object({
   parcel_id: z.string().min(10, {
@@ -37,7 +38,7 @@ const FormSchema = z.object({
   description: z.string(),
   type: z.string(),
   group: z.string(),
-  amount: z.number().positive(),
+  amount: z.number(),
   available: z.boolean(),
   department: z.string(),
 });
@@ -65,7 +66,7 @@ const types = [
   },
 ];
 
-const group = [
+const groups = [
   {
     value: "next.js",
     label: "Next.js",
@@ -90,6 +91,9 @@ const group = [
 
 export function CreateParcel() {
   const [image_url, setImageUrl] = useState("");
+  const { type } = useAppContext();
+  const { group } = useAppContext();
+
 
   const form = useForm({
     resolver: zodResolver(FormSchema),
@@ -119,8 +123,9 @@ export function CreateParcel() {
     reader.readAsDataURL(file);
     reader.onload = () => {
       //me.modelvalue = reader.result;
-      const result = reader.result?.toString() || "";
-      setImageUrl(result.split("data:image/png;base64,")[1] || "");
+      const result = reader.result?.toString() ?? "";
+      console.log(result);
+      setImageUrl(result.split("data:image/png;base64,")[1] ?? "");
     };
     reader.onerror = (error) => {
       console.error("Error:", error);
@@ -128,23 +133,30 @@ export function CreateParcel() {
   }
 
   function onSubmit(data: any) {
+    console.log(type);
+    console.log(type);
+
+    data.parcel_id = "44";
     console.log(data);
     //console.log(image_url);
   }
 
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
-      <Dialog>
-        <DialogTrigger asChild>
-          <Button variant="outline">สร้างพัสดุใหม่</Button>
-        </DialogTrigger>
-        <DialogContent className="min-w-[700px] font-noto-sans sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>กรอกข้อมูลพัสดุใหม่</DialogTitle>
-            <DialogDescription>กรุณาใส่ข้อมูลให้ครบถ้วน.</DialogDescription>
-          </DialogHeader>
-          <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-2 gap-2">
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button variant="outline">สร้างพัสดุใหม่</Button>
+      </DialogTrigger>
+      <DialogContent className="min-w-[700px] font-noto-sans sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>กรอกข้อมูลพัสดุใหม่</DialogTitle>
+          <DialogDescription>กรุณาใส่ข้อมูลให้ครบถ้วน.</DialogDescription>
+        </DialogHeader>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex w-full space-y-6"
+        >
+          <div className="grid w-full gap-4 py-4">
+            <div className="grid w-full grid-cols-2 gap-2">
               <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="id" className="text-right">
                   เลขไอดี
@@ -179,10 +191,10 @@ export function CreateParcel() {
                 />
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="desc" className="text-right">
+                <Label htmlFor="type" className="text-right">
                   ประเภท
                 </Label>
-                <ComboboxDemo options={types} />
+                <Types options={types} {...form.register("type")} />
               </div>
             </div>
             <div className="grid grid-cols-2 gap-2">
@@ -190,7 +202,7 @@ export function CreateParcel() {
                 <Label htmlFor="desc" className="text-right">
                   หมวดหมู่
                 </Label>
-                <ComboboxDemo options={group} {...form.register("group")} />
+                <Group options={groups} {...form.register("group")} />
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="desc" className="text-right">
@@ -202,7 +214,7 @@ export function CreateParcel() {
                 />
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 gap-1">
               <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="desc" className="text-right">
                   จำนวน
@@ -213,29 +225,32 @@ export function CreateParcel() {
                   className="col-span-3"
                 />
               </div>
+
               <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="desc" className="">
+                  หน่วยงาน
+                </Label>
+                <Department
+                  options={groups}
+                  {...form.register("department")}
+                />
+              </div>
+              <div className="grid grid-cols-2 items-center justify-start gap-4">
                 <Label htmlFor="desc" className="text-right">
                   ใช้งานได้
                 </Label>
                 <Input
                   type="checkbox"
                   {...form.register("available")}
-                  className="col-span-3 w-6"
+                  className=" w-6"
                 />
               </div>
             </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="desc" className="text-right">
-                  หน่วยงาน
-                </Label>
-                <ComboboxDemo options={group} {...form.register("department")} />
-              </div>
-          </div>
-          <DialogFooter>
+
             <Button type="submit">สร้างเลย !!</Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-    </form>
+          </div>
+        </form>
+      </DialogContent>
+    </Dialog>
   );
 }

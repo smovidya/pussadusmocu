@@ -28,9 +28,9 @@ interface Framework {
   interface Props {
     options: Framework[];
   }
-export function ComboboxDemo({options}:Props) {
+export function Group({options}:Props) {
   const [open, setOpen] = React.useState(false);
-  const {state, setState} = useAppContext();
+  const {group, setGroup} = useAppContext();
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -41,8 +41,8 @@ export function ComboboxDemo({options}:Props) {
           aria-expanded={open}
           className="w-[200px] justify-between"
         >
-          {state
-            ? options.find((option) => option.value === state)?.label
+          {group
+            ? options.find((option) => option.value === group)?.label
             : "Select framework..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -57,14 +57,14 @@ export function ComboboxDemo({options}:Props) {
                 key={option.value}
                 value={option.value}
                 onSelect={(currentValue) => {
-                  setState(currentValue === state ? "" : currentValue);
+                  setGroup(currentValue === group ? "" : currentValue);
                   setOpen(false);
                 }}
               >
                 <Check
                   className={cn(
                     "mr-2 h-4 w-4",
-                    state === option.value ? "opacity-100" : "opacity-0",
+                    group === option.value ? "opacity-100" : "opacity-0",
                   )}
                 />
                 {option.label}
