@@ -17,12 +17,15 @@ import {
 } from "~/components/ui/dialog";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import { Textarea } from "~/components/ui/textarea";
-import { useAppContext } from "~/context";
 import { Types } from "./combobox/type";
 import { Group } from "./combobox/group";
-import { Department } from "./combobox/department";
+import { Departments } from "./combobox/department";
 import { api } from "~/trpc/react";
 import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
+import { typeSelector } from "~/stores/slices/type";
+import { groupSelector } from "~/stores/slices/group";
+import { departmentSelector } from "~/stores/slices/department";
 
 const FormSchema = z.object({
   parcel_id: z.string().min(10, {
@@ -37,7 +40,9 @@ const FormSchema = z.object({
     })
     .refine((file) => !file || (!!file && file.type?.startsWith("image")), {
       message: "Only images are allowed to be sent.",
-    }),
+    })
+    .nullable()
+    .optional(),
   description: z.string(),
   type: z.string(),
   group: z.string(),
@@ -45,6 +50,12 @@ const FormSchema = z.object({
   available: z.boolean(),
   department: z.string(),
 });
+
+type FormSchemaType = z.infer<typeof FormSchema>;
+interface UploadResponse {
+  key: string;
+}
+
 
 const types = [
   {
@@ -179,9 +190,12 @@ export function CreateParcel() {
   const router = useRouter();
   const [image_url, setImageUrl] = useState("");
   const [close, setClose] = useState(false);
-  const { type } = useAppContext();
-  const { group } = useAppContext();
-  const { department } = useAppContext();
+  const typeReducer = useSelector(typeSelector);
+  const groupReducer = useSelector(groupSelector);
+  const departmentReducer = useSelector(departmentSelector);
+  const type = typeReducer.key;
+  const department = departmentReducer.key;
+  const group = groupReducer.key;
   const createPost = api.parcel.create.useMutation({
     onSuccess: () => {
       setClose(true);
@@ -226,7 +240,7 @@ export function CreateParcel() {
     };
   }
 
-  async function onSubmit(data: any) {
+  async function onSubmit(data : FormSchemaType) {
     try {
       const response = await fetch(
         "https://smo-api.bunyawatapp37204.workers.dev/images/upload",
@@ -242,10 +256,11 @@ export function CreateParcel() {
           }),
         },
       );
-      const _data = await response.json();
+      const jsonData: unknown = await response.json();
+      const _data = jsonData as UploadResponse;
       const img =
         "https://smo-api.bunyawatapp37204.workers.dev/images/" + _data.key;
-      const _amount = (data.amount as string) ?? "";
+      const _amount = data.amount;
       createPost.mutate({
         amount: parseInt(_amount),
         available: data.available,
@@ -313,7 +328,7 @@ export function CreateParcel() {
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="type" className="text-right">
-                  ประเภท
+                  ประเภท {type}
                 </Label>
                 <Types options={types} {...form.register("type")} />
               </div>
@@ -351,7 +366,7 @@ export function CreateParcel() {
                 <Label htmlFor="desc" className="">
                   หน่วยงาน
                 </Label>
-                <Department
+                <Departments
                   options={departments}
                   {...form.register("department")}
                 />

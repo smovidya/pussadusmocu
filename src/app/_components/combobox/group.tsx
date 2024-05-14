@@ -17,7 +17,10 @@ import {
 } from "~/components/ui/command";
 import { cn } from "~/lib/utils";
 import { Button } from "~/components/ui/button";
-import { useAppContext } from "~/context";
+import { useAppDispatch } from "~/stores/store";
+import { groupSelector, selectedOption } from "~/stores/slices/group";
+import { useSelector } from "react-redux";
+import type { PARCEL_GROUP } from "@prisma/client";
 
 
 interface Framework {
@@ -30,7 +33,9 @@ interface Framework {
   }
 export function Group({options}:Props) {
   const [open, setOpen] = React.useState(false);
-  const {group, setGroup} = useAppContext();
+  const groupReducer = useSelector(groupSelector);
+  const dispatch = useAppDispatch();
+  const group = groupReducer.key;
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -42,7 +47,7 @@ export function Group({options}:Props) {
           className="w-[200px] justify-between"
         >
           {group
-            ? options.find((option) => option.value === group)?.label
+            ? options.find((option) => option.value === group.toUpperCase())?.label
             : "Select framework..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -57,7 +62,7 @@ export function Group({options}:Props) {
                 key={option.value}
                 value={option.value}
                 onSelect={(currentValue) => {
-                  setGroup(option.value);
+                  dispatch(selectedOption({key:option.value as PARCEL_GROUP, label: currentValue}))
                   setOpen(false);
                 }}
               >

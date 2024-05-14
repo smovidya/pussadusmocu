@@ -3,7 +3,7 @@ import "~/styles/globals.css";
 import { Noto_Sans_Thai } from "next/font/google";
 
 import { TRPCReactProvider } from "~/trpc/react";
-import { AppWrapper } from "~/context";
+import ReduxProvider from "./ReduxProvider";
 
 const inter = Noto_Sans_Thai({
   subsets: ["thai"],
@@ -25,7 +25,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`font-sans ${inter.variable}`}>
         <TRPCReactProvider>
-          <AppWrapper>{children}</AppWrapper>
+          <ReduxProvider>{children}</ReduxProvider>
         </TRPCReactProvider>
       </body>
     </html>

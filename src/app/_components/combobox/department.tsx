@@ -17,8 +17,10 @@ import {
 } from "~/components/ui/command";
 import { cn } from "~/lib/utils";
 import { Button } from "~/components/ui/button";
-import { useAppContext } from "~/context";
-
+import { useSelector } from "react-redux";
+import { departmentSelector, selectedOption } from "~/stores/slices/department";
+import { useAppDispatch } from "~/stores/store";
+import type { Department } from "@prisma/client";
 
 interface Framework {
     value: string;
@@ -28,9 +30,11 @@ interface Framework {
   interface Props {
     options: Framework[];
   }
-export function Department({options}:Props) {
+export function Departments({options}:Props) {
   const [open, setOpen] = React.useState(false);
-  const {department, setDepartment} = useAppContext();
+  const departmentReducer = useSelector(departmentSelector);
+  const dispatch = useAppDispatch();
+  const department = departmentReducer.key;
 
   return (
     <Popover open={open} onOpenChange={setOpen} >
@@ -42,7 +46,7 @@ export function Department({options}:Props) {
           className="w-[200px] justify-between"
         >
           {department
-            ? options.find((option) => option.value === department)?.label
+            ? options.find((option) => option.value === department.toUpperCase())?.label
             : "Select framework..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -57,7 +61,7 @@ export function Department({options}:Props) {
                 key={option.value}
                 value={option.value}
                 onSelect={(currentValue) => {
-                  setDepartment(option.value);
+                  dispatch(selectedOption({key:option.value as Department, label:currentValue}))
                   setOpen(false);
                 }}
               >
