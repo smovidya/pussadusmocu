@@ -5,7 +5,7 @@ import groupReducer from "./slices/group";
 import departmentReducer from "./slices/department";
 
 export const store = configureStore({
-    reducer: { typeReducer, groupReducer, departmentReducer },
+  reducer: { typeReducer, groupReducer, departmentReducer },
 });
 
 // create and export typed-hooks in file

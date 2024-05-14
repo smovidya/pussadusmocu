@@ -23,21 +23,21 @@ import { useAppDispatch } from "~/stores/store";
 import type { Department } from "@prisma/client";
 
 interface Framework {
-    value: string;
-    label: string;
-  }
-  
-  interface Props {
-    options: Framework[];
-  }
-export function Departments({options}:Props) {
+  value: string;
+  label: string;
+}
+
+interface Props {
+  options: Framework[];
+}
+export function Departments({ options }: Props) {
   const [open, setOpen] = React.useState(false);
   const departmentReducer = useSelector(departmentSelector);
   const dispatch = useAppDispatch();
   const department = departmentReducer.key;
 
   return (
-    <Popover open={open} onOpenChange={setOpen} >
+    <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
           variant="outline"
@@ -46,12 +46,14 @@ export function Departments({options}:Props) {
           className="w-[200px] justify-between"
         >
           {department
-            ? options.find((option) => option.value === department.toUpperCase())?.label
+            ? options.find(
+                (option) => option.value === department.toUpperCase(),
+              )?.label
             : "Select framework..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0 top-0">
+      <PopoverContent className="top-0 w-[200px] p-0">
         <Command>
           <CommandInput placeholder="Search framework..." />
           <CommandEmpty>No framework found.</CommandEmpty>
@@ -61,7 +63,12 @@ export function Departments({options}:Props) {
                 key={option.value}
                 value={option.value}
                 onSelect={(currentValue) => {
-                  dispatch(selectedOption({key:option.value as Department, label:currentValue}))
+                  dispatch(
+                    selectedOption({
+                      key: option.value as Department,
+                      label: currentValue,
+                    }),
+                  );
                   setOpen(false);
                 }}
               >

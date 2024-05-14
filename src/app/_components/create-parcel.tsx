@@ -56,7 +56,6 @@ interface UploadResponse {
   key: string;
 }
 
-
 const types = [
   {
     value: "NORMAL",
@@ -240,7 +239,7 @@ export function CreateParcel() {
     };
   }
 
-  async function onSubmit(data : FormSchemaType) {
+  async function onSubmit(data: FormSchemaType) {
     try {
       const response = await fetch(
         "https://smo-api.bunyawatapp37204.workers.dev/images/upload",
@@ -328,7 +327,7 @@ export function CreateParcel() {
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="type" className="text-right">
-                  ประเภท {type}
+                  ประเภท
                 </Label>
                 <Types options={types} {...form.register("type")} />
               </div>

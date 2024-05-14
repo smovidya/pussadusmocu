@@ -22,14 +22,14 @@ import { useAppDispatch } from "~/stores/store";
 import { useSelector } from "react-redux";
 import type { PARCEL_TYPE } from "@prisma/client";
 interface Framework {
-    value: string;
-    label: string;
-  }
-  
-  interface Props {
-    options: Framework[];
-  }
-export function Types({options}:Props) {
+  value: string;
+  label: string;
+}
+
+interface Props {
+  options: Framework[];
+}
+export function Types({ options }: Props) {
   const [open, setOpen] = React.useState(false);
   const typeReducer = useSelector(typeSelector);
   const dispatch = useAppDispatch();
@@ -45,7 +45,8 @@ export function Types({options}:Props) {
           className="w-[200px] justify-between"
         >
           {type
-            ? options.find((option) => option.value === type.toUpperCase())?.label
+            ? options.find((option) => option.value === type.toUpperCase())
+                ?.label
             : "Select framework..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -61,7 +62,12 @@ export function Types({options}:Props) {
                 value={option.label}
                 onSelect={(currentValue) => {
                   setOpen(false);
-                  dispatch(selectedOption({key:option.value as PARCEL_TYPE, label:currentValue}))
+                  dispatch(
+                    selectedOption({
+                      key: option.value as PARCEL_TYPE,
+                      label: currentValue,
+                    }),
+                  );
                 }}
               >
                 <Check

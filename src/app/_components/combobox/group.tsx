@@ -22,16 +22,15 @@ import { groupSelector, selectedOption } from "~/stores/slices/group";
 import { useSelector } from "react-redux";
 import type { PARCEL_GROUP } from "@prisma/client";
 
-
 interface Framework {
-    value: string;
-    label: string;
-  }
-  
-  interface Props {
-    options: Framework[];
-  }
-export function Group({options}:Props) {
+  value: string;
+  label: string;
+}
+
+interface Props {
+  options: Framework[];
+}
+export function Group({ options }: Props) {
   const [open, setOpen] = React.useState(false);
   const groupReducer = useSelector(groupSelector);
   const dispatch = useAppDispatch();
@@ -47,12 +46,13 @@ export function Group({options}:Props) {
           className="w-[200px] justify-between"
         >
           {group
-            ? options.find((option) => option.value === group.toUpperCase())?.label
+            ? options.find((option) => option.value === group.toUpperCase())
+                ?.label
             : "Select framework..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0 overflow-y-auto">
+      <PopoverContent className="w-[200px] overflow-y-auto p-0">
         <Command>
           <CommandInput placeholder="Search framework..." />
           <CommandEmpty>No framework found.</CommandEmpty>
@@ -62,7 +62,12 @@ export function Group({options}:Props) {
                 key={option.value}
                 value={option.value}
                 onSelect={(currentValue) => {
-                  dispatch(selectedOption({key:option.value as PARCEL_GROUP, label: currentValue}))
+                  dispatch(
+                    selectedOption({
+                      key: option.value as PARCEL_GROUP,
+                      label: currentValue,
+                    }),
+                  );
                   setOpen(false);
                 }}
               >

@@ -15,14 +15,19 @@ interface BlogProps {
 
 const Blog = ({ parcel }: BlogProps) => {
   return (
-    <Card className="h-auto w-44 hover:scale-105 hover:cursor-pointer font-noto-sans">
+    <Card className="h-auto w-44 font-noto-sans hover:scale-105 hover:cursor-pointer">
       <CardHeader>
         <CardTitle>{parcel.title}</CardTitle>
         <CardDescription>{parcel.description}</CardDescription>
       </CardHeader>
       <CardContent>
         {parcel.image_url && (
-          <Image src={parcel.image_url} width={172} height={172} alt="Parcel Image" />
+          <Image
+            src={parcel.image_url}
+            width={172}
+            height={172}
+            alt="Parcel Image"
+          />
         )}
       </CardContent>
       <CardFooter>

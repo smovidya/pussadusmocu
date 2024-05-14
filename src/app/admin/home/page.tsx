@@ -40,7 +40,7 @@ const Home = async () => {
             <Blog key={parcel.parcel_id} parcel={parcel} />
           ))}
         </div>
-        <div className="flex w-24 flex-col gap-1 item-end font-noto-sans">
+        <div className="item-end flex w-24 flex-col gap-1 font-noto-sans">
           <CreateParcel />
         </div>
       </div>
