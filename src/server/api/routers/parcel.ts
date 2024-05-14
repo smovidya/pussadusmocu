@@ -55,7 +55,7 @@ export const parcelRouter = createTRPCRouter({
         department: ParcelDepartmentSchema,
         group: ParcelGroupSchema,
         type: ParcelTypeSchema,
-        available: z.boolean()
+        available: z.boolean(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -70,8 +70,8 @@ export const parcelRouter = createTRPCRouter({
           group: input.group,
           type: input.type,
           department: input.department,
-          amount:input.amount,
-          available: input.available
+          amount: input.amount,
+          available: input.available,
         },
       });
     }),

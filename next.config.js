@@ -6,15 +6,15 @@ await import("./src/env.js");
 
 /** @type {import("next").NextConfig} */
 const config = {
-    images:{
-        remotePatterns:[
-            {
-                protocol:'https',
-                pathname:'/images/*',
-                hostname:'smo-api.bunyawatapp37204.workers.dev'
-            }
-        ]
-    }
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        pathname: "/images/*",
+        hostname: "smo-api.bunyawatapp37204.workers.dev",
+      },
+    ],
+  },
 };
 
 export default config;
