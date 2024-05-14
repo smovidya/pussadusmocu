@@ -34,13 +34,13 @@ const Home = async () => {
           </div>
         </div>
       </div>
-      <div className="flex flex-row justify-center">
+      <div className="flex flex-row justify-center gap-6">
         <div className="grid grid-cols-5 gap-2">
           {mockParcels.map((parcel) => (
             <Blog key={parcel.parcel_id} parcel={parcel} />
           ))}
         </div>
-        <div className="flex w-24 flex-col items-end gap-1 font-noto-sans">
+        <div className="flex w-24 flex-col gap-1 item-end font-noto-sans">
           <CreateParcel />
         </div>
       </div>
