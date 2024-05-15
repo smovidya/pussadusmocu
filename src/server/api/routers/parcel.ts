@@ -44,6 +44,20 @@ export const parcelRouter = createTRPCRouter({
     return parcel;
   }),
 
+  getById: publicProcedure
+    .input(
+      z.object({
+        parcel_id: z.string(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      return ctx.db.parcel.findFirst({
+        where: {
+          parcel_id: input.parcel_id,
+        },
+      });
+    }),
   create: publicProcedure
     .input(
       z.object({
