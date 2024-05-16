@@ -158,3 +158,39 @@ export const departments = [
     label: "กิจการนิสิต",
   },
 ];
+
+export const ParcelGroupSchema = z.enum([
+  "OFFICE",
+  "ELECTRONIC",
+  "HOME",
+  "BUILDING",
+  "FUEL",
+  "MEDICAL_SCI",
+  "ADS",
+  "MUSICAL",
+  "CLOTHING",
+  "COMPUTER",
+]);
+
+export const ParcelDepartmentSchema = z.enum([
+  "SMO",
+  "MATHCOM",
+  "MARINE",
+  "CHEM",
+  "CHEMTECH",
+  "BIO",
+  "BIOCHEM",
+  "BSAC",
+  "BBTECH",
+  "FOODTECH",
+  "MATSCI",
+  "PHYSICS",
+  "BOTGEN",
+  "MICROBIO",
+  "PHOTO",
+  "GEO",
+  "ENVI",
+  "NISIT_OFFICER",
+]);
+
+export const ParcelTypeSchema = z.enum(["NORMAL", "DURABLE"]);

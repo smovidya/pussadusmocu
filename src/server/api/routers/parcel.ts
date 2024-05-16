@@ -1,42 +1,11 @@
 import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
-
-const ParcelGroupSchema = z.enum([
-  "OFFICE",
-  "ELECTRONIC",
-  "HOME",
-  "BUILDING",
-  "FUEL",
-  "MEDICAL_SCI",
-  "ADS",
-  "MUSICAL",
-  "CLOTHING",
-  "COMPUTER",
-]);
-
-const ParcelDepartmentSchema = z.enum([
-  "SMO",
-  "MATHCOM",
-  "MARINE",
-  "CHEM",
-  "CHEMTECH",
-  "BIO",
-  "BIOCHEM",
-  "BSAC",
-  "BBTECH",
-  "FOODTECH",
-  "MATSCI",
-  "PHYSICS",
-  "BOTGEN",
-  "MICROBIO",
-  "PHOTO",
-  "GEO",
-  "ENVI",
-  "NISIT_OFFICER",
-]);
-
-const ParcelTypeSchema = z.enum(["NORMAL", "DURABLE"]);
+import {
+  ParcelDepartmentSchema,
+  ParcelGroupSchema,
+  ParcelTypeSchema,
+} from "~/utils/constant";
 
 export const parcelRouter = createTRPCRouter({
   getAll: publicProcedure.query(async ({ ctx }) => {
