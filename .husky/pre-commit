@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
-bun run format
-bun run check
-bun run lint
+pnpm run format
+pnpm run check
+pnpm run lint
