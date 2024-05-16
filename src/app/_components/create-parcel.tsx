@@ -41,15 +41,17 @@ export function CreateParcel() {
   const router = useRouter();
   const [image_url, setImageUrl] = useState("");
   const [close, setClose] = useState(false);
+  const [disabled, setDisabled] = useState(false);
   const typeReducer = useSelector(typeSelector);
   const groupReducer = useSelector(groupSelector);
   const departmentReducer = useSelector(departmentSelector);
   const type = typeReducer.key;
   const department = departmentReducer.key;
   const group = groupReducer.key;
-  const createPost = api.parcel.create.useMutation({
+  const createParcel = api.parcel.create.useMutation({
     onSuccess: () => {
       setClose(true);
+      setDisabled(false);
       router.refresh();
     },
   });
@@ -92,6 +94,7 @@ export function CreateParcel() {
 
   async function onSubmit(data: FormSchemaType) {
     try {
+      setDisabled(true);
       const response = await fetch(
         "https://smo-api.bunyawatapp37204.workers.dev/images/upload",
         {
@@ -111,7 +114,7 @@ export function CreateParcel() {
       const img =
         "https://smo-api.bunyawatapp37204.workers.dev/images/" + _data.key;
       const _amount = data.amount;
-      createPost.mutate({
+      createParcel.mutate({
         amount: _amount,
         available: data.available,
         department: department,
@@ -148,6 +151,7 @@ export function CreateParcel() {
                   เลขไอดี
                 </Label>
                 <Input
+                  disabled={disabled}
                   type="text"
                   {...form.register("parcel_id")}
                   className="col-span-3"
@@ -158,6 +162,7 @@ export function CreateParcel() {
                   ชื่อพัสดุ
                 </Label>
                 <Input
+                  disabled={disabled}
                   type="text"
                   {...form.register("parcel_title")}
                   className="col-span-3"
@@ -170,6 +175,7 @@ export function CreateParcel() {
                   รูปพัสดุ
                 </Label>
                 <Input
+                  disabled={disabled}
                   type="file"
                   {...form.register("image")}
                   className="col-span-3 hover:cursor-pointer"
@@ -180,7 +186,11 @@ export function CreateParcel() {
                 <Label htmlFor="type" className="text-right">
                   ประเภท
                 </Label>
-                <Types options={types} {...form.register("type")} />
+                <Types
+                  disabled={disabled}
+                  options={types}
+                  {...form.register("type")}
+                />
               </div>
             </div>
             <div className="grid grid-cols-2 gap-2">
@@ -188,13 +198,18 @@ export function CreateParcel() {
                 <Label htmlFor="desc" className="text-right">
                   หมวดหมู่
                 </Label>
-                <Group options={groups} {...form.register("group")} />
+                <Group
+                  disabled={disabled}
+                  options={groups}
+                  {...form.register("group")}
+                />
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="desc" className="text-right">
                   รายละเอียด
                 </Label>
                 <Textarea
+                  disabled={disabled}
                   {...form.register("description")}
                   className="col-span-3"
                 />
@@ -206,7 +221,8 @@ export function CreateParcel() {
                   จำนวน
                 </Label>
                 <Input
-                  type="text"
+                  disabled={disabled}
+                  type="number"
                   {...form.register("amount")}
                   className="col-span-3"
                 />
@@ -217,6 +233,7 @@ export function CreateParcel() {
                   หน่วยงาน
                 </Label>
                 <Departments
+                  disabled={disabled}
                   options={departments}
                   {...form.register("department")}
                 />
@@ -226,17 +243,17 @@ export function CreateParcel() {
                   ใช้งานได้
                 </Label>
                 <Input
+                  disabled={disabled}
                   type="checkbox"
                   {...form.register("available")}
                   className=" w-6"
                 />
               </div>
             </div>
-
             {!close && (
-              <Button type="submit">
+              <Button type="submit" disabled={disabled}>
                 {" "}
-                {createPost.isPending ? "กำลังสร้าง..." : "สร้างเลย!!!"}
+                {createParcel.isPending ? "กำลังสร้าง..." : "สร้างเลย!!!"}
               </Button>
             )}
           </div>

@@ -12,10 +12,14 @@ import {
   CardContent,
   CardFooter,
 } from "~/components/ui/card";
-import { Dialog, DialogContent, DialogTrigger } from "~/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+} from "~/components/ui/dialog";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
-import { departments, FormSchema, groups, types } from "~/utils/constant";
+import { departments, FormSchema, type FormSchemaType, groups, types, type UploadResponse } from "~/utils/constant";
 import { Types } from "./combobox/type";
 import { Group } from "./combobox/group";
 import { Textarea } from "~/components/ui/textarea";
@@ -23,31 +27,99 @@ import { Departments } from "./combobox/department";
 import { Button } from "~/components/ui/button";
 import { api } from "~/trpc/react";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 interface BlogProps {
   parcel: Parcel;
 }
 
 const Blog = ({ parcel }: BlogProps) => {
-  const [id, setId] = useState<string>(parcel.parcel_id);
-  const [title, setTitle] = useState<string>(parcel.title);
-  const [description, setDescription] = useState<string>(parcel.description ?? "");
-  // const [amount, ]
-
-  const form = useForm({
+  const form = useForm<FormSchemaType>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      parcel_id: "",
-      parcel_title: "",
-      description: "",
-      type: "",
-      group: "",
-      amount: "0",
-      available: true,
-      department: "",
-      image: undefined,
+      parcel_id: parcel.parcel_id,
+      parcel_title: parcel.title,
+      description: parcel.description ?? "",
+      type: parcel.type,
+      group: parcel.group,
+      amount: parcel.amount,
+      available: parcel.available,
+      department: parcel.department ?? "SMO",
+      image: undefined
     },
   });
+  const router = useRouter();
+  const [disabled, setDisabled] = useState(false);
+  const [image_url, setImageUrl] = useState<string | undefined>();
+
+  const editParcel = api.parcel.edit.useMutation({
+    onSuccess: () => {
+      router.refresh();
+    },
+  });
+
+  function getBase64(event: HTMLInputElement) {
+    const target = event;
+    const file = target.files?.[0];
+
+    if (!file) {
+      console.error("No file selected");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      //me.modelvalue = reader.result;
+      const result = reader.result?.toString() ?? "";
+      setImageUrl(result.split("data:image/png;base64,")[1] ?? "");
+    };
+    reader.onerror = (error) => {
+      console.error("Error:", error);
+    };
+  }
+
+  async function onSubmit(data: FormSchemaType) {
+    setDisabled(true);
+    try {
+      let imageUrl;
+      if (image_url) {
+        const response = await fetch(
+          "https://smo-api.bunyawatapp37204.workers.dev/images/upload",
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              body: image_url,
+              width: 100,
+              height: 100,
+            }),
+          },
+        );
+        const jsonData: UploadResponse = await response.json() as UploadResponse;
+        imageUrl = `https://smo-api.bunyawatapp37204.workers.dev/images/${jsonData.key}`;
+      } else {
+        imageUrl = parcel.image_url; // Use the existing image URL if no new image is uploaded
+      }
+
+      editParcel.mutate({
+        name: data.parcel_title,
+        amount: data.amount,
+        available: data.available,
+        department: data.department,
+        description: data.description,
+        group: data.group,
+        image_url: imageUrl,
+        type: data.type,
+        id: parcel.parcel_id
+      });
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -74,7 +146,7 @@ const Blog = ({ parcel }: BlogProps) => {
       </DialogTrigger>
       <DialogContent className="min-w-[700px] font-noto-sans sm:max-w-[425px]">
         <form
-          onSubmit={form.handleSubmit(() => console.log("submit"))}
+          onSubmit={form.handleSubmit(onSubmit)}
           className="flex w-full space-y-6"
         >
           <div className="grid w-full gap-4 py-4">
@@ -84,6 +156,7 @@ const Blog = ({ parcel }: BlogProps) => {
                   เลขไอดี
                 </Label>
                 <Input
+                disabled
                   type="text"
                   {...form.register("parcel_id")}
                   className="col-span-3"
@@ -109,7 +182,7 @@ const Blog = ({ parcel }: BlogProps) => {
                   type="file"
                   {...form.register("image")}
                   className="col-span-3 hover:cursor-pointer"
-                  // onChange={(event) => getBase64(event.target)}
+                  onChange={(event) => getBase64(event.target)}
                 />
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
@@ -168,6 +241,10 @@ const Blog = ({ parcel }: BlogProps) => {
                 />
               </div>
             </div>
+            <Button type="submit" disabled={disabled}>
+                {" "}
+                {editParcel.isPending ? "กำลังสร้าง..." : "แก้ไข"}
+              </Button>
           </div>
         </form>
       </DialogContent>

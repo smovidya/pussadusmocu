@@ -12,7 +12,6 @@ export const parcelRouter = createTRPCRouter({
     const parcel = await ctx.db.parcel.findMany();
     return parcel;
   }),
-
   getById: publicProcedure
     .input(
       z.object({
@@ -57,5 +56,37 @@ export const parcelRouter = createTRPCRouter({
           available: input.available,
         },
       });
+    }),
+  edit: publicProcedure
+    .input(
+      z.object({
+        name: z.string().min(1),
+        description: z.string(),
+        id: z.string().min(10),
+        image_url: z.string(),
+        amount: z.number().positive(),
+        department: ParcelDepartmentSchema,
+        group: ParcelGroupSchema,
+        type: ParcelTypeSchema,
+        available: z.boolean(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      console.log(input);
+      return await ctx.db.parcel.update({
+        where: {
+          parcel_id : input.id
+        },
+        data:{
+          title: input.name,
+          description: input.description,
+          amount: input.amount,
+          image_url: input.image_url,
+          available: input.available,
+          department: input.department,
+          group: input.group,
+          type: input.type,
+        }
+      })
     }),
 });
