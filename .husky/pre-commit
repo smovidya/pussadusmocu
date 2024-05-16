@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-bunx prettier --write . 
-bun run check
 bun run format
+bun run check
 bun run lint
