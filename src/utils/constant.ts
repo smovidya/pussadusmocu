@@ -1,5 +1,41 @@
 import { z } from "zod";
 
+export const ParcelGroupSchema = z.enum([
+  "OFFICE",
+  "ELECTRONIC",
+  "HOME",
+  "BUILDING",
+  "FUEL",
+  "MEDICAL_SCI",
+  "ADS",
+  "MUSICAL",
+  "CLOTHING",
+  "COMPUTER",
+]);
+
+export const ParcelTypeSchema = z.enum(["NORMAL", "DURABLE"]);
+
+export const ParcelDepartmentSchema = z.enum([
+  "SMO",
+  "MATHCOM",
+  "MARINE",
+  "CHEM",
+  "CHEMTECH",
+  "BIO",
+  "BIOCHEM",
+  "BSAC",
+  "BBTECH",
+  "FOODTECH",
+  "MATSCI",
+  "PHYSICS",
+  "BOTGEN",
+  "MICROBIO",
+  "PHOTO",
+  "GEO",
+  "ENVI",
+  "NISIT_OFFICER",
+]);
+
 export const FormSchema = z.object({
   parcel_id: z.string().min(10, {
     message: "Username must be at least 10 characters.",
@@ -17,11 +53,13 @@ export const FormSchema = z.object({
     .nullable()
     .optional(),
   description: z.string(),
-  type: z.string(),
-  group: z.string(),
-  amount: z.string(),
+  type: ParcelTypeSchema,
+  group: ParcelGroupSchema,
+  amount: z.string().refine((val) => !isNaN(Number(val)) && Number(val) > 0, {
+    message: "Amount must be a positive number.",
+  }).transform(Number),
   available: z.boolean(),
-  department: z.string(),
+  department: ParcelDepartmentSchema,
 });
 
 export type FormSchemaType = z.infer<typeof FormSchema>;
@@ -159,38 +197,6 @@ export const departments = [
   },
 ];
 
-export const ParcelGroupSchema = z.enum([
-  "OFFICE",
-  "ELECTRONIC",
-  "HOME",
-  "BUILDING",
-  "FUEL",
-  "MEDICAL_SCI",
-  "ADS",
-  "MUSICAL",
-  "CLOTHING",
-  "COMPUTER",
-]);
 
-export const ParcelDepartmentSchema = z.enum([
-  "SMO",
-  "MATHCOM",
-  "MARINE",
-  "CHEM",
-  "CHEMTECH",
-  "BIO",
-  "BIOCHEM",
-  "BSAC",
-  "BBTECH",
-  "FOODTECH",
-  "MATSCI",
-  "PHYSICS",
-  "BOTGEN",
-  "MICROBIO",
-  "PHOTO",
-  "GEO",
-  "ENVI",
-  "NISIT_OFFICER",
-]);
 
-export const ParcelTypeSchema = z.enum(["NORMAL", "DURABLE"]);
+

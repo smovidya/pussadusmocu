@@ -29,6 +29,9 @@ import {
   departments,
   FormSchema,
   groups,
+  ParcelDepartmentSchema,
+  ParcelGroupSchema,
+  ParcelTypeSchema,
   types,
   type FormSchemaType,
   type UploadResponse,
@@ -57,11 +60,11 @@ export function CreateParcel() {
       parcel_id: "",
       parcel_title: "",
       description: "",
-      type: "",
-      group: "",
-      amount: "0",
+      type: ParcelTypeSchema.Values.NORMAL,
+      group: ParcelGroupSchema.Values.OFFICE,
+      amount: 0,
       available: true,
-      department: "",
+      department: ParcelDepartmentSchema.Values.SMO,
       image: undefined,
     },
   });
@@ -109,7 +112,7 @@ export function CreateParcel() {
         "https://smo-api.bunyawatapp37204.workers.dev/images/" + _data.key;
       const _amount = data.amount;
       createPost.mutate({
-        amount: parseInt(_amount),
+        amount: _amount,
         available: data.available,
         department: department,
         type: type,

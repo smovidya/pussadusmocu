@@ -29,8 +29,10 @@ interface BlogProps {
 }
 
 const Blog = ({ parcel }: BlogProps) => {
-  const parcel_id = parcel.parcel_id;
-  const [title, setTitle] = useState<string>("");
+  const [id, setId] = useState<string>(parcel.parcel_id);
+  const [title, setTitle] = useState<string>(parcel.title);
+  const [description, setDescription] = useState<string>(parcel.description ?? "");
+  // const [amount, ]
 
   const form = useForm({
     resolver: zodResolver(FormSchema),
@@ -166,13 +168,6 @@ const Blog = ({ parcel }: BlogProps) => {
                 />
               </div>
             </div>
-
-            {!close && (
-              <Button type="submit">
-                {" "}
-                {/* {createPost.isPending ? "กำลังสร้าง..." : "สร้างเลย!!!"} */}
-              </Button>
-            )}
           </div>
         </form>
       </DialogContent>
