@@ -12,14 +12,17 @@ import {
   CardContent,
   CardFooter,
 } from "~/components/ui/card";
-import {
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-} from "~/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger } from "~/components/ui/dialog";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
-import { departments, FormSchema, type FormSchemaType, groups, types, type UploadResponse } from "~/utils/constant";
+import {
+  departments,
+  FormSchema,
+  type FormSchemaType,
+  groups,
+  types,
+  type UploadResponse,
+} from "~/utils/constant";
 import { Types } from "./combobox/type";
 import { Group } from "./combobox/group";
 import { Textarea } from "~/components/ui/textarea";
@@ -28,6 +31,8 @@ import { Button } from "~/components/ui/button";
 import { api } from "~/trpc/react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useToast } from "~/components/ui/use-toast";
+import { ToastAction } from "@radix-ui/react-toast";
 
 interface BlogProps {
   parcel: Parcel;
@@ -45,15 +50,36 @@ const Blog = ({ parcel }: BlogProps) => {
       amount: parcel.amount,
       available: parcel.available,
       department: parcel.department ?? "SMO",
-      image: undefined
+      image: undefined,
     },
   });
   const router = useRouter();
   const [disabled, setDisabled] = useState(false);
   const [image_url, setImageUrl] = useState<string | undefined>();
+  const { toast } = useToast();
 
   const editParcel = api.parcel.edit.useMutation({
     onSuccess: () => {
+      setDisabled(false);
+      toast({
+        title: "Alert",
+        description: "แก้ไขพัสดุสำเร็จ",
+        className: "font-noto-sans",
+        action: <ToastAction altText="close button">close</ToastAction>,
+      });
+      router.refresh();
+    },
+  });
+
+  const deleteParcel = api.parcel.delete.useMutation({
+    onSuccess: () => {
+      toast({
+        title: "Alert",
+        variant: "destructive",
+        description: "ลบพัสดุสำเร็จ",
+        className: "font-noto-sans",
+        action: <ToastAction altText="close button">close</ToastAction>,
+      });
       router.refresh();
     },
   });
@@ -98,7 +124,8 @@ const Blog = ({ parcel }: BlogProps) => {
             }),
           },
         );
-        const jsonData: UploadResponse = await response.json() as UploadResponse;
+        const jsonData: UploadResponse =
+          (await response.json()) as UploadResponse;
         imageUrl = `https://smo-api.bunyawatapp37204.workers.dev/images/${jsonData.key}`;
       } else {
         imageUrl = parcel.image_url; // Use the existing image URL if no new image is uploaded
@@ -113,11 +140,17 @@ const Blog = ({ parcel }: BlogProps) => {
         group: data.group,
         image_url: imageUrl,
         type: data.type,
-        id: parcel.parcel_id
+        id: parcel.parcel_id,
       });
     } catch (error) {
       console.error("Error fetching data:", error);
     }
+  }
+
+  async function onDelete() {
+    deleteParcel.mutate({
+      parcel_id: parcel.parcel_id,
+    });
   }
 
   return (
@@ -156,7 +189,7 @@ const Blog = ({ parcel }: BlogProps) => {
                   เลขไอดี
                 </Label>
                 <Input
-                disabled
+                  disabled
                   type="text"
                   {...form.register("parcel_id")}
                   className="col-span-3"
@@ -241,10 +274,15 @@ const Blog = ({ parcel }: BlogProps) => {
                 />
               </div>
             </div>
-            <Button type="submit" disabled={disabled}>
+            <div className="grid grid-cols-2 gap-4">
+              <Button type="submit" disabled={disabled}>
                 {" "}
                 {editParcel.isPending ? "กำลังสร้าง..." : "แก้ไข"}
               </Button>
+              <Button type="button" variant="destructive" onClick={onDelete}>
+                ลบ
+              </Button>
+            </div>
           </div>
         </form>
       </DialogContent>

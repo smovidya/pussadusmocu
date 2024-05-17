@@ -72,12 +72,13 @@ export const parcelRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      console.log(input);
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
       return await ctx.db.parcel.update({
         where: {
-          parcel_id : input.id
+          parcel_id: input.id,
         },
-        data:{
+        data: {
           title: input.name,
           description: input.description,
           amount: input.amount,
@@ -86,7 +87,21 @@ export const parcelRouter = createTRPCRouter({
           department: input.department,
           group: input.group,
           type: input.type,
-        }
-      })
+        },
+      });
+    }),
+  delete: publicProcedure
+    .input(
+      z.object({
+        parcel_id: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      return await ctx.db.parcel.delete({
+        where: {
+          parcel_id: input.parcel_id,
+        },
+      });
     }),
 });

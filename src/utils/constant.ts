@@ -55,9 +55,12 @@ export const FormSchema = z.object({
   description: z.string(),
   type: ParcelTypeSchema,
   group: ParcelGroupSchema,
-  amount: z.string().refine((val) => !isNaN(Number(val)) && Number(val) > 0, {
-    message: "Amount must be a positive number.",
-  }).transform(Number),
+  amount: z
+    .string()
+    .refine((val) => !isNaN(Number(val)) && Number(val) > 0, {
+      message: "Amount must be a positive number.",
+    })
+    .transform(Number),
   available: z.boolean(),
   department: ParcelDepartmentSchema,
 });
@@ -196,7 +199,3 @@ export const departments = [
     label: "กิจการนิสิต",
   },
 ];
-
-
-
-
