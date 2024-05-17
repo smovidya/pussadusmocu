@@ -1,5 +1,5 @@
 import type { Parcel } from "@prisma/client";
-import Blog from "~/app/_components/Blog";
+import ParcelAdmin from "~/app/_components/Parcel.admin";
 import { CreateParcel } from "~/app/_components/create-parcel";
 import { api } from "~/trpc/server";
 import { Navbar } from "../../_components/Navbar";
@@ -12,7 +12,7 @@ const Home = async () => {
       <div className="flex flex-row justify-center gap-6">
         <div className="grid grid-cols-5 gap-2">
           {mockParcels.map((parcel) => (
-            <Blog key={parcel.parcel_id} parcel={parcel} />
+            <ParcelAdmin key={parcel.parcel_id} parcel={parcel} />
           ))}
         </div>
         <div className="item-end flex w-24 flex-col gap-1 font-noto-sans">

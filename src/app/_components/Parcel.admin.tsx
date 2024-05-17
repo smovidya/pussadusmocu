@@ -38,7 +38,7 @@ interface BlogProps {
   parcel: Parcel;
 }
 
-const Blog = ({ parcel }: BlogProps) => {
+const ParcelAdmin = ({ parcel }: BlogProps) => {
   const form = useForm<FormSchemaType>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -324,4 +324,4 @@ const Blog = ({ parcel }: BlogProps) => {
   );
 };
 
-export default Blog;
+export default ParcelAdmin;
