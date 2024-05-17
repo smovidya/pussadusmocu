@@ -1,7 +1,7 @@
 import "~/styles/globals.css";
 
 import { Noto_Sans_Thai } from "next/font/google";
-import { Toaster } from "~/components/ui/toaster"
+import { Toaster } from "~/components/ui/toaster";
 import { TRPCReactProvider } from "~/trpc/react";
 import ReduxProvider from "./ReduxProvider";
 
