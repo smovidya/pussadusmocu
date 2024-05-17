@@ -69,6 +69,16 @@ const Blog = ({ parcel }: BlogProps) => {
       });
       router.refresh();
     },
+    onError: (error) => {
+      toast({
+        title: "Alert",
+        variant: "destructive",
+        description: error.message,
+        className: "font-noto-sans",
+        action: <ToastAction altText="close button">close</ToastAction>,
+      });
+      setDisabled(false);
+    },
   });
 
   const deleteParcel = api.parcel.delete.useMutation({
@@ -81,6 +91,16 @@ const Blog = ({ parcel }: BlogProps) => {
         action: <ToastAction altText="close button">close</ToastAction>,
       });
       router.refresh();
+    },
+    onError: (error) => {
+      toast({
+        title: "Alert",
+        variant: "destructive",
+        description: error.message,
+        className: "font-noto-sans",
+        action: <ToastAction altText="close button">close</ToastAction>,
+      });
+      setDisabled(false);
     },
   });
 
@@ -200,6 +220,7 @@ const Blog = ({ parcel }: BlogProps) => {
                   ชื่อพัสดุ
                 </Label>
                 <Input
+                  disabled={disabled}
                   type="text"
                   {...form.register("parcel_title")}
                   className="col-span-3"
@@ -213,6 +234,7 @@ const Blog = ({ parcel }: BlogProps) => {
                 </Label>
                 <Input
                   type="file"
+                  disabled={disabled}
                   {...form.register("image")}
                   className="col-span-3 hover:cursor-pointer"
                   onChange={(event) => getBase64(event.target)}
@@ -222,7 +244,11 @@ const Blog = ({ parcel }: BlogProps) => {
                 <Label htmlFor="type" className="text-right">
                   ประเภท
                 </Label>
-                <Types options={types} {...form.register("type")} />
+                <Types
+                  disabled={disabled}
+                  options={types}
+                  {...form.register("type")}
+                />
               </div>
             </div>
             <div className="grid grid-cols-2 gap-2">
@@ -230,13 +256,18 @@ const Blog = ({ parcel }: BlogProps) => {
                 <Label htmlFor="desc" className="text-right">
                   หมวดหมู่
                 </Label>
-                <Group options={groups} {...form.register("group")} />
+                <Group
+                  disabled={disabled}
+                  options={groups}
+                  {...form.register("group")}
+                />
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="desc" className="text-right">
                   รายละเอียด
                 </Label>
                 <Textarea
+                  disabled={disabled}
                   {...form.register("description")}
                   className="col-span-3"
                 />
@@ -248,6 +279,7 @@ const Blog = ({ parcel }: BlogProps) => {
                   จำนวน
                 </Label>
                 <Input
+                  disabled={disabled}
                   type="text"
                   {...form.register("amount")}
                   className="col-span-3"
@@ -259,6 +291,7 @@ const Blog = ({ parcel }: BlogProps) => {
                   หน่วยงาน
                 </Label>
                 <Departments
+                  disabled={disabled}
                   options={departments}
                   {...form.register("department")}
                 />
@@ -268,6 +301,7 @@ const Blog = ({ parcel }: BlogProps) => {
                   ใช้งานได้
                 </Label>
                 <Input
+                  disabled={disabled}
                   type="checkbox"
                   {...form.register("available")}
                   className=" w-6"
@@ -277,7 +311,7 @@ const Blog = ({ parcel }: BlogProps) => {
             <div className="grid grid-cols-2 gap-4">
               <Button type="submit" disabled={disabled}>
                 {" "}
-                {editParcel.isPending ? "กำลังสร้าง..." : "แก้ไข"}
+                {editParcel.isPending ? "กำลังแก้ไข..." : "แก้ไข"}
               </Button>
               <Button type="button" variant="destructive" onClick={onDelete}>
                 ลบ

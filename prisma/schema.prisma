@@ -64,6 +64,7 @@ model Parcel_Project {
   parcel_id String
   project_id String
   amount Int @default(0)
+  description String @default("")
   status BORROWING_STATUS @default(PENDING)
   project Project @relation(fields: [project_id], references: [project_id])
   parcel Parcel @relation(fields: [parcel_id], references: [parcel_id])
@@ -73,6 +74,7 @@ enum BORROWING_STATUS {
   PENDING
   BORROWING
   RETURN
+  REJECT
 }
 
 enum PARCEL_TYPE {

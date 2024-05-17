@@ -36,9 +36,12 @@ import {
   type FormSchemaType,
   type UploadResponse,
 } from "~/utils/constant";
+import { useToast } from "~/components/ui/use-toast";
+import { ToastAction } from "~/components/ui/toast";
 
 export function CreateParcel() {
   const router = useRouter();
+  const { toast } = useToast();
   const [image_url, setImageUrl] = useState("");
   const [close, setClose] = useState(false);
   const [disabled, setDisabled] = useState(false);
@@ -54,6 +57,18 @@ export function CreateParcel() {
       setDisabled(false);
       router.refresh();
     },
+
+    onError: (error) => {
+      toast({
+        title: "Alert",
+        variant: "destructive",
+        description: error.message,
+        className: "font-noto-sans",
+        action: <ToastAction altText="close button">close</ToastAction>,
+      });
+      setDisabled(false);
+    }
+    
   });
 
   const form = useForm({
