@@ -67,8 +67,7 @@ export function CreateParcel() {
         action: <ToastAction altText="close button">close</ToastAction>,
       });
       setDisabled(false);
-    }
-    
+    },
   });
 
   const form = useForm({
