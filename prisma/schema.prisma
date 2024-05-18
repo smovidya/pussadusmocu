@@ -73,6 +73,7 @@ model Parcel_Project {
 enum BORROWING_STATUS {
   PENDING
   BORROWING
+  INUSE
   RETURN
   REJECT
 }
