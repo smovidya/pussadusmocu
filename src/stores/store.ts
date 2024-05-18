@@ -5,7 +5,6 @@ import groupReducer from "./slices/group";
 import departmentReducer from "./slices/department";
 import datepickerReducer from "./slices/datepicker";
 
-
 export const store = configureStore({
   reducer: { typeReducer, groupReducer, departmentReducer, datepickerReducer },
 });

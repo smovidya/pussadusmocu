@@ -52,29 +52,46 @@ export const parcelRouter = createTRPCRouter({
     }),
 
   booking: publicProcedure
-  .input(
-    z.object({
-      parcel_id: z.string(),
-      project_id: z.string(),
-      amount: z.number(),
-      description: z.string(),
-      startDate: z.date(),
-      endDate: z.date(),
-    })
-  )
-  .mutation(async ({ctx, input}) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    return await ctx.db.parcel_Project.create({
-      data:{
-        parcel_id: input.parcel_id,
-        project_id: input.project_id,
-        amount: input.amount,
-        description: input.description,
-        startDate: input.startDate,
-        endDate: input.endDate
-      }
-    });
-  }),
+    .input(
+      z.object({
+        parcel_id: z.string(),
+        project_id: z.string(),
+        amount: z.number(),
+        description: z.string(),
+        startDate: z.date().optional(),
+        endDate: z.date().optional(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      return ctx.db.$transaction(async (tx) => {
+        const parcel = await tx.parcel.findFirst({
+          where: {
+            parcel_id: input.parcel_id,
+          },
+        });
+        const amount = parcel?.amount ?? 0;
+        await tx.parcel_Project.create({
+          data: {
+            parcel_id: input.parcel_id,
+            project_id: input.project_id,
+            amount: input.amount,
+            description: input.description,
+            startDate: input.startDate,
+            endDate: input.endDate,
+            status: "BORROWING",
+          },
+        });
+        await tx.parcel.update({
+          where: {
+            parcel_id: input.parcel_id,
+          },
+          data: {
+            amount: amount - input.amount,
+          },
+        });
+      });
+    }),
 
   create: publicProcedure
     .input(

@@ -44,19 +44,39 @@ interface BlogProps {
 }
 
 const ParcelUser = ({ parcel }: BlogProps) => {
+  const router = useRouter();
+  const bookedParcel = api.parcel.booking.useMutation({
+    onSuccess: () => {
+      router.refresh();
+    },
+    onError: (error) => {
+      console.error("Booking error:", error);
+    },
+  });
+
   const form = useForm<FormSchemaBookingType>({
     resolver: zodResolver(FormSchemaBooking),
     defaultValues: {
-      parcel_id: parcel.parcel_id,
+      project_id:"",
       description: "",
       amount: 1,
-      startDate: new Date(),
-      endDate: new Date(),
     },
   });
 
   const datepickerReducer = useSelector(datepickerSelector);
   const _date = datepickerReducer.date;
+
+  async function onSubmit(data: FormSchemaBookingType) {
+    console.log("Work");
+    bookedParcel.mutate({
+      amount: data.amount,
+      parcel_id: parcel.parcel_id,
+      description: data.description,
+      startDate: _date?.from ?? new Date(),
+      endDate: _date?.to ?? new Date(),
+      project_id: data.project_id,
+    });
+  }
 
   return (
     <Dialog>
@@ -84,7 +104,7 @@ const ParcelUser = ({ parcel }: BlogProps) => {
       </DialogTrigger>
       <DialogContent className="min-w-[700px] font-noto-sans sm:max-w-[425px]">
         <form
-          //   onSubmit={form.handleSubmit()}
+          onSubmit={form.handleSubmit(onSubmit)}
           className="flex w-full space-y-6"
         >
           <div className="grid w-full grid-cols-2">
@@ -96,28 +116,24 @@ const ParcelUser = ({ parcel }: BlogProps) => {
             />
             <div className="flex flex-col gap-2">
               <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="id" className="text-right">
+                <Label htmlFor="parcel_id" className="text-right">
                   เลขไอดี
                 </Label>
                 <Input
                   disabled
                   type="text"
-                  {...form.register("parcel_id")}
+                  value={parcel.parcel_id}
                   className="col-span-3"
                 />
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="id" className="text-right">
+                <Label htmlFor="parcel_title" className="text-right">
                   ชื่อพัสดุ
                 </Label>
-                <Input
-                  disabled
-                  value={parcel.title}
-                  className="col-span-3"
-                />
+                <Input disabled value={parcel.title} className="col-span-3" />
               </div>
               <div className="grid grid-cols-4 items-start gap-4">
-                <Label htmlFor="id" className="text-right">
+                <Label htmlFor="description" className="text-right">
                   รายละเอียด
                 </Label>
                 <Textarea
@@ -126,7 +142,7 @@ const ParcelUser = ({ parcel }: BlogProps) => {
                 />
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="id" className="text-right">
+                <Label htmlFor="amount" className="text-right">
                   จำนวน
                 </Label>
                 <Input
@@ -136,16 +152,25 @@ const ParcelUser = ({ parcel }: BlogProps) => {
                 />
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="id" className="text-right">
+                <Label htmlFor="amount" className="text-right">
+                  project id
+                </Label>
+                <Input
+                  type="text"
+                  {...form.register("project_id")}
+                  className="col-span-3"
+                />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="datepicker" className="text-right">
                   วันยืม
                 </Label>
-                <DatePickerWithRange/>
+                <DatePickerWithRange />
               </div>
-              <Button type="submit">
-                ยืม
+              <Button type="submit" disabled={bookedParcel.isPending}>
+                {bookedParcel.isPending ? "กำลังยืม..." : "ยืมเลย!!!"}
               </Button>
             </div>
-
           </div>
         </form>
       </DialogContent>
