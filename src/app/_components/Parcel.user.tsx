@@ -16,25 +16,13 @@ import { Dialog, DialogContent, DialogTrigger } from "~/components/ui/dialog";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import {
-  departments,
-  FormSchema,
   FormSchemaBooking,
   type FormSchemaBookingType,
-  type FormSchemaType,
-  groups,
-  types,
-  type UploadResponse,
 } from "~/utils/constant";
-import { Types } from "./combobox/type";
-import { Group } from "./combobox/group";
 import { Textarea } from "~/components/ui/textarea";
-import { Departments } from "./combobox/department";
 import { Button } from "~/components/ui/button";
 import { api } from "~/trpc/react";
-import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useToast } from "~/components/ui/use-toast";
-import { ToastAction } from "@radix-ui/react-toast";
 import { DatePickerWithRange } from "./Datepicker";
 import { useSelector } from "react-redux";
 import { datepickerSelector } from "~/stores/slices/datepicker";
@@ -57,7 +45,7 @@ const ParcelUser = ({ parcel }: BlogProps) => {
   const form = useForm<FormSchemaBookingType>({
     resolver: zodResolver(FormSchemaBooking),
     defaultValues: {
-      project_id:"",
+      project_id: "",
       description: "",
       amount: 1,
     },
