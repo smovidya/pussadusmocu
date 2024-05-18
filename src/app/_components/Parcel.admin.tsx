@@ -130,6 +130,7 @@ const ParcelAdmin = ({ parcel }: BlogProps) => {
     try {
       let imageUrl;
       if (image_url) {
+        console.log("URL"+image_url)
         const response = await fetch(
           "https://smo-api.bunyawatapp37204.workers.dev/images/upload",
           {

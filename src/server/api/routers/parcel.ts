@@ -51,6 +51,31 @@ export const parcelRouter = createTRPCRouter({
       }
     }),
 
+  booking: publicProcedure
+  .input(
+    z.object({
+      parcel_id: z.string(),
+      project_id: z.string(),
+      amount: z.number(),
+      description: z.string(),
+      startDate: z.date(),
+      endDate: z.date(),
+    })
+  )
+  .mutation(async ({ctx, input}) => {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    return await ctx.db.parcel_Project.create({
+      data:{
+        parcel_id: input.parcel_id,
+        project_id: input.project_id,
+        amount: input.amount,
+        description: input.description,
+        startDate: input.startDate,
+        endDate: input.endDate
+      }
+    });
+  }),
+
   create: publicProcedure
     .input(
       z.object({

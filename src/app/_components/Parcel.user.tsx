@@ -18,6 +18,8 @@ import { Label } from "~/components/ui/label";
 import {
   departments,
   FormSchema,
+  FormSchemaBooking,
+  type FormSchemaBookingType,
   type FormSchemaType,
   groups,
   types,
@@ -33,29 +35,28 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useToast } from "~/components/ui/use-toast";
 import { ToastAction } from "@radix-ui/react-toast";
+import { DatePickerWithRange } from "./Datepicker";
+import { useSelector } from "react-redux";
+import { datepickerSelector } from "~/stores/slices/datepicker";
 
 interface BlogProps {
   parcel: Parcel;
 }
 
 const ParcelUser = ({ parcel }: BlogProps) => {
-  const form = useForm<FormSchemaType>({
-    resolver: zodResolver(FormSchema),
+  const form = useForm<FormSchemaBookingType>({
+    resolver: zodResolver(FormSchemaBooking),
     defaultValues: {
       parcel_id: parcel.parcel_id,
-      parcel_title: parcel.title,
-      description: parcel.description ?? "",
-      type: parcel.type,
-      group: parcel.group,
-      amount: parcel.amount,
-      available: parcel.available,
-      department: parcel.department ?? "SMO",
-      image: undefined,
+      description: "",
+      amount: 1,
+      startDate: new Date(),
+      endDate: new Date(),
     },
   });
-  const router = useRouter();
-  const [disabled, setDisabled] = useState(false);
-  const { toast } = useToast();
+
+  const datepickerReducer = useSelector(datepickerSelector);
+  const _date = datepickerReducer.date;
 
   return (
     <Dialog>
@@ -86,8 +87,14 @@ const ParcelUser = ({ parcel }: BlogProps) => {
           //   onSubmit={form.handleSubmit()}
           className="flex w-full space-y-6"
         >
-          <div className="grid w-full gap-4 py-4">
-            <div className="grid w-full grid-cols-2 gap-2">
+          <div className="grid w-full grid-cols-2">
+            <Image
+              src={parcel.image_url}
+              width={300}
+              height={300}
+              alt={parcel.parcel_id}
+            />
+            <div className="flex flex-col gap-2">
               <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="id" className="text-right">
                   เลขไอดี
@@ -100,102 +107,45 @@ const ParcelUser = ({ parcel }: BlogProps) => {
                 />
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="name" className="text-right">
+                <Label htmlFor="id" className="text-right">
                   ชื่อพัสดุ
                 </Label>
                 <Input
-                  disabled={disabled}
-                  type="text"
-                  {...form.register("parcel_title")}
+                  disabled
+                  value={parcel.title}
                   className="col-span-3"
                 />
               </div>
-            </div>
-            <div className="grid grid-cols-2 gap-2">
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="desc" className="text-right">
-                  รูปพัสดุ
-                </Label>
-                <Input
-                  type="file"
-                  disabled={disabled}
-                  {...form.register("image")}
-                  className="col-span-3 hover:cursor-pointer"
-                />
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="type" className="text-right">
-                  ประเภท
-                </Label>
-                <Types
-                  disabled={disabled}
-                  options={types}
-                  {...form.register("type")}
-                />
-              </div>
-            </div>
-            <div className="grid grid-cols-2 gap-2">
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="desc" className="text-right">
-                  หมวดหมู่
-                </Label>
-                <Group
-                  disabled={disabled}
-                  options={groups}
-                  {...form.register("group")}
-                />
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="desc" className="text-right">
+              <div className="grid grid-cols-4 items-start gap-4">
+                <Label htmlFor="id" className="text-right">
                   รายละเอียด
                 </Label>
                 <Textarea
-                  disabled={disabled}
                   {...form.register("description")}
                   className="col-span-3"
                 />
               </div>
-            </div>
-            <div className="grid grid-cols-2 gap-1">
               <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="desc" className="text-right">
+                <Label htmlFor="id" className="text-right">
                   จำนวน
                 </Label>
                 <Input
-                  disabled={disabled}
-                  type="text"
+                  type="number"
                   {...form.register("amount")}
                   className="col-span-3"
                 />
               </div>
-
               <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="desc" className="">
-                  หน่วยงาน
+                <Label htmlFor="id" className="text-right">
+                  วันยืม
                 </Label>
-                <Departments
-                  disabled={disabled}
-                  options={departments}
-                  {...form.register("department")}
-                />
+                <DatePickerWithRange/>
               </div>
-              <div className="grid grid-cols-2 items-center justify-start gap-4">
-                <Label htmlFor="desc" className="text-right">
-                  ใช้งานได้
-                </Label>
-                <Input
-                  disabled={disabled}
-                  type="checkbox"
-                  {...form.register("available")}
-                  className=" w-6"
-                />
-              </div>
-            </div>
-            <div className="grid grid-cols-1 gap-4">
-              <Button type="submit" disabled={disabled}>
+              <Button type="submit">
                 ยืม
               </Button>
             </div>
+
           </div>
         </form>
       </DialogContent>

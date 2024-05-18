@@ -38,7 +38,7 @@ export const ParcelDepartmentSchema = z.enum([
 
 export const FormSchema = z.object({
   parcel_id: z.string().min(10, {
-    message: "Username must be at least 10 characters.",
+    message: "id must be at least 10 characters.",
   }),
   parcel_title: z.string(),
   image: z
@@ -66,6 +66,24 @@ export const FormSchema = z.object({
 });
 
 export type FormSchemaType = z.infer<typeof FormSchema>;
+
+export const FormSchemaBooking = z.object({
+  parcel_id: z.string().min(10, {
+    message: "id must be at least 10 characters.",
+  }),
+  amount: z
+    .string()
+    .refine((val) => !isNaN(Number(val)) && Number(val) > 0, {
+      message: "Amount must be a positive number.",
+    })
+    .transform(Number),
+  description : z.string(),
+  startDate: z.date(),
+  endDate: z.date(),
+  project_id: z.string()
+});
+
+export type FormSchemaBookingType = z.infer<typeof FormSchemaBooking>;
 
 export interface UploadResponse {
   key: string;
