@@ -80,6 +80,12 @@ export const FormSchemaBooking = z.object({
 
 export type FormSchemaBookingType = z.infer<typeof FormSchemaBooking>;
 
+export const FormSchemaRegister = z.object({
+  project_id: z.string()
+});
+
+export type FormSchemaRegisterType = z.infer<typeof FormSchemaRegister>;
+
 export interface UploadResponse {
   key: string;
 }
@@ -212,3 +218,5 @@ export const departments = [
     label: "กิจการนิสิต",
   },
 ];
+
+export const STUDENT_ID = "6534435223";

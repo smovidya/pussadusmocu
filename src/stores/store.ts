@@ -4,9 +4,10 @@ import typeReducer from "./slices/type";
 import groupReducer from "./slices/group";
 import departmentReducer from "./slices/department";
 import datepickerReducer from "./slices/datepicker";
+import projectReducer from "./slices/project";
 
 export const store = configureStore({
-  reducer: { typeReducer, groupReducer, departmentReducer, datepickerReducer },
+  reducer: { typeReducer, groupReducer, departmentReducer, datepickerReducer, projectReducer },
 });
 
 // create and export typed-hooks in file
