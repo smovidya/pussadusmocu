@@ -11,7 +11,11 @@ const Home = async ({ params }: { params: { id: string } }) => {
       <div className="flex flex-row justify-center gap-6">
         <div className="grid grid-cols-5 gap-2">
           {mockParcels.map((parcel) => (
-            <ParcelUser key={parcel.parcel_id} parcel={parcel} project_id={params.id}/>
+            <ParcelUser
+              key={parcel.parcel_id}
+              parcel={parcel}
+              project_id={params.id}
+            />
           ))}
         </div>
       </div>

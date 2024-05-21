@@ -29,7 +29,7 @@ import { datepickerSelector } from "~/stores/slices/datepicker";
 
 interface BlogProps {
   parcel: Parcel;
-  project_id : string;
+  project_id: string;
 }
 
 const ParcelUser = ({ parcel, project_id }: BlogProps) => {

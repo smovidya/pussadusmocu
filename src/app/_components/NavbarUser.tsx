@@ -18,11 +18,11 @@ export const NavbarUser = () => {
         />
       </div>
       <div className="grid w-full grid-cols-3 font-noto-sans">
-        <a href="/users/home">
-          <Home className="h-8 w-8 hover:cursor-pointer" />
-        </a>
         <a href="/users/profile">
           <User className="h-8 w-8 hover:cursor-pointer" />
+        </a>
+        <a href="/users/home">
+          <Home className="h-8 w-8 hover:cursor-pointer" />
         </a>
         <a href="/users/cart">
           <ShoppingCart className="h-8 w-8 hover:cursor-pointer" />
