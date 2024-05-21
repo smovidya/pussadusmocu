@@ -29,9 +29,10 @@ import { datepickerSelector } from "~/stores/slices/datepicker";
 
 interface BlogProps {
   parcel: Parcel;
+  project_id : string;
 }
 
-const ParcelUser = ({ parcel }: BlogProps) => {
+const ParcelUser = ({ parcel, project_id }: BlogProps) => {
   const router = useRouter();
   const bookedParcel = api.parcel.booking.useMutation({
     onSuccess: () => {
@@ -45,7 +46,7 @@ const ParcelUser = ({ parcel }: BlogProps) => {
   const form = useForm<FormSchemaBookingType>({
     resolver: zodResolver(FormSchemaBooking),
     defaultValues: {
-      project_id: "",
+      project_id: project_id,
       description: "",
       amount: 1,
     },
@@ -145,7 +146,8 @@ const ParcelUser = ({ parcel }: BlogProps) => {
                 </Label>
                 <Input
                   type="text"
-                  {...form.register("project_id")}
+                  disabled
+                  value={project_id}
                   className="col-span-3"
                 />
               </div>

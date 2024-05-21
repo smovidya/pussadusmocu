@@ -21,6 +21,16 @@ export const parcelRouter = createTRPCRouter({
     }
   }),
 
+  getRemain: publicProcedure.query(async ({ ctx }) => {
+    return await ctx.db.parcel.findMany({
+      where: {
+        NOT: {
+          amount: 0,
+        },
+      },
+    });
+  }),
+
   getById: publicProcedure
     .input(
       z.object({

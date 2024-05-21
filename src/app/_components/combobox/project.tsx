@@ -47,9 +47,8 @@ export function Projects({ options }: Props) {
           className="w-[200px] justify-between"
         >
           {project
-            ? options.find(
-                (option) => option.value === project.toUpperCase(),
-              )?.label
+            ? options.find((option) => option.value === project.toUpperCase())
+                ?.label
             : "Select framework..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
