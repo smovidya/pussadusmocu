@@ -3,17 +3,24 @@ import { Navbar } from "~/app/_components/Navbar";
 import React, { useState } from "react";
 import { Button } from "~/components/ui/button";
 import PopupCard from "~/components/ui/popCard";
+import Dropdown  from "~/components/ui/dropdown";
+import { X } from "lucide-react";
+import { api } from "~/trpc/react";
 
 function Sta() {
   const [parcel_status, changeSta] = useState("Pending");
   const updateAccept = () => {
+    setIsOpen(false);
     changeSta("Accept");
   };
-  const upDateReject = () => {
+  const updateReject = () => {
+    setIsOpen(false);
     changeSta("Reject");
   };
 
-  // const project = "projectname" ; ดึงดาต้าโปรเจกต์มาใช้
+  // const projects = api.project.getAll ; เขียน project.getAll ใน routers/project
+
+  // <Dropdown projects={projects}/>
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -23,13 +30,7 @@ function Sta() {
   return (
     <div className="flex h-full w-full flex-col items-center gap-2">
       <Navbar />
-      <select className="mb-2 mt-2 w-4/6 px-2 py-2">
-        <option value="">โครงการ</option>
-        <option>โครงการ2</option>
-        <option>โครงการ3</option>
-        <option>โครงการ4</option>
-        <option>โครงการ5</option>
-      </select>
+      <Dropdown /> 
       <div className="flex w-4/6 flex-grow flex-col rounded-lg border-gray-300 px-6 py-4 shadow-md">
         <h1 className="mb-3 border-b border-gray-300 pb-2">
           ไอดีโครงการ | ชื่อโครงการ
@@ -46,9 +47,13 @@ function Sta() {
           </div>
           <div>
             <Button type="button" onClick={openPopup} variant="destructive">
-              รอการอนุมัติ
+              {parcel_status}
             </Button>
-            {isOpen && <PopupCard onClose={closePopup} />}
+            {isOpen && <PopupCard 
+              onClose={closePopup}
+              onAccept={updateAccept}
+              onReject={updateReject} 
+            />}
           </div>
         </div>
       </div>
@@ -57,3 +62,6 @@ function Sta() {
 }
 
 export default Sta;
+
+
+

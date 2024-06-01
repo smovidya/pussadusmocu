@@ -4,9 +4,12 @@ import { X } from "lucide-react";
 
 interface PopupCardProps {
   onClose: () => void;
+  onAccept: () => void;
+  onReject: () => void;
 }
 
-const PopupCard: React.FC<PopupCardProps> = ({ onClose }) => {
+const PopupCard: React.FC<PopupCardProps> = ({ onClose, onAccept, onReject }) => {
+
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
       <div className="w-full max-w-sm rounded-lg bg-white p-6 shadow-lg">
@@ -32,10 +35,10 @@ const PopupCard: React.FC<PopupCardProps> = ({ onClose }) => {
               <h3>จำนวน</h3>
             </div>
             <div className="grid grid-cols-2 gap-2">
-              <Button type="button" variant="outline">
+              <Button type="button" variant="outline" onClick={onAccept}>
                 Accpet
               </Button>
-              <Button type="button" variant="destructive">
+              <Button type="button" variant="destructive" onClick={onReject}>
                 Cancle
               </Button>
             </div>
