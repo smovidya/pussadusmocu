@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { type Project } from "@prisma/client";
 
 export const ParcelGroupSchema = z.enum([
   "OFFICE",
@@ -219,4 +220,8 @@ export const departments = [
   },
 ];
 
-export const STUDENT_ID = "6534435223";
+export interface Projectinparcel {
+  project: Project;
+}
+
+export const STUDENT_ID = "6534414023";
