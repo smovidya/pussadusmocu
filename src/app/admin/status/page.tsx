@@ -3,7 +3,7 @@ import { Navbar } from "~/app/_components/Navbar";
 import React, { useState } from "react";
 import { Button } from "~/components/ui/button";
 import PopupCard from "~/components/ui/popCard";
-import Dropdown  from "~/components/ui/dropdown";
+import Dropdown from "~/components/ui/dropdown";
 import { X } from "lucide-react";
 import { api } from "~/trpc/react";
 
@@ -30,7 +30,7 @@ function Sta() {
   return (
     <div className="flex h-full w-full flex-col items-center gap-2">
       <Navbar />
-      <Dropdown /> 
+      <Dropdown />
       <div className="flex w-4/6 flex-grow flex-col rounded-lg border-gray-300 px-6 py-4 shadow-md">
         <h1 className="mb-3 border-b border-gray-300 pb-2">
           ไอดีโครงการ | ชื่อโครงการ
@@ -49,11 +49,13 @@ function Sta() {
             <Button type="button" onClick={openPopup} variant="destructive">
               {parcel_status}
             </Button>
-            {isOpen && <PopupCard 
-              onClose={closePopup}
-              onAccept={updateAccept}
-              onReject={updateReject} 
-            />}
+            {isOpen && (
+              <PopupCard
+                onClose={closePopup}
+                onAccept={updateAccept}
+                onReject={updateReject}
+              />
+            )}
           </div>
         </div>
       </div>
@@ -62,6 +64,3 @@ function Sta() {
 }
 
 export default Sta;
-
-
-

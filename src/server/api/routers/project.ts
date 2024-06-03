@@ -3,7 +3,7 @@ import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 
 export const projectRouter = createTRPCRouter({
-  getProject: publicProcedure.mutation(async ({ ctx }) => {
+  getProject: publicProcedure.query(async ({ ctx }) => {
     try {
       const parcels = await ctx.db.project.findMany({
         where: {

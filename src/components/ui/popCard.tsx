@@ -8,8 +8,11 @@ interface PopupCardProps {
   onReject: () => void;
 }
 
-const PopupCard: React.FC<PopupCardProps> = ({ onClose, onAccept, onReject }) => {
-
+const PopupCard: React.FC<PopupCardProps> = ({
+  onClose,
+  onAccept,
+  onReject,
+}) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
       <div className="w-full max-w-sm rounded-lg bg-white p-6 shadow-lg">
