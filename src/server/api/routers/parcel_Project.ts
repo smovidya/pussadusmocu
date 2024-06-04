@@ -8,6 +8,7 @@ export const Parcel_projectRouter = createTRPCRouter({
       const parcels = await ctx.db.parcel_Project.findMany({
         include: {
           project: true,
+          parcel:true,
         },
       });
       return parcels;
