@@ -1,6 +1,7 @@
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
-import { z } from "zod";
+import { string, z } from "zod";
 import { TRPCError } from "@trpc/server";
+import { BORROWING_STATUS } from "@prisma/client";
 
 export const Parcel_projectRouter = createTRPCRouter({
   getAll: publicProcedure.query(async ({ ctx }) => {
@@ -8,7 +9,7 @@ export const Parcel_projectRouter = createTRPCRouter({
       const parcels = await ctx.db.parcel_Project.findMany({
         include: {
           project: true,
-          parcel:true,
+          parcel: true,
         },
       });
       return parcels;
@@ -20,4 +21,26 @@ export const Parcel_projectRouter = createTRPCRouter({
       });
     }
   }),
+  updatestatus: publicProcedure
+    .input(
+      z.object({
+        project_id: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      return ctx.db.$transaction(async (tx) => {
+        console.log("inbackend");
+        await tx.parcel_Project.updateMany({
+          where: {
+            project_id: input.project_id, // Use project_id directly
+          },
+          data: {
+            status: BORROWING_STATUS.INUSE,
+          },
+        });
+      });
+    }),
+
+
 });

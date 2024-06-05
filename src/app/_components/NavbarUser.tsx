@@ -4,8 +4,8 @@ import { Input } from "~/components/ui/input";
 
 export const NavbarUser = () => {
   return (
-    <div className="grid h-24 w-full grid-cols-3 items-center justify-start gap-[38px] bg-yellow01 px-5 py-1.5">
-      <div className="flex w-auto flex-row items-center font-noto-sans">
+    <div className="bg-yellow01 grid h-24 w-full grid-cols-3 items-center justify-start gap-[38px] px-5 py-1.5">
+      <div className="font-noto-sans flex w-auto flex-row items-center">
         <Image
           src={"/picture/yellowBox.svg"}
           alt="iconBox"
@@ -17,7 +17,7 @@ export const NavbarUser = () => {
           placeholder="ค้นหาพัสดุ"
         />
       </div>
-      <div className="grid w-full grid-cols-3 font-noto-sans">
+      <div className="font-noto-sans grid w-full grid-cols-3">
         <a href="/users/profile">
           <User className="h-8 w-8 hover:cursor-pointer" />
         </a>

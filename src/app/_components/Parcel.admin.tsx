@@ -177,7 +177,7 @@ const ParcelAdmin = ({ parcel }: BlogProps) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Card className="h-auto w-44 font-noto-sans hover:scale-105 hover:cursor-pointer">
+        <Card className="font-noto-sans h-auto w-44 hover:scale-105 hover:cursor-pointer">
           <CardHeader>
             <CardTitle>{parcel.title}</CardTitle>
             <CardDescription>{parcel.description}</CardDescription>
@@ -198,7 +198,7 @@ const ParcelAdmin = ({ parcel }: BlogProps) => {
           </CardFooter>
         </Card>
       </DialogTrigger>
-      <DialogContent className="min-w-[700px] font-noto-sans sm:max-w-[425px]">
+      <DialogContent className="font-noto-sans min-w-[700px] sm:max-w-[425px]">
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex w-full space-y-6"
