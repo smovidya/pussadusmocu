@@ -1,8 +1,8 @@
 "use client";
 import { Navbar } from "~/app/_components/Navbar";
 import { Button } from "~/components/ui/button";
-import PopupCard from "~/components/ui/popCard";
-import Dropdown from "~/components/ui/dropdown";
+import PopupCard from "~/app/_components/popCard";
+import Dropdown from "~/app/_components/dropdown";
 import React, { useState } from "react";
 import { Parcel_Project, Project, Parcel, PrismaClient } from "@prisma/client";
 
@@ -23,21 +23,34 @@ async function fetchParcelsProjects() {
   return parcelsProjects;
 }
 
-function Sta({ parcelsProjects }: { parcelsProjects: ParcelProjectWithDetails[] }) {
-  const [parcel_status, changeSta] = useState("Pending");
+function Sta({
+  parcelsProjects,
+}: {
+  parcelsProjects: ParcelProjectWithDetails[];
+}) {
+  const [parcelStatus, setParcelStatus] = useState("Pending");
   const buttonTheme = "default";
   const [isOpen, setIsOpen] = useState(false);
-  const openPopup = () => setIsOpen(true);
-  const closePopup = () => setIsOpen(false);
+  const [currentParcelProjectId, setCurrentParcelProjectId] = useState<string | null>(null);
+
+  const openPopup = (id: string) => {
+    setCurrentParcelProjectId(id);
+    setIsOpen(true);
+  };
+
+  const closePopup = () => {
+    setIsOpen(false);
+    setCurrentParcelProjectId(null);
+  };
 
   const updateAccept = () => {
     setIsOpen(false);
-    changeSta("Accept");
+    setParcelStatus("Accept");
   };
 
   const updateReject = () => {
     setIsOpen(false);
-    changeSta("Reject");
+    setParcelStatus("Reject");
   };
 
   return (
@@ -45,17 +58,21 @@ function Sta({ parcelsProjects }: { parcelsProjects: ParcelProjectWithDetails[] 
       <Navbar />
       <Dropdown />
       {parcelsProjects?.map((parcelsProject) => (
-        <div key={parcelsProject.id} className="flex w-4/6 flex-grow flex-col rounded-lg border-gray-300 px-6 py-4 shadow-md">
+        <div
+          key={parcelsProject.id}
+          className="flex w-4/6 flex-grow flex-col rounded-lg border-gray-300 px-6 py-4 shadow-md"
+        >
           <h1 className="mb-3 border-b border-gray-300 pb-2">
             {parcelsProject.project.project_id} | {parcelsProject.project.title}
           </h1>
           <div className="text-md grid grid-cols-5 items-center justify-center gap-3 border-black">
             <div>
-              <img src={parcelsProject.parcel.image_url}/>
+              <img src={parcelsProject.parcel.image_url} />
             </div>
             <div>
               <p>
-                {parcelsProject.parcel.parcel_id} | {parcelsProject.parcel.title}
+                {parcelsProject.parcel.parcel_id} |{" "}
+                {parcelsProject.parcel.title}
               </p>
             </div>
             <div>
@@ -66,10 +83,14 @@ function Sta({ parcelsProjects }: { parcelsProjects: ParcelProjectWithDetails[] 
               <p>{new Date(parcelsProject.endDate).toLocaleDateString()}</p>
             </div>
             <div>
-              <Button type="button" onClick={openPopup} variant={buttonTheme}>
-                {parcelsProject.status}
+            <Button
+                type="button"
+                onClick={() => openPopup(parcelsProject.project_id)}
+                variant={buttonTheme}
+              >
+                {parcelStatus}
               </Button>
-              {isOpen && (
+              {isOpen && currentParcelProjectId === parcelsProject.id && (
                 <PopupCard
                   onClose={closePopup}
                   onAccept={updateAccept}
