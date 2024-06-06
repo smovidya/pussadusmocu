@@ -91,7 +91,7 @@ export function RegisterParcel() {
       <DialogTrigger asChild>
         <Button variant="outline">เลือกโครง</Button>
       </DialogTrigger>
-      <DialogContent className="font-noto-sans min-w-[700px] sm:max-w-[425px]">
+      <DialogContent className="min-w-[700px] font-noto-sans sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>กรอกข้อมูลพัสดุใหม่</DialogTitle>
           <DialogDescription>กรุณาใส่ข้อมูลให้ครบถ้วน.</DialogDescription>

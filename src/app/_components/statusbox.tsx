@@ -33,25 +33,28 @@ export const Statuesbox = ({ parcelslist }: Props) => {
     },
   });
   async function Updatestatus(project_id: string) {
-    console.log("StatusINUSE")
+    console.log("StatusINUSE");
     updateparcel.mutate({
-      project_id: project_id
-    })
+      project_id: project_id,
+    });
   }
   const renderedCards = [];
   for (const projectId in parcelslist) {
     const parcels = parcelslist[projectId];
     if (parcels !== undefined) {
       const table = (
-        <Table className="font-noto-sans h-auto w-full bg-white" key={projectId}>
-
+        <Table
+          className="h-auto w-full bg-white font-noto-sans"
+          key={projectId}
+        >
           <TableHeader>
             <TableRow>
-              <TableCell className="text-right ">{projectId} | {parcels[0]?.project.owner}</TableCell>
+              <TableCell className="text-right ">
+                {projectId} | {parcels[0]?.project.owner}
+              </TableCell>
               <TableCell className="text-right">{parcels[0]?.status}</TableCell>
             </TableRow>
           </TableHeader>
-
 
           <TableBody>
             {Array.isArray(parcels) &&
@@ -82,18 +85,19 @@ export const Statuesbox = ({ parcelslist }: Props) => {
                       <div className="row-start-1">
                         <div className="flex justify-end ">
                           <p className="pr-6 ">ระยะเวลายืม</p>
-                          {parcel.startDate && format(new Date(parcel.startDate), 'dd/MM/yyyy')}
+                          {parcel.startDate &&
+                            format(new Date(parcel.startDate), "dd/MM/yyyy")}
                         </div>
                       </div>
                       <div className="row-start-2 py-4">
-                        {parcel.endDate && format(new Date(parcel.endDate), 'dd/MM/yyyy')}
+                        {parcel.endDate &&
+                          format(new Date(parcel.endDate), "dd/MM/yyyy")}
                       </div>
                     </div>
                   </TableCell>
                 </TableRow>
               ))}
           </TableBody>
-
 
           <TableFooter>
             <TableRow>
@@ -120,14 +124,21 @@ export const Statuesbox = ({ parcelslist }: Props) => {
                     </a>
                   </div>
                   <div className="row-start-4">
-                    <Button className="bg-yellow-400" type="button" onClick={() => parcels[0]?.project_id && Updatestatus(parcels[0]?.project_id)}>ได้รับพัสดุเรียบร้อยแล้ว</Button>
+                    <Button
+                      className="bg-yellow-400"
+                      type="button"
+                      onClick={() =>
+                        parcels[0]?.project_id &&
+                        Updatestatus(parcels[0]?.project_id)
+                      }
+                    >
+                      ได้รับพัสดุเรียบร้อยแล้ว
+                    </Button>
                   </div>
                 </div>
               </TableCell>
             </TableRow>
           </TableFooter>
-
-
         </Table>
       );
 

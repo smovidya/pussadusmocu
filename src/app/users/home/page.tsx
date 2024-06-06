@@ -24,7 +24,7 @@ const Profile = async () => {
             </a>
           ))}
         </div>
-        <div className="item-end font-noto-sans flex w-24 flex-col gap-1">
+        <div className="item-end flex w-24 flex-col gap-1 font-noto-sans">
           <RegisterParcel />
         </div>
       </div>

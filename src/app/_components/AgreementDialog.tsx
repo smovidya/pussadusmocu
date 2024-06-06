@@ -18,7 +18,7 @@ const AgreementDialog = () => {
             type="checkbox"
             name="agreement"
             id="agreement"
-            className="accent-yellow01 mr-2 flex h-5 w-5  "
+            className="mr-2 flex h-5 w-5 accent-yellow01  "
             readOnly
           />
         </AlertDialogTrigger>
@@ -70,7 +70,7 @@ const AgreementDialog = () => {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogAction className="bg-yellow01 font-noto-sans h-10 w-full rounded-md text-black shadow-sm shadow-black">
+          <AlertDialogAction className="h-10 w-full rounded-md bg-yellow01 font-noto-sans text-black shadow-sm shadow-black">
             ตกลง
           </AlertDialogAction>
         </AlertDialogFooter>

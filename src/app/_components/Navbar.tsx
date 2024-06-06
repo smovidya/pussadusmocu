@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export const Navbar = () => {
   return (
-    <div className="bg-yellow01 inline-flex h-24 w-full items-center justify-start gap-[38px] px-5 py-1.5">
+    <div className="inline-flex h-24 w-full items-center justify-start gap-[38px] bg-yellow01 px-5 py-1.5">
       <div className="flex h-[88px] w-[88px]">
         <Image
           src={"/picture/yellowBox.svg"}
@@ -12,7 +12,7 @@ export const Navbar = () => {
           height={108}
         />
       </div>
-      <div className="font-noto-sans flex w-full">
+      <div className="flex w-full font-noto-sans">
         <Input className="rounded-full" placeholder="ค้นหาพัสดุ" />
       </div>
       <div className="flex items-center justify-start gap-4">
