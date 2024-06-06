@@ -1,7 +1,7 @@
 import { NavbarUser } from "~/app/_components/NavbarUser";
 import { Statuesbox } from "~/app/_components/statusbox";
 import { api } from "~/trpc/server";
-import { Projectinparcel, Parcellist } from "~/utils/constant";
+import { type Projectinparcel, type Parcellist } from "~/utils/constant";
 
 const Profile = async () => {
   const Parcel_Project: Projectinparcel[] = await api.parcel_Project.getAll();
