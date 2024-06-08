@@ -96,9 +96,9 @@ export const Statuesbox = ({ parcelslist }: Props) => {
                           ? "text-blue-700"
                           : parcel.status === "REJECT"
                             ? "text-red-700"
-                            : parcel.status === "PENDING" ?
-                            "text-yellow02"
-                            : "text-green-700"
+                            : parcel.status === "PENDING"
+                              ? "text-yellow02"
+                              : "text-green-700"
                       }`}
                     >
                       {parcel.status}
