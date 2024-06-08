@@ -265,7 +265,7 @@ export function CreateParcel() {
               </div>
             </div>
             {!close && (
-              <Button type="submit" disabled={disabled}>
+              <Button type="submit" className="bg-black text-white" disabled={disabled}>
                 {" "}
                 {createParcel.isPending ? "กำลังสร้าง..." : "สร้างเลย!!!"}
               </Button>
@@ -274,7 +274,7 @@ export function CreateParcel() {
         </form>
         {close && (
           <DialogClose asChild>
-            <Button type="submit" onClick={() => setClose(false)}>
+            <Button type="submit" className="bg-red01 text-white" onClick={() => setClose(false)}>
               ปิด
             </Button>
           </DialogClose>

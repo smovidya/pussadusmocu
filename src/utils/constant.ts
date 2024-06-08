@@ -235,4 +235,4 @@ export interface Projectinparcel {
 
 export type Parcellist = Record<string, Projectinparcel[]>;
 
-export const STUDENT_ID = "6534414023";
+export const STUDENT_ID = "6534435223";

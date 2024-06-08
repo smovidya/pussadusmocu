@@ -5,14 +5,12 @@ import { api } from "~/trpc/react";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableFooter,
-  TableHead,
   TableHeader,
   TableRow,
 } from "~/components/ui/table";
-import { Parcellist } from "~/utils/constant";
+import { type Parcellist } from "~/utils/constant";
 import Image from "next/image";
 import { Button } from "~/components/ui/button";
 import { format } from "date-fns";
@@ -52,7 +50,6 @@ export const Statuesbox = ({ parcelslist }: Props) => {
               <TableCell className="text-right ">
                 {projectId} | {parcels[0]?.project.owner}
               </TableCell>
-              <TableCell className="text-right">{parcels[0]?.status}</TableCell>
             </TableRow>
           </TableHeader>
 
@@ -93,6 +90,17 @@ export const Statuesbox = ({ parcelslist }: Props) => {
                         {parcel.endDate &&
                           format(new Date(parcel.endDate), "dd/MM/yyyy")}
                       </div>
+                    </div>
+                    <div
+                      className={`text-base font-bold ${
+                        parcel.status === "BORROWING"
+                          ? "text-blue-700"
+                          : parcel.status === "REJECT"
+                            ? "text-red-700"
+                            : "text-green-700"
+                      }`}
+                    >
+                      {parcel.status}
                     </div>
                   </TableCell>
                 </TableRow>
