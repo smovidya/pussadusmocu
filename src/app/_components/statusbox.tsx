@@ -31,7 +31,6 @@ export const Statuesbox = ({ parcelslist }: Props) => {
     },
   });
   async function Updatestatus(project_id: string) {
-    console.log("StatusINUSE");
     updateparcel.mutate({
       project_id: project_id,
     });
@@ -48,7 +47,7 @@ export const Statuesbox = ({ parcelslist }: Props) => {
           <TableHeader>
             <TableRow>
               <TableCell className="text-right ">
-                {projectId} | {parcels[0]?.project.owner}
+                {projectId} | {parcels[0]?.project.title}
               </TableCell>
             </TableRow>
           </TableHeader>
@@ -97,6 +96,8 @@ export const Statuesbox = ({ parcelslist }: Props) => {
                           ? "text-blue-700"
                           : parcel.status === "REJECT"
                             ? "text-red-700"
+                            : parcel.status === "PENDING" ?
+                            "text-yellow02"
                             : "text-green-700"
                       }`}
                     >

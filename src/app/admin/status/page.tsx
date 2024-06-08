@@ -1,7 +1,6 @@
-import { PrismaClient, Parcel_Project, Project, Parcel } from '@prisma/client';
+import { api } from '~/trpc/server';
 import Sta from './Sta';
-
-const prisma = new PrismaClient();
+import { type Parcel_Project, type Parcel, type Project } from '@prisma/client';
 
 export type ParcelProjectWithDetails = Parcel_Project & {
   project: Project;
@@ -9,11 +8,6 @@ export type ParcelProjectWithDetails = Parcel_Project & {
 };
 
 export default async function Page() {
-  const parcelsProjects = await prisma.parcel_Project.findMany({
-    include: {
-      project: true,
-      parcel: true,
-    },
-  });
+  const parcelsProjects = await api.parcel_Project.getAll();
   return <Sta parcelsProjects={parcelsProjects} />;
 }

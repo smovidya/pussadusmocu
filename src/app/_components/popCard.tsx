@@ -1,7 +1,8 @@
 import { Button } from "~/components/ui/button";
 import React from "react";
 import { X } from "lucide-react";
-import { ParcelProjectWithDetails } from '~/app/admin/status/page';
+import { type ParcelProjectWithDetails } from '~/app/admin/status/page';
+import Image from "next/image";
 
 interface PopupCardProps {
   onClose: () => void;
@@ -35,7 +36,7 @@ const PopupCard: React.FC<PopupCardProps> = ({
         </div>
         <div className="grid grid-cols-2 gap-2 p-2 items-center justify-center">
           <div className="p-3">
-            <img src={parcelProject.parcel.image_url} />
+            <Image src={parcelProject.parcel.image_url} alt={parcelProject.id} width={100} height={100}/>
           </div>
           <div className="flex flex-col gap-4 p-2">
             <div>
@@ -52,11 +53,11 @@ const PopupCard: React.FC<PopupCardProps> = ({
               <h3>จำนวน: {parcelProject.amount}</h3>
             </div>
             <div className="grid grid-cols-2 gap-2">
-              <Button type="button" variant="outline" onClick={onAccept}>
+              <Button type="button" className="text-white bg-green01" onClick={onAccept}>
                 Accept
               </Button>
-              <Button type="button" variant="destructive" onClick={onReject}>
-                Cancel
+              <Button type="button" className="text-white bg-red01" onClick={onReject}>
+                Reject
               </Button>
             </div>
           </div>
