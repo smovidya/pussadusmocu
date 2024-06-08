@@ -6,6 +6,7 @@ import {
   ParcelGroupSchema,
   ParcelTypeSchema,
 } from "~/utils/constant";
+import { BORROWING_STATUS } from "@prisma/client";
 
 export const parcelRouter = createTRPCRouter({
   getAll: publicProcedure.query(async ({ ctx }) => {
@@ -89,7 +90,7 @@ export const parcelRouter = createTRPCRouter({
             description: input.description,
             startDate: input.startDate,
             endDate: input.endDate,
-            status: "BORROWING",
+            status: BORROWING_STATUS.PENDING,
           },
         });
         await tx.parcel.update({

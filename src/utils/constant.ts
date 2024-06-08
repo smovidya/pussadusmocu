@@ -152,7 +152,7 @@ export const departments = [
   },
   {
     value: "MATHCOM",
-    label: "คณิตศาสตรและวิทยาการคอม",
+    label: "คณิตศาสตร์และวิทยาการคอม",
   },
   {
     value: "MARINE",
