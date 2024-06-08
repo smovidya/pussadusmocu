@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { BORROWING_STATUS, type Project, type Parcel } from "@prisma/client";
 
 export const ParcelGroupSchema = z.enum([
   "OFFICE",
@@ -218,5 +219,20 @@ export const departments = [
     label: "กิจการนิสิต",
   },
 ];
+
+export interface Projectinparcel {
+  id: string;
+  parcel_id: string;
+  project_id: string;
+  amount: number;
+  description: string;
+  status: BORROWING_STATUS;
+  startDate: Date;
+  endDate: Date;
+  project: Project;
+  parcel: Parcel;
+}
+
+export type Parcellist = Record<string, Projectinparcel[]>;
 
 export const STUDENT_ID = "6534435223";
