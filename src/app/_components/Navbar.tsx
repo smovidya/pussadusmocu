@@ -17,7 +17,7 @@ export const Navbar = () => {
         <Input className="rounded-full" placeholder="ค้นหาพัสดุ" />
       </div>
       <div className="flex items-center justify-start gap-4">
-      <a href="/admin/home">
+        <a href="/admin/home">
           <Home className="h-8 w-8 hover:cursor-pointer" />
         </a>
         <a href="/admin/status">
