@@ -6,12 +6,14 @@ export const Navbar = () => {
   return (
     <div className="inline-flex h-24 w-full items-center justify-start gap-[38px] bg-yellow01 px-5 py-1.5">
       <div className="flex h-[88px] w-[88px]">
-        <Image
-          src={"/picture/yellowBox.svg"}
-          alt="iconBox"
-          width={108}
-          height={108}
-        />
+        <a href="/users/home" className="hover:cursor-pointer">
+          <Image
+            src={"/picture/yellowBox.svg"}
+            alt="iconBox"
+            width={108}
+            height={108}
+          />
+        </a>
       </div>
       <div className="flex w-full font-noto-sans">
         <Input className="rounded-full" placeholder="ค้นหาพัสดุ" />
