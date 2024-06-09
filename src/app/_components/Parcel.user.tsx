@@ -102,6 +102,7 @@ const ParcelUser = ({ parcel, project_id }: BlogProps) => {
               width={300}
               height={300}
               alt={parcel.parcel_id}
+              loading="eager"
             />
             <div className="flex flex-col gap-2">
               <div className="grid grid-cols-4 items-center gap-4">
