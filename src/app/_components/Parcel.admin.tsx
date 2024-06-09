@@ -310,11 +310,11 @@ const ParcelAdmin = ({ parcel }: BlogProps) => {
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
-              <Button type="submit" disabled={disabled}>
+              <Button type="submit" className="text-white bg-black" disabled={disabled}>
                 {" "}
                 {editParcel.isPending ? "กำลังแก้ไข..." : "แก้ไข"}
               </Button>
-              <Button type="button" variant="destructive" onClick={onDelete}>
+              <Button type="button" className="text-white bg-red01" onClick={onDelete}>
                 ลบ
               </Button>
             </div>

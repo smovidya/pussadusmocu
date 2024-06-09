@@ -157,7 +157,7 @@ const ParcelUser = ({ parcel, project_id }: BlogProps) => {
                 </Label>
                 <DatePickerWithRange />
               </div>
-              <Button type="submit" disabled={bookedParcel.isPending}>
+              <Button type="submit" className="bg-black text-white" disabled={bookedParcel.isPending}>
                 {bookedParcel.isPending ? "กำลังยืม..." : "ยืมเลย!!!"}
               </Button>
             </div>
