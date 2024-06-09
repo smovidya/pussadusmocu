@@ -39,8 +39,8 @@ const PopupCard: React.FC<PopupCardProps> = ({
             <Image
               src={parcelProject.parcel.image_url}
               alt={parcelProject.id}
-              width={100}
-              height={100}
+              width={300}
+              height={300}
             />
           </div>
           <div className="flex flex-col gap-4 p-2">
