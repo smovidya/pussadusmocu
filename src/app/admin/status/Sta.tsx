@@ -75,7 +75,7 @@ function Sta({
   };
 
   return (
-    <div className="flex h-full w-full flex-col items-center gap-2">
+    <div className="flex h-full w-full flex-col items-center gap-2 font-noto-sans">
       <Navbar />
       <Dropdown />
       {parcelsProjects?.map((parcelsProject) => (
