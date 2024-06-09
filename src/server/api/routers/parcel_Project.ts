@@ -67,7 +67,7 @@ export const Parcel_projectRouter = createTRPCRouter({
     )
     .mutation(async ({ ctx, input }) => {
       await new Promise((resolve) => setTimeout(resolve, 1000));
-      return ctx.db.$transaction(async (tx) => {
+      return await ctx.db.$transaction(async (tx) => {
         const parcel = await tx.parcel_Project.findFirst({
           where: {
             id: input.parcel_project_id,
@@ -85,12 +85,14 @@ export const Parcel_projectRouter = createTRPCRouter({
           },
         });
         const current_amount = parcel?.parcel.amount ?? 0;
+        const booking = parcel?.amount ?? 0 ;
+        const total = current_amount + booking;
         await tx.parcel.update({
           where: {
             parcel_id: parcel?.parcel_id,
           },
           data: {
-            amount: parcel?.amount ?? 0 + current_amount,
+            amount: total,
           },
         });
       });
