@@ -33,7 +33,7 @@ const config = {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
       fontFamily: {
-        "noto-sans": ["Noto Sans Thai", "sans-serif"],
+        "noto-sans": ['var(--font-sans)'],
       },
       fontSize: {
         H1: "64px",
