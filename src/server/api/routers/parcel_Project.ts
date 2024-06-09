@@ -85,7 +85,7 @@ export const Parcel_projectRouter = createTRPCRouter({
           },
         });
         const current_amount = parcel?.parcel.amount ?? 0;
-        const booking = parcel?.amount ?? 0 ;
+        const booking = parcel?.amount ?? 0;
         const total = current_amount + booking;
         await tx.parcel.update({
           where: {
