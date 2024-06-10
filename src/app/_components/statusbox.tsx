@@ -5,14 +5,6 @@ import { api } from "~/trpc/react";
 import {
   Table,
   TableBody,
-<<<<<<< HEAD
-  TableCell,
-  TableFooter,
-  TableHeader,
-  TableRow,
-} from "~/components/ui/table";
-import { type Parcellist } from "~/utils/constant";
-=======
   TableCaption,
   TableCell,
   TableFooter,
@@ -21,7 +13,6 @@ import { type Parcellist } from "~/utils/constant";
   TableRow,
 } from "~/components/ui/table";
 import { Parcellist } from "~/utils/constant";
->>>>>>> 1b642f9 (just update ka)
 import Image from "next/image";
 import { Button } from "~/components/ui/button";
 import { format } from "date-fns";
@@ -42,10 +33,7 @@ export const Statuesbox = ({ parcelslist }: Props) => {
     },
   });
   async function Updatestatus(project_id: string) {
-<<<<<<< HEAD
-=======
     console.log("StatusINUSE");
->>>>>>> 1b642f9 (just update ka)
     updateparcel.mutate({
       project_id: project_id,
     });
@@ -62,14 +50,8 @@ export const Statuesbox = ({ parcelslist }: Props) => {
           <TableHeader>
             <TableRow>
               <TableCell className="text-right ">
-<<<<<<< HEAD
                 {projectId} | {parcels[0]?.project.title}
               </TableCell>
-=======
-                {projectId} | {parcels[0]?.project.owner}
-              </TableCell>
-              <TableCell className="text-right">{parcels[0]?.status}</TableCell>
->>>>>>> 1b642f9 (just update ka)
             </TableRow>
           </TableHeader>
 
@@ -111,7 +93,6 @@ export const Statuesbox = ({ parcelslist }: Props) => {
                           format(new Date(parcel.endDate), "dd/MM/yyyy")}
                       </div>
                     </div>
-<<<<<<< HEAD
                     <div
                       className={`text-base font-bold ${
                         parcel.status === "BORROWING"
@@ -125,8 +106,6 @@ export const Statuesbox = ({ parcelslist }: Props) => {
                     >
                       {parcel.status}
                     </div>
-=======
->>>>>>> 1b642f9 (just update ka)
                   </TableCell>
                 </TableRow>
               ))}
