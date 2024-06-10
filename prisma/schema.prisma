@@ -20,54 +20,58 @@ model Post {
 }
 
 model Project {
-  project_id String @id @unique @default(uuid())
-  createdAt DateTime @default(now())
-  published Boolean  @default(false)
-  title String  @default("title")
-  status Status @default(NOTSTART)
-  owner Owner @default(ETC)
-  students Project_Student[]
-  parcels Parcel_Project[]
+  project_id String            @id @unique @default(uuid())
+  createdAt  DateTime          @default(now())
+  published  Boolean           @default(false)
+  title      String            @default("title")
+  status     Status            @default(NOTSTART)
+  owner      Owner             @default(ETC)
+  students   Project_Student[]
+  parcels    Parcel_Project[]
 }
 
 model Student {
-  student_id String @id @unique @default(uuid())
-  email String @unique
-  line_id String  @unique
+  student_id String            @id @unique @default(uuid())
+  name       String            @default("")
+  email      String            @unique
+  line_id    String            @unique
   department Department
-  project Project_Student[]
+  project    Project_Student[]
 }
 
 model Project_Student {
-  id String @id @unique @default(uuid())
-  student_id String 
+  id         String  @id @unique @default(uuid())
+  student_id String
   project_id String
-  student   Student   @relation(fields: [student_id], references: [student_id])
-  project   Project   @relation(fields: [project_id], references: [project_id])
+  student    Student @relation(fields: [student_id], references: [student_id])
+  project    Project @relation(fields: [project_id], references: [project_id])
 }
 
 model Parcel {
-  parcel_id String @id @unique @default(uuid())
-  title String @default("")
+  parcel_id   String           @id @unique @default(uuid())
+  title       String           @default("")
   description String?
-  amount Int @default(1)
-  available Boolean @default(true)
-  image_url String
-  type PARCEL_TYPE
-  group PARCEL_GROUP
-  department Department?
-  project Parcel_Project[]
+  amount      Int              @default(1)
+  available   Boolean          @default(true)
+  image_url   String
+  type        PARCEL_TYPE
+  group       PARCEL_GROUP
+  department  Department?
+  project     Parcel_Project[]
 }
 
 model Parcel_Project {
-  id String @id @unique @default(uuid())
-  parcel_id String
-  project_id String
-  amount Int @default(0)
-  description String @default("")
-  status BORROWING_STATUS @default(PENDING)
-  project Project @relation(fields: [project_id], references: [project_id])
-  parcel Parcel @relation(fields: [parcel_id], references: [parcel_id])
+  id          String           @id @unique @default(uuid())
+  createdAt   DateTime          @default(now())
+  parcel_id   String
+  project_id  String
+  description_admin String           @default("")
+  image_url   String           @default("")
+  amount      Int              @default(0)
+  description String           @default("")
+  status      BORROWING_STATUS @default(PENDING)
+  project     Project          @relation(fields: [project_id], references: [project_id])
+  parcel      Parcel           @relation(fields: [parcel_id], references: [parcel_id])
   startDate   DateTime         @default(now())
   endDate     DateTime         @default(now())
 }
