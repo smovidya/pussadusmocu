@@ -6,7 +6,10 @@ export const Navbar = () => {
   return (
     <div className="inline-flex h-24 w-full items-center justify-start gap-[38px] bg-yellow01 px-5 py-1.5">
       <div className="flex h-[88px] w-[88px]">
-        <a href="/users/home" className="hover:cursor-pointer items-center justify-center">
+        <a
+          href="/users/home"
+          className="items-center justify-center hover:cursor-pointer"
+        >
           <Image
             src={"/picture/yellowBox.svg"}
             alt="iconBox"
