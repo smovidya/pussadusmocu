@@ -21,7 +21,9 @@ function Sta({
   const [currentParcelProject, setCurrentParcelProject] =
     useState<ParcelProjectWithDetails | null>(null);
 
-  const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
+  const [selectedProjectId, setSelectedProjectId] = useState<string | null>(
+    null,
+  );
 
   const openPopup = (parcelsProject: ParcelProjectWithDetails) => {
     setCurrentParcelProject(parcelsProject);
@@ -74,7 +76,9 @@ function Sta({
     return new Date(dateString).toLocaleDateString("en-GB", options);
   };
   const filteredParcelsProjects = selectedProjectId
-    ? parcelsProjects.filter(pp => pp.project.project_id === selectedProjectId)
+    ? parcelsProjects.filter(
+        (pp) => pp.project.project_id === selectedProjectId,
+      )
     : parcelsProjects;
 
   return (
