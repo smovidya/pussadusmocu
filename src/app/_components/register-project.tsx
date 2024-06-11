@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Input } from "~/components/ui/input";
 import { Button } from "~/components/ui/button";
 import { Label } from "~/components/ui/label";
 import {
@@ -15,10 +14,6 @@ import {
   DialogTrigger,
 } from "~/components/ui/dialog";
 import { DialogTitle } from "@radix-ui/react-dialog";
-import { Textarea } from "~/components/ui/textarea";
-import { Types } from "./combobox/type";
-import { Group } from "./combobox/group";
-import { Departments } from "./combobox/department";
 import { api } from "~/trpc/react";
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
@@ -26,15 +21,11 @@ import { typeSelector } from "~/stores/slices/type";
 import { groupSelector } from "~/stores/slices/group";
 import { departmentSelector } from "~/stores/slices/department";
 import {
-  departments,
   FormSchemaRegister,
   type FormSchemaRegisterType,
-  groups,
   STUDENT_ID,
-  types,
 } from "~/utils/constant";
 import { useToast } from "~/components/ui/use-toast";
-import { ToastAction } from "~/components/ui/toast";
 import { Projects } from "./combobox/project";
 import { projectSelector } from "~/stores/slices/project";
 
@@ -62,9 +53,6 @@ export function RegisterParcel() {
   const groupReducer = useSelector(groupSelector);
   const departmentReducer = useSelector(departmentSelector);
   const projectReducer = useSelector(projectSelector);
-  const type = typeReducer.key;
-  const department = departmentReducer.key;
-  const group = groupReducer.key;
   const project_id = projectReducer.key;
   const registerProject = api.project.registerProject.useMutation({
     onSuccess: () => {

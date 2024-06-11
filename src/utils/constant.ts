@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { BORROWING_STATUS, type Project, type Parcel } from "@prisma/client";
+import { type BORROWING_STATUS, type Project, type Parcel } from "@prisma/client";
 
 export const ParcelGroupSchema = z.enum([
   "OFFICE",
