@@ -5,12 +5,14 @@ import { api } from "~/trpc/react";
 import {
   Table,
   TableBody,
+  TableCaption,
   TableCell,
   TableFooter,
+  TableHead,
   TableHeader,
   TableRow,
 } from "~/components/ui/table";
-import { type Parcellist } from "~/utils/constant";
+import { Parcellist } from "~/utils/constant";
 import Image from "next/image";
 import { Button } from "~/components/ui/button";
 import { format } from "date-fns";
@@ -31,6 +33,7 @@ export const Statuesbox = ({ parcelslist }: Props) => {
     },
   });
   async function Updatestatus(project_id: string) {
+    console.log("StatusINUSE");
     updateparcel.mutate({
       project_id: project_id,
     });
