@@ -2,7 +2,6 @@ import { type Parcel_Project, type Project, type Parcel } from "@prisma/client";
 import Sta from "./Sta";
 import { api } from "~/trpc/server";
 
-
 export type ParcelProjectWithDetails = Parcel_Project & {
   project: Project;
   parcel: Parcel;

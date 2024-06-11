@@ -1,5 +1,9 @@
 import { z } from "zod";
-import { type BORROWING_STATUS, type Project, type Parcel } from "@prisma/client";
+import {
+  type BORROWING_STATUS,
+  type Project,
+  type Parcel,
+} from "@prisma/client";
 
 export const ParcelGroupSchema = z.enum([
   "OFFICE",
@@ -14,7 +18,7 @@ export const ParcelGroupSchema = z.enum([
   "COMPUTER",
 ]);
 
-export const ParcelTypeSchema = z.enum(["NORMAL", "DURABLE"]);
+export const ParcelTypeSchema = z.enum(["NORMAL", "DURABLE", "KEY"]);
 
 export const ParcelDepartmentSchema = z.enum([
   "SMO",
@@ -99,6 +103,10 @@ export const types = [
   {
     value: "DURABLE",
     label: "ครุภัณฑ์",
+  },
+  {
+    value: "KEY",
+    label: "กุญแจ",
   },
 ];
 
