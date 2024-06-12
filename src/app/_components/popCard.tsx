@@ -8,6 +8,7 @@ interface PopupCardProps {
   onClose: () => void;
   onAccept: () => void;
   onReject: () => void;
+  onReturn: () => void;
   parcelProject: ParcelProjectWithDetails;
 }
 
@@ -24,8 +25,45 @@ const PopupCard: React.FC<PopupCardProps> = ({
   onClose,
   onAccept,
   onReject,
+  onReturn,
   parcelProject,
 }) => {
+  const renderButton = () => {
+    switch(parcelProject.status){
+      case "PENDING":
+        return(
+          <>
+            <div className="grid grid-cols-2 gap-2">
+              <Button
+                type="button"
+                className="bg-green01 text-white"
+                onClick={onAccept}
+              >
+                Accept
+              </Button>
+              <Button
+                type="button"
+                className="bg-red01 text-white"
+                onClick={onReject}
+              >
+                Reject
+              </Button>
+            </div>
+          </>
+        );
+        case "INUSE":
+          return(
+            <Button
+                type="button"
+                className="bg-green01 text-white"
+                onClick={onReturn}
+              >
+                Return
+              </Button>
+          );
+    }
+  }
+
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
       <div className="h-3/5 w-3/4 max-w-xl rounded-lg bg-white p-1 shadow-lg">
@@ -62,22 +100,7 @@ const PopupCard: React.FC<PopupCardProps> = ({
             <div>
               <h3>จำนวน: {parcelProject.amount}</h3>
             </div>
-            <div className="grid grid-cols-2 gap-2">
-              <Button
-                type="button"
-                className="bg-green01 text-white"
-                onClick={onAccept}
-              >
-                Accept
-              </Button>
-              <Button
-                type="button"
-                className="bg-red01 text-white"
-                onClick={onReject}
-              >
-                Reject
-              </Button>
-            </div>
+            {renderButton()}
           </div>
         </div>
       </div>

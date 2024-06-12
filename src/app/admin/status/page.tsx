@@ -1,4 +1,4 @@
-import { PrismaClient, Parcel_Project, Project, Parcel } from "@prisma/client";
+import { PrismaClient, type Parcel_Project, type Project, type Parcel } from "@prisma/client";
 import Sta from "./Sta";
 import { api } from "~/trpc/server";
 

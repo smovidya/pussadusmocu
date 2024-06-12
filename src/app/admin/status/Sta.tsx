@@ -10,18 +10,14 @@ import { api } from "~/trpc/react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
-function Sta({
-  parcelsProjects,
-}: {
-  parcelsProjects: ParcelProjectWithDetails[];
-}) {
+function Sta({parcelsProjects,}: {parcelsProjects: ParcelProjectWithDetails[];}) {
   const router = useRouter();
 
   const [isOpen, setIsOpen] = useState(false);
   const [currentParcelProject, setCurrentParcelProject] =
     useState<ParcelProjectWithDetails | null>(null);
 
-  const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
+  const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null,);
 
   const openPopup = (parcelsProject: ParcelProjectWithDetails) => {
     setCurrentParcelProject(parcelsProject);
@@ -65,6 +61,10 @@ function Sta({
     });
   };
 
+  const updateTostock = async (id:string) => {
+    setIsOpen(false);
+  }
+
   const formatDate = (dateString: string) => {
     const options: Intl.DateTimeFormatOptions = {
       year: "numeric",
@@ -74,7 +74,9 @@ function Sta({
     return new Date(dateString).toLocaleDateString("en-GB", options);
   };
   const filteredParcelsProjects = selectedProjectId
-    ? parcelsProjects.filter(pp => pp.project.project_id === selectedProjectId)
+    ? parcelsProjects.filter(
+        (pp) => pp.project.project_id === selectedProjectId,
+      )
     : parcelsProjects;
 
   return (
@@ -132,6 +134,7 @@ function Sta({
                   onClose={closePopup}
                   onAccept={() => updateAccept(parcelsProject.id)}
                   onReject={() => updateReject(parcelsProject.id)}
+                  onReturn={() => updateTostock(parcelsProject.id)}
                   parcelProject={currentParcelProject}
                 />
               )}
