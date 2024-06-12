@@ -10,14 +10,20 @@ import { api } from "~/trpc/react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
-function Sta({parcelsProjects,}: {parcelsProjects: ParcelProjectWithDetails[];}) {
+function Sta({
+  parcelsProjects,
+}: {
+  parcelsProjects: ParcelProjectWithDetails[];
+}) {
   const router = useRouter();
 
   const [isOpen, setIsOpen] = useState(false);
   const [currentParcelProject, setCurrentParcelProject] =
     useState<ParcelProjectWithDetails | null>(null);
 
-  const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null,);
+  const [selectedProjectId, setSelectedProjectId] = useState<string | null>(
+    null,
+  );
 
   const openPopup = (parcelsProject: ParcelProjectWithDetails) => {
     setCurrentParcelProject(parcelsProject);
@@ -61,9 +67,9 @@ function Sta({parcelsProjects,}: {parcelsProjects: ParcelProjectWithDetails[];})
     });
   };
 
-  const updateTostock = async (id:string) => {
+  const updateTostock = async (id: string) => {
     setIsOpen(false);
-  }
+  };
 
   const formatDate = (dateString: string) => {
     const options: Intl.DateTimeFormatOptions = {
@@ -83,7 +89,7 @@ function Sta({parcelsProjects,}: {parcelsProjects: ParcelProjectWithDetails[];})
     <div className="flex h-full w-full flex-col items-center gap-2 font-noto-sans">
       <Navbar />
       <Dropdown setSelectedProjectId={setSelectedProjectId} />
-      {filteredParcelsProjects?.map((parcelsProject) => (
+      {filteredParcelsProjects?.reverse().map((parcelsProject) => (
         <div
           key={parcelsProject.id}
           className="flex w-4/6 flex-grow flex-col rounded-lg border-gray-300 px-6 py-4 shadow-md"

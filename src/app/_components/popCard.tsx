@@ -29,9 +29,9 @@ const PopupCard: React.FC<PopupCardProps> = ({
   parcelProject,
 }) => {
   const renderButton = () => {
-    switch(parcelProject.status){
+    switch (parcelProject.status) {
       case "PENDING":
-        return(
+        return (
           <>
             <div className="grid grid-cols-2 gap-2">
               <Button
@@ -51,18 +51,18 @@ const PopupCard: React.FC<PopupCardProps> = ({
             </div>
           </>
         );
-        case "INUSE":
-          return(
-            <Button
-                type="button"
-                className="bg-green01 text-white"
-                onClick={onReturn}
-              >
-                Return
-              </Button>
-          );
+      case "INUSE":
+        return (
+          <Button
+            type="button"
+            className="bg-green01 text-white"
+            onClick={onReturn}
+          >
+            Return
+          </Button>
+        );
     }
-  }
+  };
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
