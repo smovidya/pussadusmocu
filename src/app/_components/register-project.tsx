@@ -45,7 +45,6 @@ export function RegisterParcel() {
       label: "ค่ายอนุรักษ์",
     },
   ];
-  
   const { toast } = useToast();
   const [image_url, setImageUrl] = useState("");
   const [close, setClose] = useState(false);
