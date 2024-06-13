@@ -1,14 +1,16 @@
 import { Button } from "~/components/ui/button";
-import React from "react";
+import React , { useState } from "react";
 import { X } from "lucide-react";
 import { type ParcelProjectWithDetails } from "~/app/admin/status/page";
 import Image from "next/image";
+import { Input } from "~/components/ui/input";
+
 
 interface PopupCardProps {
   onClose: () => void;
   onAccept: () => void;
   onReject: () => void;
-  onReturn: () => void;
+  onReturn: (quantity: number) => void;
   parcelProject: ParcelProjectWithDetails;
 }
 
@@ -28,6 +30,13 @@ const PopupCard: React.FC<PopupCardProps> = ({
   onReturn,
   parcelProject,
 }) => {
+
+  const [returnQuantity, setReturnQuantity] = useState<number>(0);
+
+  const handleReturn = () => {
+    onReturn(returnQuantity);
+  };
+
   const renderButton = () => {
     switch (parcelProject.status) {
       case "PENDING":
@@ -53,13 +62,12 @@ const PopupCard: React.FC<PopupCardProps> = ({
         );
       case "INUSE":
         return (
-          <Button
-            type="button"
-            className="bg-green01 text-white"
-            onClick={onReturn}
-          >
-            Return
-          </Button>
+          <>
+          <Input placeholder="จำนวนของที่คืน" type="number" value={returnQuantity} 
+            onChange={(e) => setReturnQuantity(parseInt(e.target.value, 10))} />
+          <Button type="button" className="bg-green01 text-white" onClick={handleReturn}> Return </Button>
+          </>
+          
         );
     }
   };

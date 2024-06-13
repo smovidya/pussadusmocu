@@ -1,13 +1,6 @@
-import {
-  PrismaClient,
-  type Parcel_Project,
-  type Project,
-  type Parcel,
-} from "@prisma/client";
+import {type Parcel_Project, type Project, type Parcel} from "@prisma/client";
 import Sta from "./Sta";
 import { api } from "~/trpc/server";
-
-const prisma = new PrismaClient();
 
 export type ParcelProjectWithDetails = Parcel_Project & {
   project: Project;

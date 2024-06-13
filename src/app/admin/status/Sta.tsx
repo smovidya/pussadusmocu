@@ -47,7 +47,16 @@ function Sta({
       console.error("Booking error:", error);
     },
   });
-
+  
+  const returnParcel = api.parcel_Project.returnParcel.useMutation({
+    onSuccess: () => {
+      router.refresh();
+    },
+    onError: (error) => {
+      console.error("REturn error", error);
+    }
+  })
+  
   const closePopup = () => {
     setIsOpen(false);
     setCurrentParcelProject(null);
@@ -66,9 +75,13 @@ function Sta({
       parcel_project_id: id,
     });
   };
-
-  const updateTostock = async (id: string) => {
+  
+  const updateTostock = async (id: string, quantity: number) => {
     setIsOpen(false);
+    returnParcel.mutate({
+      parcel_project_id: id,
+      parcel_return: quantity,
+    });
   };
 
   const formatDate = (dateString: string) => {
@@ -89,7 +102,7 @@ function Sta({
     <div className="flex h-full w-full flex-col items-center gap-2 font-noto-sans">
       <Navbar />
       <Dropdown setSelectedProjectId={setSelectedProjectId} />
-      {filteredParcelsProjects?.reverse().map((parcelsProject) => (
+      {filteredParcelsProjects?.map((parcelsProject) => (
         <div
           key={parcelsProject.id}
           className="flex w-4/6 flex-grow flex-col rounded-lg border-gray-300 px-6 py-4 shadow-md"
@@ -140,7 +153,7 @@ function Sta({
                   onClose={closePopup}
                   onAccept={() => updateAccept(parcelsProject.id)}
                   onReject={() => updateReject(parcelsProject.id)}
-                  onReturn={() => updateTostock(parcelsProject.id)}
+                  onReturn={(quantity: number) => updateTostock(parcelsProject.id, quantity)}
                   parcelProject={currentParcelProject}
                 />
               )}
