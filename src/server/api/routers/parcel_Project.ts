@@ -101,10 +101,10 @@ export const Parcel_projectRouter = createTRPCRouter({
     .input(
       z.object({
         parcel_project_id: z.string(),
-        parcel_return: z.number()
+        parcel_return: z.number(),
       }),
     )
-    .mutation(async ({ctx, input}) =>{
+    .mutation(async ({ ctx, input }) => {
       return await ctx.db.$transaction(async (tx) => {
         const parcel = await tx.parcel_Project.findFirst({
           where: {
@@ -112,6 +112,14 @@ export const Parcel_projectRouter = createTRPCRouter({
           },
           include: {
             parcel: true,
+          },
+        });
+        await tx.parcel_Project.updateMany({
+          where: {
+            id: input.parcel_project_id, 
+          },
+          data: {
+            status: BORROWING_STATUS.RETURN,
           },
         });
         const currentAmount = parcel?.parcel.amount ?? 0;
@@ -125,6 +133,6 @@ export const Parcel_projectRouter = createTRPCRouter({
             amount: toStock,
           },
         });
-      })
-    })
+      });
+    }),
 });

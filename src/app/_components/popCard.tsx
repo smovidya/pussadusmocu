@@ -1,10 +1,9 @@
 import { Button } from "~/components/ui/button";
-import React , { useState } from "react";
+import React, { useState } from "react";
 import { X } from "lucide-react";
 import { type ParcelProjectWithDetails } from "~/app/admin/status/page";
 import Image from "next/image";
 import { Input } from "~/components/ui/input";
-
 
 interface PopupCardProps {
   onClose: () => void;
@@ -30,11 +29,17 @@ const PopupCard: React.FC<PopupCardProps> = ({
   onReturn,
   parcelProject,
 }) => {
-
   const [returnQuantity, setReturnQuantity] = useState<number>(0);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleReturn = () => {
-    onReturn(returnQuantity);
+  const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(e.target.value, 10);
+    if (value > parcelProject.amount) {
+      setError(`จำนวนที่คืนต้องไม่เกิน ${parcelProject.amount}`);
+    } else {
+      setError(null);
+      setReturnQuantity(value);
+    }
   };
 
   const renderButton = () => {
@@ -63,18 +68,29 @@ const PopupCard: React.FC<PopupCardProps> = ({
       case "INUSE":
         return (
           <>
-          <Input placeholder="จำนวนของที่คืน" type="number" value={returnQuantity} 
-            onChange={(e) => setReturnQuantity(parseInt(e.target.value, 10))} />
-          <Button type="button" className="bg-green01 text-white" onClick={handleReturn}> Return </Button>
+            <Input
+              placeholder="จำนวนของที่คืน"
+              type="number"
+              value={returnQuantity}
+              onChange={handleQuantityChange}
+            />
+            {error && <p className="text-red-500 ">{error}</p>}
+            <Button
+              type="button"
+              className="bg-green01 text-white"
+              onClick={() => onReturn(returnQuantity)}
+              disabled={returnQuantity > parcelProject.amount}
+            >
+              Return
+            </Button>
           </>
-          
         );
     }
   };
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="h-3/5 w-3/4 max-w-xl rounded-lg bg-white p-1 shadow-lg">
+      <div className="h-2/3 w-3/4 max-w-xl rounded-lg bg-white p-1 shadow-lg">
         <div className="flex items-end justify-end">
           <button onClick={onClose}>
             <X />

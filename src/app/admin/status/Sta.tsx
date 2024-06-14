@@ -47,16 +47,16 @@ function Sta({
       console.error("Booking error:", error);
     },
   });
-  
+
   const returnParcel = api.parcel_Project.returnParcel.useMutation({
     onSuccess: () => {
       router.refresh();
     },
     onError: (error) => {
       console.error("REturn error", error);
-    }
-  })
-  
+    },
+  });
+
   const closePopup = () => {
     setIsOpen(false);
     setCurrentParcelProject(null);
@@ -75,7 +75,7 @@ function Sta({
       parcel_project_id: id,
     });
   };
-  
+
   const updateTostock = async (id: string, quantity: number) => {
     setIsOpen(false);
     returnParcel.mutate({
@@ -153,7 +153,9 @@ function Sta({
                   onClose={closePopup}
                   onAccept={() => updateAccept(parcelsProject.id)}
                   onReject={() => updateReject(parcelsProject.id)}
-                  onReturn={(quantity: number) => updateTostock(parcelsProject.id, quantity)}
+                  onReturn={(quantity: number) =>
+                    updateTostock(parcelsProject.id, quantity)
+                  }
                   parcelProject={currentParcelProject}
                 />
               )}
