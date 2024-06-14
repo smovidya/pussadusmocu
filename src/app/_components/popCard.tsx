@@ -1,13 +1,15 @@
 import { Button } from "~/components/ui/button";
-import React from "react";
+import React, { useState } from "react";
 import { X } from "lucide-react";
 import { type ParcelProjectWithDetails } from "~/app/admin/status/page";
 import Image from "next/image";
+import { Input } from "~/components/ui/input";
 
 interface PopupCardProps {
   onClose: () => void;
   onAccept: () => void;
   onReject: () => void;
+  onReturn: (quantity: number) => void;
   parcelProject: ParcelProjectWithDetails;
 }
 
@@ -24,11 +26,71 @@ const PopupCard: React.FC<PopupCardProps> = ({
   onClose,
   onAccept,
   onReject,
+  onReturn,
   parcelProject,
 }) => {
+  const [returnQuantity, setReturnQuantity] = useState<number>(0);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(e.target.value, 10);
+    if (value > parcelProject.amount) {
+      setError(`จำนวนที่คืนต้องไม่เกิน ${parcelProject.amount}`);
+    } else {
+      setError(null);
+      setReturnQuantity(value);
+    }
+  };
+
+  const renderButton = () => {
+    switch (parcelProject.status) {
+      case "PENDING":
+        return (
+          <>
+            <div className="grid grid-cols-2 gap-2">
+              <Button
+                type="button"
+                className="bg-green01 text-white"
+                onClick={onAccept}
+              >
+                Accept
+              </Button>
+              <Button
+                type="button"
+                className="bg-red01 text-white"
+                onClick={onReject}
+              >
+                Reject
+              </Button>
+            </div>
+          </>
+        );
+      case "INUSE":
+        return (
+          <>
+            <Input
+              placeholder="จำนวนของที่คืน"
+              type="number"
+              value={returnQuantity}
+              onChange={handleQuantityChange}
+            />
+            {error && <p className="text-red-500 ">{error}</p>}
+            <Button
+              type="button"
+              className="bg-green01 text-white"
+              onClick={() => onReturn(returnQuantity)}
+              disabled={returnQuantity > parcelProject.amount}
+            >
+              Return
+            </Button>
+          </>
+        );
+    }
+  };
+
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="h-3/5 w-3/4 max-w-xl rounded-lg bg-white p-1 shadow-lg">
+      <div className="h-2/3 w-3/4 max-w-xl rounded-lg bg-white p-1 shadow-lg">
         <div className="flex items-end justify-end">
           <button onClick={onClose}>
             <X />
@@ -62,22 +124,7 @@ const PopupCard: React.FC<PopupCardProps> = ({
             <div>
               <h3>จำนวน: {parcelProject.amount}</h3>
             </div>
-            <div className="grid grid-cols-2 gap-2">
-              <Button
-                type="button"
-                className="bg-green01 text-white"
-                onClick={onAccept}
-              >
-                Accept
-              </Button>
-              <Button
-                type="button"
-                className="bg-red01 text-white"
-                onClick={onReject}
-              >
-                Reject
-              </Button>
-            </div>
+            {renderButton()}
           </div>
         </div>
       </div>
