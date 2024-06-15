@@ -5,7 +5,7 @@ const LoginPage = () => {
   const getURLByEnv = () => {
     const env = process.env.NODE_ENV;
     if (env === "development") {
-      return "/user/home";
+      return "/users/home";
     }
     return "https://account.it.chula.ac.th/html/login.html?serviceName=PUSSADU-SUCU&service=https://https://pussadusmocu.vercel.app/api/auth/callback";
   };
