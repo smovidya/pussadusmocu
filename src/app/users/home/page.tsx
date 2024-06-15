@@ -5,11 +5,10 @@ import { ProjectBlog } from "~/app/_components/ProjectsBlog";
 import { RegisterParcel } from "~/app/_components/register-project";
 import { api } from "~/trpc/server";
 import { STUDENT_ID } from "~/utils/constant";
-import { getCookie } from 'cookies-next';
-
+import { getCookie } from "cookies-next";
 
 const Profile = async () => {
-  const student_id = getCookie('student_id', { cookies });
+  const student_id = getCookie("student_id", { cookies });
   console.log("COOKIE", student_id);
 
   if (!student_id) {
@@ -24,7 +23,7 @@ const Profile = async () => {
     console.log("PROJECTS", projects);
 
     const student = await api.auth.getUser({
-      student_id: student_id
+      student_id: student_id,
     });
     console.log("STUDENT", student);
 
