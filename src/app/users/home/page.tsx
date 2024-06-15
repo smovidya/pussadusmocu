@@ -1,4 +1,4 @@
-import { Student, type Project } from "@prisma/client";
+import { type Project } from "@prisma/client";
 import { cookies } from "next/headers";
 import { NavbarUser } from "~/app/_components/NavbarUser";
 import { ProjectBlog } from "~/app/_components/ProjectsBlog";
@@ -8,12 +8,13 @@ import { STUDENT_ID } from "~/utils/constant";
 
 const Profile = async () => {
   const cookieStore = cookies();
-  const student_id = cookieStore.get('student_id');
+  const student_id = cookieStore.get("student_id");
+  console.log("COOKIE",student_id);
   const projects: Project[] = await api.project.getProjectByStudent({
     student_id: STUDENT_ID,
   });
   const student = await api.auth.getUser({
-    student_id: student_id?.value ?? ""
+    student_id: student_id?.value ?? "",
   });
 
   return (
