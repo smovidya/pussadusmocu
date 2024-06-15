@@ -9,7 +9,7 @@ import { STUDENT_ID } from "~/utils/constant";
 const Profile = async () => {
   const cookieStore = cookies();
   const student_id = cookieStore.get("student_id");
-  console.log("COOKIE",student_id);
+  console.log("COOKIE", student_id);
   const projects: Project[] = await api.project.getProjectByStudent({
     student_id: STUDENT_ID,
   });
@@ -33,7 +33,7 @@ const Profile = async () => {
         </div>
         <div className="item-end flex w-24 flex-col gap-1 font-noto-sans">
           <RegisterParcel />
-          <p>{student?.name}</p>
+          <p>{student_id?.value}</p>
         </div>
       </div>
     </div>
