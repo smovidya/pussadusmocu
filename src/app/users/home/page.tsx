@@ -1,4 +1,5 @@
-import { type Project } from "@prisma/client";
+import { Student, type Project } from "@prisma/client";
+import { cookies } from "next/headers";
 import { NavbarUser } from "~/app/_components/NavbarUser";
 import { ProjectBlog } from "~/app/_components/ProjectsBlog";
 import { RegisterParcel } from "~/app/_components/register-project";
@@ -6,8 +7,13 @@ import { api } from "~/trpc/server";
 import { STUDENT_ID } from "~/utils/constant";
 
 const Profile = async () => {
+  const cookieStore = cookies();
+  const student_id = cookieStore.get('student_id');
   const projects: Project[] = await api.project.getProjectByStudent({
     student_id: STUDENT_ID,
+  });
+  const student = await api.auth.getUser({
+    student_id: student_id?.value ?? ""
   });
 
   return (
@@ -26,6 +32,7 @@ const Profile = async () => {
         </div>
         <div className="item-end flex w-24 flex-col gap-1 font-noto-sans">
           <RegisterParcel />
+          <p>{student?.name}</p>
         </div>
       </div>
     </div>
