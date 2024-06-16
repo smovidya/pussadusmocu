@@ -2,7 +2,6 @@ import { type Project } from "@prisma/client";
 import { cookies } from "next/headers";
 import { NavbarUser } from "~/app/_components/NavbarUser";
 import { ProjectBlog } from "~/app/_components/ProjectsBlog";
-import { RegisterParcel } from "~/app/_components/register-project";
 import { api } from "~/trpc/server";
 import { STUDENT_ID } from "~/utils/constant";
 import { getCookie } from "cookies-next";
@@ -40,10 +39,6 @@ const Profile = async () => {
                 <ProjectBlog project={project} />
               </a>
             ))}
-          </div>
-          <div className="item-end flex w-24 flex-col gap-1 font-noto-sans">
-            <RegisterParcel />
-            <p>{student?.name}</p>
           </div>
         </div>
       </div>
