@@ -21,7 +21,7 @@ const Profile = async () => {
     });
 
     if (!student) {
-      return redirect('/login');
+      return redirect("/login");
     }
 
     return (
@@ -43,7 +43,8 @@ const Profile = async () => {
     );
   } catch (error) {
     console.error("Error fetching data", error);
-    return <div>Error fetching data</div>;
+    redirect('/login');
+    return <div>Session expires</div>;
   }
 };
 
