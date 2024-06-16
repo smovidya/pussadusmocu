@@ -1,14 +1,14 @@
 import { type Project } from "@prisma/client";
+import { cookies } from "next/headers";
 import { NavbarUser } from "~/app/_components/NavbarUser";
 import { ProjectBlog } from "~/app/_components/ProjectsBlog";
 import { RegisterParcel } from "~/app/_components/register-project";
 import { api } from "~/trpc/server";
+import { STUDENT_ID } from "~/utils/constant";
 import { getCookie } from "cookies-next";
 
-const Profile = async (context: { req: unknown; }) => {
-  // Access cookies from context if available
-  const student_id = getCookie("student_id", { req: context.req });
-
+const Profile = async () => {
+  const student_id = getCookie("student_id");
   console.log("COOKIE", student_id);
 
   if (!student_id) {
@@ -18,7 +18,7 @@ const Profile = async (context: { req: unknown; }) => {
 
   try {
     const projects: Project[] = await api.project.getProjectByStudent({
-      student_id,
+      student_id: STUDENT_ID,
     });
     console.log("PROJECTS", projects);
 
