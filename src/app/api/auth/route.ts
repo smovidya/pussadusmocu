@@ -8,7 +8,7 @@ type ServiceValidationResponse = {
 const serviceValidation = async (
   ticket: string,
   DeeAppId: string,
-  DeeAppSecret: string
+  DeeAppSecret: string,
 ): Promise<ServiceValidationResponse> => {
   try {
     const url = "https://account.it.chula.ac.th/serviceValidation";
@@ -25,7 +25,7 @@ const serviceValidation = async (
       },
     });
 
-    const jsonResponse = await response.json() as Record<string, unknown>;
+    const jsonResponse = (await response.json()) as Record<string, unknown>;
 
     if (response.ok) {
       return {
@@ -50,17 +50,27 @@ export async function GET(req: NextRequest) {
   const ticket = req.nextUrl.searchParams.get("ticket");
 
   if (!ticket) {
-    return NextResponse.json({ status: 400, message: "Ticket parameter is missing" });
+    return NextResponse.json({
+      status: 400,
+      message: "Ticket parameter is missing",
+    });
   }
 
   const DeeAppId = process.env.DEE_APP_ID ?? "";
   const DeeAppSecret = process.env.DEE_APP_SECRET ?? "";
 
   if (!DeeAppId || !DeeAppSecret) {
-    return NextResponse.json({ status: 500, message: "App ID or App Secret is missing" });
+    return NextResponse.json({
+      status: 500,
+      message: "App ID or App Secret is missing",
+    });
   }
 
-  const validationResponse = await serviceValidation(ticket, DeeAppId, DeeAppSecret);
+  const validationResponse = await serviceValidation(
+    ticket,
+    DeeAppId,
+    DeeAppSecret,
+  );
 
   return NextResponse.json(validationResponse);
 }
