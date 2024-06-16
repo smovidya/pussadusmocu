@@ -5,8 +5,8 @@ import { redirect } from "next/navigation";
 export default async function Home() {
   const encryptedCookie = getCookie("student_id", { cookies });
   if (encryptedCookie) {
-    redirect("/login");
+    redirect("/users/home");
   }
 
-  redirect("/users/home");
+  redirect("/login");
 }
