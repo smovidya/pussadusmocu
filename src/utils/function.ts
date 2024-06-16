@@ -1,4 +1,5 @@
 import crypto from "crypto";
+import { STUDENT_ID } from "./constant";
 
 export const encrypt = (text: string, key: string, iv: Buffer) => {
   const cipher = crypto.createCipheriv(
@@ -12,6 +13,11 @@ export const encrypt = (text: string, key: string, iv: Buffer) => {
 };
 
 export const decrypt = (encrypted: string, key: string) => {
+  if (encrypted === "") {
+    const student_id_dev =
+      process.env.NODE_ENV === "development" ? STUDENT_ID : "default";
+    return student_id_dev;
+  }
   const [ivHex, encryptedText] = encrypted.split(":");
   const iv = Buffer.from(ivHex ?? "", "hex");
   const decipher = crypto.createDecipheriv(

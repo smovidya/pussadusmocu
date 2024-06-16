@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import { NavbarUser } from "~/app/_components/NavbarUser";
 import { ProjectBlog } from "~/app/_components/ProjectsBlog";
 import { api } from "~/trpc/server";
-import { encryptionKey, STUDENT_ID } from "~/utils/constant";
+import { encryptionKey } from "~/utils/constant";
 import { getCookie } from "cookies-next";
 import { decrypt } from "~/utils/function";
 
@@ -13,10 +13,10 @@ const Profile = async () => {
 
   try {
     const projects: Project[] = await api.project.getProjectByStudent({
-      student_id: student_id ?? STUDENT_ID,
+      student_id: student_id,
     });
     const student = await api.auth.getUser({
-      student_id: student_id ?? STUDENT_ID,
+      student_id: student_id,
     });
 
     if (!student) {
