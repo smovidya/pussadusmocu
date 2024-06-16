@@ -7,7 +7,7 @@ const LoginPage = () => {
     if (env === "development") {
       return "/users/home";
     }
-    return "https://account.it.chula.ac.th/html/login.html?serviceName=PUSSADU-SUCU&service=https://smo-api.bunyawatapp37204.workers.dev/auth/callback";
+    return "https://account.it.chula.ac.th/html/login.html?serviceName=PUSSADU-SUCU&service=https://pussadusmocu.vercel.app/api/auth";
   };
   return (
     <div className="grid h-screen w-screen md:grid-cols-5">
