@@ -8,7 +8,7 @@ import { STUDENT_ID } from "~/utils/constant";
 import { getCookie } from "cookies-next";
 
 const Profile = async () => {
-  const student_id = getCookie("student_id");
+  const student_id = getCookie("student_id", { cookies });
   console.log("COOKIE", student_id);
 
   if (!student_id) {
