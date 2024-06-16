@@ -1,9 +1,24 @@
 import { type NextRequest, NextResponse } from "next/server";
 
+type UserData = {
+    firstname: string;
+    lastname: string;
+    ouid: string;
+    username: string;
+    gecos: string;
+    email: string;
+    disable: boolean;
+    roles: string[];
+    firtnameth: string;
+    lastnameth: string;
+  }
+
 type ServiceValidationResponse = {
   status: number;
   message: string | Record<string, unknown>;
 };
+
+
 
 const serviceValidation = async (
   ticket: string,
@@ -72,5 +87,7 @@ export async function GET(req: NextRequest) {
     DeeAppSecret,
   );
 
-  return NextResponse.json(validationResponse);
+  const data : UserData = validationResponse.message as UserData;
+
+  return NextResponse.json(data);
 }
