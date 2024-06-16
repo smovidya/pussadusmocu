@@ -88,6 +88,12 @@ export async function GET(req: NextRequest) {
 
   const data: UserData = validationResponse.message as UserData;
   const cookieStore = cookies();
-  cookieStore.set("student_id", data.ouid);
+  const oneDay = 24 * 60 * 60 * 1000
+  cookieStore.set("student_id", data.ouid, {
+    httpOnly: true,
+    path: '/',
+    secure: true,
+    expires: Date.now() - oneDay,
+  });
   return NextResponse.redirect("https://pussadusmocu.vercel.app/users/home");
 }
