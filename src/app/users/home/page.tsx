@@ -6,12 +6,11 @@ import { api } from "~/trpc/server";
 import { encryptionKey } from "~/utils/constant";
 import { getCookie } from "cookies-next";
 import { decrypt } from "~/utils/function";
-import { useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 
 const Profile = async () => {
   const encryptedCookie = getCookie("student_id", { cookies });
   const student_id = decrypt(encryptedCookie ?? "", encryptionKey);
-  const router = useRouter();
 
   try {
     const projects: Project[] = await api.project.getProjectByStudent({
@@ -22,7 +21,7 @@ const Profile = async () => {
     });
 
     if (!student) {
-      return router.push("/login");
+      return redirect('/login');
     }
 
     return (
