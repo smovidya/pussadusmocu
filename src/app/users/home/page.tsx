@@ -43,7 +43,7 @@ const Profile = async () => {
     );
   } catch (error) {
     console.error("Error fetching data", error);
-    redirect('/login');
+    redirect("/login");
     return <div>Session expires</div>;
   }
 };
