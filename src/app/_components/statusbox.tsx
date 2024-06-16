@@ -5,14 +5,12 @@ import { api } from "~/trpc/react";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableFooter,
-  TableHead,
   TableHeader,
   TableRow,
 } from "~/components/ui/table";
-import { Parcellist } from "~/utils/constant";
+import { type Parcellist } from "~/utils/constant";
 import Image from "next/image";
 import { Button } from "~/components/ui/button";
 import { format } from "date-fns";
