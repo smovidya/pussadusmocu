@@ -8,23 +8,18 @@ import { getCookie } from "cookies-next";
 
 const Profile = async () => {
   const student_id = getCookie("student_id", { cookies });
-  console.log("COOKIE", student_id);
-
-  if (!student_id) {
-    console.error("Student ID cookie is missing");
-    return <div>Error: Student ID cookie is missing</div>;
-  }
 
   try {
     const projects: Project[] = await api.project.getProjectByStudent({
-      student_id: STUDENT_ID,
+      student_id: student_id ?? STUDENT_ID,
     });
-    console.log("PROJECTS", projects);
-
     const student = await api.auth.getUser({
-      student_id: student_id,
+      student_id: student_id ?? STUDENT_ID,
     });
-    console.log("STUDENT", student);
+
+    if (!student) {
+      return <div className="text-6xl">not found stunt</div>;
+    }
 
     return (
       <div className="flex h-full w-full flex-col gap-2">

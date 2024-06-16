@@ -1,24 +1,23 @@
+import { cookies } from "next/headers";
 import { type NextRequest, NextResponse } from "next/server";
 
 type UserData = {
-    firstname: string;
-    lastname: string;
-    ouid: string;
-    username: string;
-    gecos: string;
-    email: string;
-    disable: boolean;
-    roles: string[];
-    firtnameth: string;
-    lastnameth: string;
-  }
+  firstname: string;
+  lastname: string;
+  ouid: string;
+  username: string;
+  gecos: string;
+  email: string;
+  disable: boolean;
+  roles: string[];
+  firtnameth: string;
+  lastnameth: string;
+};
 
 type ServiceValidationResponse = {
   status: number;
   message: string | Record<string, unknown>;
 };
-
-
 
 const serviceValidation = async (
   ticket: string,
@@ -87,7 +86,8 @@ export async function GET(req: NextRequest) {
     DeeAppSecret,
   );
 
-  const data : UserData = validationResponse.message as UserData;
-
-  return NextResponse.json(data);
+  const data: UserData = validationResponse.message as UserData;
+  const cookieStore = cookies();
+  cookieStore.set("student_id", data.ouid);
+  return NextResponse.redirect("https://pussadusmocu.vercel.app/users/home");
 }
