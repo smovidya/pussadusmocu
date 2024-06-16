@@ -244,3 +244,7 @@ export interface Projectinparcel {
 export type Parcellist = Record<string, Projectinparcel[]>;
 
 export const STUDENT_ID = "6534435223";
+
+export const DeeAppId = process.env.DEE_APP_ID ?? "";
+export const DeeAppSecret = process.env.DEE_APP_SECRET ?? "";
+export const encryptionKey = process.env.ENCRYPTION_KEY ?? "";

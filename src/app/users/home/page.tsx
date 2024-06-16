@@ -3,11 +3,13 @@ import { cookies } from "next/headers";
 import { NavbarUser } from "~/app/_components/NavbarUser";
 import { ProjectBlog } from "~/app/_components/ProjectsBlog";
 import { api } from "~/trpc/server";
-import { STUDENT_ID } from "~/utils/constant";
+import { encryptionKey, STUDENT_ID } from "~/utils/constant";
 import { getCookie } from "cookies-next";
+import { decrypt } from "~/utils/function";
 
 const Profile = async () => {
-  const student_id = getCookie("student_id", { cookies });
+  const encryptedCookie = getCookie("student_id", { cookies });
+  const student_id = decrypt(encryptedCookie ?? "", encryptionKey);
 
   try {
     const projects: Project[] = await api.project.getProjectByStudent({

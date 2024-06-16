@@ -1,5 +1,8 @@
 import { cookies } from "next/headers";
 import { type NextRequest, NextResponse } from "next/server";
+import { encrypt } from "~/utils/function";
+import crypto from "crypto";
+import { DeeAppId, DeeAppSecret, encryptionKey } from "~/utils/constant";
 
 type UserData = {
   firstname: string;
@@ -70,9 +73,6 @@ export async function GET(req: NextRequest) {
     });
   }
 
-  const DeeAppId = process.env.DEE_APP_ID ?? "";
-  const DeeAppSecret = process.env.DEE_APP_SECRET ?? "";
-
   if (!DeeAppId || !DeeAppSecret) {
     return NextResponse.json({
       status: 500,
@@ -89,7 +89,13 @@ export async function GET(req: NextRequest) {
   const data: UserData = validationResponse.message as UserData;
   const cookieStore = cookies();
   const oneDay = 24 * 60 * 60 * 1000;
-  cookieStore.set("student_id", data.ouid, {
+
+  // Encrypt the `ouid`
+  const iv = crypto.randomBytes(16);
+  const encryptedOuid = encrypt(data.ouid, encryptionKey, iv);
+  const encryptedOuidWithIv = iv.toString("hex") + ":" + encryptedOuid;
+
+  cookieStore.set("student_id", encryptedOuidWithIv, {
     secure: true,
     httpOnly: true,
     expires: Date.now() + oneDay,
