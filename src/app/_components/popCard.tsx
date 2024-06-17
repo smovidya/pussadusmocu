@@ -103,6 +103,7 @@ const PopupCard: React.FC<PopupCardProps> = ({
               alt={parcelProject.id}
               width={300}
               height={300}
+              loading="eager"
             />
           </div>
           <div className="flex flex-col gap-4 p-2">

@@ -2,6 +2,13 @@ import Image from "next/image";
 import AgreementDialog from "../_components/AgreementDialog";
 
 const LoginPage = () => {
+  const getURLByEnv = () => {
+    const env = process.env.NODE_ENV;
+    if (env === "development") {
+      return "/users/home";
+    }
+    return "https://account.it.chula.ac.th/html/login.html?serviceName=PUSSADU-SUCU&service=https://pussadusmocu.vercel.app/api/auth";
+  };
   return (
     <div className="grid h-screen w-screen md:grid-cols-5">
       <div className="col-span-3 hidden items-center justify-center md:flex md:bg-yellow01">
@@ -35,7 +42,7 @@ const LoginPage = () => {
           <div className="mb-28 font-noto-sans text-subHead2 font-bold md:text-subHead1">
             สโมสรนิสิตคณะวิทยาศาสตร์
           </div>
-          <a href="/users/home">
+          <a href={getURLByEnv()}>
             <button
               type="button"
               data-modal-target="default-model"

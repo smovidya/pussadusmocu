@@ -201,12 +201,21 @@ export const parcelRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       try {
         await new Promise((resolve) => setTimeout(resolve, 1000));
-        const deletedParcel = await ctx.db.parcel.delete({
-          where: {
-            parcel_id: input.parcel_id,
-          },
+        return ctx.db.$transaction(async (tx) => {
+          await tx.parcel_Project.deleteMany({
+            where: {
+              parcel_id: input.parcel_id,
+              NOT: {
+                status: "INUSE",
+              },
+            },
+          });
+          await tx.parcel.delete({
+            where: {
+              parcel_id: input.parcel_id,
+            },
+          });
         });
-        return deletedParcel;
       } catch (error) {
         if (error instanceof TRPCError) {
           throw new TRPCError({

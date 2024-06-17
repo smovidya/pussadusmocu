@@ -1,5 +1,9 @@
 import { z } from "zod";
-import { BORROWING_STATUS, type Project, type Parcel } from "@prisma/client";
+import {
+  type BORROWING_STATUS,
+  type Project,
+  type Parcel,
+} from "@prisma/client";
 
 export const ParcelGroupSchema = z.enum([
   "OFFICE",
@@ -14,7 +18,7 @@ export const ParcelGroupSchema = z.enum([
   "COMPUTER",
 ]);
 
-export const ParcelTypeSchema = z.enum(["NORMAL", "DURABLE"]);
+export const ParcelTypeSchema = z.enum(["NORMAL", "DURABLE", "KEY"]);
 
 export const ParcelDepartmentSchema = z.enum([
   "SMO",
@@ -99,6 +103,10 @@ export const types = [
   {
     value: "DURABLE",
     label: "ครุภัณฑ์",
+  },
+  {
+    value: "KEY",
+    label: "กุญแจ",
   },
 ];
 
@@ -236,3 +244,7 @@ export interface Projectinparcel {
 export type Parcellist = Record<string, Projectinparcel[]>;
 
 export const STUDENT_ID = "6534435223";
+
+export const DeeAppId = process.env.DEE_APP_ID ?? "";
+export const DeeAppSecret = process.env.DEE_APP_SECRET ?? "";
+export const encryptionKey = process.env.ENCRYPTION_KEY ?? "";

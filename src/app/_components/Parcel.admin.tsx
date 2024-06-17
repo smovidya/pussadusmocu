@@ -189,6 +189,7 @@ const ParcelAdmin = ({ parcel }: BlogProps) => {
                 width={172}
                 height={172}
                 alt="Parcel Image"
+                loading="eager"
               />
             )}
           </CardContent>
