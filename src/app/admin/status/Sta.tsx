@@ -22,12 +22,8 @@ function Sta({
   const [currentParcelProject, setCurrentParcelProject] =
     useState<ParcelProjectWithDetails | null>(null);
 
-  const [selectedProjectId, setSelectedProjectId] = useState<string | null>(
-    null,
-  );
-
+  const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
   const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
-
   const openPopup = (parcelsProject: ParcelProjectWithDetails) => {
     setCurrentParcelProject(parcelsProject);
     setIsOpen(true);
