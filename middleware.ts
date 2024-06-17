@@ -8,7 +8,7 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect("/login");
   }
 
-  return NextResponse.redirect(request.url);
+  return NextResponse.json(cookie);
 }
 
 export const config = {
