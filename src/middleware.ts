@@ -3,14 +3,14 @@ import { type NextRequest } from "next/server";
 
 export function middleware(request: NextRequest) {
   const cookie = request.cookies.has("student_id");
-  console.log("COOKIE", cookie);
   if (!cookie) {
     return NextResponse.redirect("/login");
   }
 
-  return NextResponse.json(cookie);
+
+  return NextResponse.redirect(request.url);
 }
 
 export const config = {
-  matcher: "/users/cart",
+  matcher: "/users/:path*",
 };
