@@ -4,11 +4,10 @@ import { type NextRequest } from "next/server";
 export function middleware(request: NextRequest) {
   const cookie = request.cookies.has("student_id");
   if (!cookie) {
-    return NextResponse.redirect("/login");
+    return NextResponse.rewrite("/login");
   }
 
-
-  return NextResponse.redirect(request.url);
+  return NextResponse.rewrite(request.url);
 }
 
 export const config = {
