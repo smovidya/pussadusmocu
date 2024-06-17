@@ -26,6 +26,7 @@ function Sta({
     null,
   );
   const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
+
   const openPopup = (parcelsProject: ParcelProjectWithDetails) => {
     setCurrentParcelProject(parcelsProject);
     setIsOpen(true);
@@ -54,7 +55,7 @@ function Sta({
       router.refresh();
     },
     onError: (error) => {
-      console.error("REturn error", error);
+      console.error("Return error", error);
     },
   });
 
