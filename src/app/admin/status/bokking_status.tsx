@@ -5,7 +5,7 @@ import { Button } from "~/components/ui/button";
 import PopupCard from "~/app/_components/popCard";
 import Dropdown from "~/app/_components/dropdown";
 import StatusDropdown from "~/app/_components/StatusDropdown";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { type ParcelProjectWithDetails } from "./page";
 import { api } from "~/trpc/react";
 import { useRouter } from "next/navigation";
@@ -26,6 +26,11 @@ function Sta({
     null,
   );
   const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const openPopup = (parcelsProject: ParcelProjectWithDetails) => {
     setCurrentParcelProject(parcelsProject);
@@ -100,6 +105,10 @@ function Sta({
       selectedProjectId ? pp.project.project_id === selectedProjectId : true,
     )
     .filter((pp) => (selectedStatus ? pp.status === selectedStatus : true));
+
+  if (!isMounted) {
+    return null; // or a loading indicator
+  }
 
   return (
     <div className="flex h-full w-full flex-col items-center gap-2 font-noto-sans">
