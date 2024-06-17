@@ -3,8 +3,7 @@ import { type NextRequest } from "next/server";
 
 export function middleware(request: NextRequest) {
   const cookie = request.cookies.get("student_id");
-  if (!cookie?.value) {
-    console.log("PASS");
+  if (!cookie) {
     return NextResponse.redirect("/login");
   }
 
