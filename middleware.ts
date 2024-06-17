@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { type NextRequest } from "next/server";
 
 export function middleware(request: NextRequest) {
-  const cookie = request.cookies.get("student_id");
+  const cookie = request.cookies.has("student_id");
   if (!cookie) {
     return NextResponse.redirect("/login");
   }
@@ -11,5 +11,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: "/users/cart",
+  matcher: '/users/:path*',
 };
