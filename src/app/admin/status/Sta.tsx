@@ -22,7 +22,9 @@ function Sta({
   const [currentParcelProject, setCurrentParcelProject] =
     useState<ParcelProjectWithDetails | null>(null);
 
-  const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null,);
+  const [selectedProjectId, setSelectedProjectId] = useState<string | null>(
+    null,
+  );
 
   const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
 
@@ -93,15 +95,17 @@ function Sta({
     };
     return new Date(dateString).toLocaleDateString("en-GB", options);
   };
-  
+
   const filteredParcelsProjects = parcelsProjects
-    .filter((pp) => (selectedProjectId ? pp.project.project_id === selectedProjectId : true))
+    .filter((pp) =>
+      selectedProjectId ? pp.project.project_id === selectedProjectId : true,
+    )
     .filter((pp) => (selectedStatus ? pp.status === selectedStatus : true));
 
   return (
     <div className="flex h-full w-full flex-col items-center gap-2 font-noto-sans">
       <Navbar />
-      <div className="flex w-4/6 flex-grid">
+      <div className="flex-grid flex w-4/6">
         <Dropdown setSelectedProjectId={setSelectedProjectId} />
         <StatusDropdown setSelectedStatus={setSelectedStatus} />
       </div>
