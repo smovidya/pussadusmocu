@@ -4,6 +4,7 @@ import { Navbar } from "~/app/_components/Navbar";
 import { Button } from "~/components/ui/button";
 import PopupCard from "~/app/_components/popCard";
 import Dropdown from "~/app/_components/dropdown";
+import StatusDropdown from "~/app/_components/StatusDropdown";
 import React, { useState } from "react";
 import { type ParcelProjectWithDetails } from "./page";
 import { api } from "~/trpc/react";
@@ -21,9 +22,9 @@ function Sta({
   const [currentParcelProject, setCurrentParcelProject] =
     useState<ParcelProjectWithDetails | null>(null);
 
-  const [selectedProjectId, setSelectedProjectId] = useState<string | null>(
-    null,
-  );
+  const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null,);
+
+  const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
 
   const openPopup = (parcelsProject: ParcelProjectWithDetails) => {
     setCurrentParcelProject(parcelsProject);
@@ -92,16 +93,18 @@ function Sta({
     };
     return new Date(dateString).toLocaleDateString("en-GB", options);
   };
-  const filteredParcelsProjects = selectedProjectId
-    ? parcelsProjects.filter(
-        (pp) => pp.project.project_id === selectedProjectId,
-      )
-    : parcelsProjects;
+  
+  const filteredParcelsProjects = parcelsProjects
+    .filter((pp) => (selectedProjectId ? pp.project.project_id === selectedProjectId : true))
+    .filter((pp) => (selectedStatus ? pp.status === selectedStatus : true));
 
   return (
     <div className="flex h-full w-full flex-col items-center gap-2 font-noto-sans">
       <Navbar />
-      <Dropdown setSelectedProjectId={setSelectedProjectId} />
+      <div className="flex w-4/6 flex-grid">
+        <Dropdown setSelectedProjectId={setSelectedProjectId} />
+        <StatusDropdown setSelectedStatus={setSelectedStatus} />
+      </div>
       {filteredParcelsProjects?.map((parcelsProject) => (
         <div
           key={parcelsProject.id}
