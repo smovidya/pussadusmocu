@@ -44,6 +44,7 @@ const LoginPage = () => {
           </div>
           <a href={getURLByEnv()}>
             <button
+              name="log-in-button"
               type="button"
               data-modal-target="default-model"
               data-modal-toggle="default-modal"
