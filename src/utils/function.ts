@@ -23,17 +23,14 @@ export const encrypt = (text: string, key: string) => {
   return `${iv.toString("hex")}:${encrypted}`;
 };
 
-export const decrypt = (encrypted: string, key: string) => {
+export const decrypt = (encrypted: string, key: Buffer) => {
   if (encrypted === "") {
     return process.env.NODE_ENV === "development" ? STUDENT_ID : "default";
   }
+
   const [ivHex, encryptedText] = encrypted.split(":");
   const iv = Buffer.from(ivHex ?? "", "hex");
-  const decipher = crypto.createDecipheriv(
-    "chacha20-poly1305",
-    generate32ByteKey(key),
-    iv,
-  );
+  const decipher = crypto.createDecipheriv("chacha20-poly1305", key, iv);
   let decrypted = decipher.update(encryptedText ?? "", "hex", "utf8");
   decrypted += decipher.final("utf8");
   return decrypted;
