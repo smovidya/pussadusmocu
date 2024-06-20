@@ -1,7 +1,6 @@
 import { cookies } from "next/headers";
 import { type NextRequest, NextResponse } from "next/server";
 import { encrypt } from "~/utils/function";
-import crypto from "crypto";
 import { DeeAppId, DeeAppSecret, encryptionKey } from "~/utils/constant";
 
 type UserData = {
