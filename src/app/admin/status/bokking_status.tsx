@@ -63,17 +63,19 @@ function Sta({
     setCurrentParcelProject(null);
   };
 
-  const updateAccept = async (id: string) => {
+  const updateAccept = async (id: string, description_input: string) => {
     setIsOpen(false);
     updateparcel.mutate({
       parcel_project_id: id,
+      description: description_input,
     });
   };
 
-  const updateReject = async (id: string) => {
+  const updateReject = async (id: string, description_input: string) => {
     setIsOpen(false);
     rejectParcel.mutate({
       parcel_project_id: id,
+      description: description_input,
     });
   };
 
@@ -110,23 +112,26 @@ function Sta({
       {filteredParcelsProjects?.map((parcelsProject) => (
         <div
           key={parcelsProject.id}
-          className="flex w-full mx-20 lg:w-4/6 flex-grow flex-col rounded-lg border-gray-300 px-6 py-4 shadow-md"
+          className="mx-20 flex w-full flex-grow flex-col rounded-lg border-gray-300 px-6 py-4 shadow-md lg:w-4/6"
         >
           <h1 className="mb-3 border-b border-gray-300 pb-2">
             {parcelsProject.project.project_id} | {parcelsProject.project.title}
           </h1>
 
-          <div className="text-md grid grid-cols-2 sm:grid-cols-5 items-center justify-center 
-          gap-3 border-black">
-
+          <div
+            className="text-md grid grid-cols-2 items-center justify-center gap-3 
+          border-black sm:grid-cols-5"
+          >
             <div className="sm:col-span-1">
-              <img src={parcelsProject.parcel.image_url} alt={parcelsProject.id}
-                className="object-contain h-full w-full"
+              <img
+                src={parcelsProject.parcel.image_url}
+                alt={parcelsProject.id}
+                className="h-full w-full object-contain"
                 loading="eager"
               />
             </div>
 
-            <div className="flex flex-col sm:grid sm:grid-cols-4 sm:col-span-4 justify-items-center ">
+            <div className="flex flex-col justify-items-center sm:col-span-4 sm:grid sm:grid-cols-4 ">
               <div>
                 <p>
                   {parcelsProject.parcel.parcel_id} |{" "}
@@ -159,8 +164,8 @@ function Sta({
                 {isOpen && currentParcelProject?.id === parcelsProject.id && (
                   <PopupCard
                     onClose={closePopup}
-                    onAccept={() => updateAccept(parcelsProject.id)}
-                    onReject={() => updateReject(parcelsProject.id)}
+                    onAccept={(description_input:string) => updateAccept(parcelsProject.id,description_input)}
+                    onReject={(description_input:string) => updateReject(parcelsProject.id,description_input)}
                     onReturn={(quantity: number) =>
                       updateTostock(parcelsProject.id, quantity)
                     }
@@ -168,9 +173,7 @@ function Sta({
                   />
                 )}
               </div>
-
             </div>
-
           </div>
         </div>
       ))}
