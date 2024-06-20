@@ -1,7 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-redundant-type-constituents */
 "use client";
 
 import * as React from "react";
@@ -23,10 +19,8 @@ import { datepickerSelector, setDate } from "~/stores/slices/datepicker";
 export function DatePickerWithRange({
   className,
 }: React.HTMLAttributes<HTMLDivElement>) {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const [date, setDateState] = React.useState<DateRange | undefined>({
     from: new Date(2023, 0, 20),
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
     to: addDays(new Date(2023, 0, 20), 20),
   });
 

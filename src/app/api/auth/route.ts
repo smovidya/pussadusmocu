@@ -90,12 +90,9 @@ export async function GET(req: NextRequest) {
   const cookieStore = cookies();
   const oneDay = 24 * 60 * 60 * 1000;
 
-  // Encrypt the `ouid`
-  const iv = crypto.randomBytes(16);
-  const encryptedOuid = encrypt(data.ouid, encryptionKey, iv);
-  const encryptedOuidWithIv = iv.toString("hex") + ":" + encryptedOuid;
+  const encryptedOuid = encrypt(data.ouid, encryptionKey);
 
-  cookieStore.set("student_id", encryptedOuidWithIv, {
+  cookieStore.set("student_id", encryptedOuid, {
     secure: true,
     httpOnly: true,
     expires: Date.now() + oneDay,

@@ -1,27 +1,26 @@
 import crypto from "crypto";
 import { STUDENT_ID } from "./constant";
 
-export const encrypt = (text: string, key: string, iv: Buffer) => {
+export const encrypt = (text: string, key: string) => {
+  const iv = crypto.randomBytes(16); // AES-CTR typically uses a 16-byte IV
   const cipher = crypto.createCipheriv(
-    "aes-256-cbc",
+    "aes-256-ctr",
     Buffer.from(key, "hex"),
     iv,
   );
   let encrypted = cipher.update(text, "utf8", "hex");
   encrypted += cipher.final("hex");
-  return encrypted;
+  return `${iv.toString("hex")}:${encrypted}`;
 };
 
 export const decrypt = (encrypted: string, key: string) => {
   if (encrypted === "") {
-    const student_id_dev =
-      process.env.NODE_ENV === "development" ? STUDENT_ID : "default";
-    return student_id_dev;
+    return process.env.NODE_ENV === "development" ? STUDENT_ID : "default";
   }
   const [ivHex, encryptedText] = encrypted.split(":");
   const iv = Buffer.from(ivHex ?? "", "hex");
   const decipher = crypto.createDecipheriv(
-    "aes-256-cbc",
+    "aes-256-ctr",
     Buffer.from(key, "hex"),
     iv,
   );

@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 pnpm run format
 pnpm run check
+pnpm run lint
