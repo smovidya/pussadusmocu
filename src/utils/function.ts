@@ -4,7 +4,7 @@ import { STUDENT_ID } from "./constant";
 // Function to encrypt text using ChaCha20
 export const encrypt = (text: string, key: string) => {
   const iv = crypto.randomBytes(12); // ChaCha20 typically uses a 12-byte nonce
-  const cipher = crypto.createCipheriv("chacha20", Buffer.from(key, "hex"), iv);
+  const cipher = crypto.createCipheriv("chacha20-poly1305", Buffer.from(key, "hex"), iv);
   let encrypted = cipher.update(text, "utf8", "hex");
   encrypted += cipher.final("hex");
   return `${iv.toString("hex")}:${encrypted}`;
@@ -18,7 +18,7 @@ export const decrypt = (encrypted: string, key: string) => {
   const [ivHex, encryptedText] = encrypted.split(":");
   const iv = Buffer.from(ivHex ?? "", "hex");
   const decipher = crypto.createDecipheriv(
-    "chacha20",
+    "chacha20-poly1305",
     Buffer.from(key, "hex"),
     iv,
   );
