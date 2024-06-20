@@ -4,7 +4,7 @@ import { STUDENT_ID } from "./constant";
 export const encrypt = (text: string, key: string) => {
   const iv = crypto.randomBytes(16); // AES-CTR typically uses a 16-byte IV
   const cipher = crypto.createCipheriv(
-    "aes-256-ctr",
+    "chacha20-poly1305",
     Buffer.from(key, "hex"),
     iv,
   );
@@ -20,7 +20,7 @@ export const decrypt = (encrypted: string, key: string) => {
   const [ivHex, encryptedText] = encrypted.split(":");
   const iv = Buffer.from(ivHex ?? "", "hex");
   const decipher = crypto.createDecipheriv(
-    "aes-256-ctr",
+    "chacha20-poly1305",
     Buffer.from(key, "hex"),
     iv,
   );
