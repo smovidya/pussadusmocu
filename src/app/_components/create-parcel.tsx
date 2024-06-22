@@ -99,7 +99,11 @@ export function CreateParcel() {
     reader.onload = () => {
       //me.modelvalue = reader.result;
       const result = reader.result?.toString() ?? "";
-      setImageUrl(result.split("data:image/png;base64,")[1] ?? "");
+      let split_result = result.split("data:image/png;base64,");
+      if (split_result.length !== 2) {
+        split_result = result.split("data:image/jpeg;base64,");
+      }
+      setImageUrl(split_result[1] ?? "");
     };
     reader.onerror = (error) => {
       console.error("Error:", error);

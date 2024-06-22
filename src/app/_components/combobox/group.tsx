@@ -60,7 +60,7 @@ export function Group({ options }: Props) {
             {options.map((option) => (
               <CommandItem
                 key={option.value}
-                value={option.value}
+                value={option.label}
                 onSelect={(currentValue) => {
                   dispatch(
                     selectedOption({
