@@ -58,6 +58,7 @@ export const FormSchema = z.object({
     .nullable()
     .optional(),
   description: z.string(),
+  unit: z.string(),
   type: ParcelTypeSchema,
   group: ParcelGroupSchema,
   amount: z

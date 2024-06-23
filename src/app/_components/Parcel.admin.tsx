@@ -49,6 +49,7 @@ const ParcelAdmin = ({ parcel }: BlogProps) => {
       group: parcel.group,
       amount: parcel.amount,
       available: parcel.available,
+      unit: parcel.unit,
       department: parcel.department ?? "SMO",
       image: undefined,
     },
@@ -155,6 +156,7 @@ const ParcelAdmin = ({ parcel }: BlogProps) => {
       editParcel.mutate({
         name: data.parcel_title,
         amount: data.amount,
+        unit: data.unit,
         available: data.available,
         department: data.department,
         description: data.description,
@@ -194,7 +196,7 @@ const ParcelAdmin = ({ parcel }: BlogProps) => {
             )}
           </CardContent>
           <CardFooter>
-            <p>Remain {parcel.amount}</p>
+            <p className="text-blue-950 font-normal">Remain {parcel.amount} {parcel.unit}</p>
             <p>{parcel.available}</p>
           </CardFooter>
         </Card>
@@ -298,7 +300,18 @@ const ParcelAdmin = ({ parcel }: BlogProps) => {
                   className="col-span-3"
                 />
               </div>
-              <div className="grid grid-cols-2 items-center justify-start gap-4">
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="desc" className="text-right">
+                  หน่วย
+                </Label>
+                <Input
+                  disabled={disabled}
+                  type="text"
+                  {...form.register("unit")}
+                  className="col-span-3"
+                />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="desc" className="text-right">
                   ใช้งานได้
                 </Label>
@@ -313,7 +326,7 @@ const ParcelAdmin = ({ parcel }: BlogProps) => {
             <div className="grid grid-cols-2 gap-4">
               <Button
                 type="submit"
-                className="bg-black text-white"
+                className="bg-black text-white hover:bg-grey01"
                 disabled={disabled}
               >
                 {" "}
@@ -321,7 +334,7 @@ const ParcelAdmin = ({ parcel }: BlogProps) => {
               </Button>
               <Button
                 type="button"
-                className="bg-red01 text-white"
+                className="bg-red01 text-white hover:bg-red-300"
                 onClick={onDelete}
               >
                 ลบ

@@ -79,6 +79,7 @@ export function CreateParcel() {
       type: ParcelTypeSchema.Values.NORMAL,
       group: ParcelGroupSchema.Values.OFFICE,
       amount: 0,
+      unit: "ชิ้น",
       available: true,
       department: ParcelDepartmentSchema.Values.SMO,
       image: undefined,
@@ -140,6 +141,7 @@ export function CreateParcel() {
         group: group,
         image_url: img,
         id: data.parcel_id,
+        unit: data.unit,
         name: data.parcel_title,
         description: data.description,
       });
@@ -256,7 +258,18 @@ export function CreateParcel() {
                   {...form.register("department")}
                 />
               </div>
-              <div className="grid grid-cols-2 items-center justify-start gap-4">
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="desc" className="text-right">
+                  หน่วย
+                </Label>
+                <Input
+                  disabled={disabled}
+                  type="text"
+                  {...form.register("unit")}
+                  className="col-span-3"
+                />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="desc" className="text-right">
                   ใช้งานได้
                 </Label>
@@ -284,7 +297,7 @@ export function CreateParcel() {
           <DialogClose asChild>
             <Button
               type="submit"
-              className="bg-red01 text-white"
+              className="bg-red01 text-white hover:bg-red-500"
               onClick={() => setClose(false)}
             >
               ปิด

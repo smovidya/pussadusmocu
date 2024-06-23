@@ -53,6 +53,7 @@ model Parcel {
   description String?
   amount      Int              @default(1)
   available   Boolean          @default(true)
+  unit        String           @default("ชิ้น")
   image_url   String
   type        PARCEL_TYPE
   group       PARCEL_GROUP

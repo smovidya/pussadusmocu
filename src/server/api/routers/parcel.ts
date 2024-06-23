@@ -111,6 +111,7 @@ export const parcelRouter = createTRPCRouter({
         description: z.string(),
         id: z.string().min(10),
         image_url: z.string(),
+        unit: z.string(),
         amount: z.number().positive(),
         department: ParcelDepartmentSchema,
         group: ParcelGroupSchema,
@@ -128,6 +129,7 @@ export const parcelRouter = createTRPCRouter({
             description: input.description,
             image_url: input.image_url,
             group: input.group,
+            unit: input.unit,
             type: input.type,
             department: input.department,
             amount: input.amount,
@@ -151,6 +153,7 @@ export const parcelRouter = createTRPCRouter({
         description: z.string(),
         id: z.string().min(10),
         image_url: z.string(),
+        unit: z.string(),
         amount: z.number().positive(),
         department: ParcelDepartmentSchema,
         group: ParcelGroupSchema,
@@ -174,6 +177,7 @@ export const parcelRouter = createTRPCRouter({
             department: input.department,
             group: input.group,
             type: input.type,
+            unit: input.unit
           },
         });
         return updatedParcel;
