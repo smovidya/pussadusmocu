@@ -7,6 +7,8 @@ import { CreateParcel } from "~/app/_components/create-parcel";
 import { Navbar } from "~/app/_components/Navbar";
 import ParcelAdmin from "~/app/_components/Parcel.admin";
 import { GroupDropdown } from "~/app/_components/GroupDropdown";
+import { useSelector } from "react-redux";
+import { parcelSelector } from "~/stores/slices/search";
 
 interface ParcelProps {
   parcels: Parcel[];
@@ -15,10 +17,13 @@ interface ParcelProps {
 export function Parcels({ parcels }: ParcelProps) {
   const [selectedType, setSelectedType] = useState<string | null>(null);
   const [selectedGroup, setSelectedGroup] = useState<string | null>(null);
+  const parcelReducer = useSelector(parcelSelector);
+  const name = parcelReducer.name;
 
   const filteredParcelsProjects = parcels
     .filter((pp) => (selectedType ? pp.type === selectedType : true))
-    .filter((pp) => (selectedGroup ? pp.group === selectedGroup : true));
+    .filter((pp) => (selectedGroup ? pp.group === selectedGroup : true))
+    .filter((pp) => (name !== "" ? pp.title.includes(name) : true));
 
   return (
     <div className="flex h-full w-full flex-col gap-2 font-noto-sans">

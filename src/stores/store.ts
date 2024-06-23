@@ -5,6 +5,8 @@ import groupReducer from "./slices/group";
 import departmentReducer from "./slices/department";
 import datepickerReducer from "./slices/datepicker";
 import projectReducer from "./slices/project";
+import parcelReducer from "./slices/search";
+
 
 export const store = configureStore({
   reducer: {
@@ -13,6 +15,7 @@ export const store = configureStore({
     departmentReducer,
     datepickerReducer,
     projectReducer,
+    parcelReducer
   },
 });
 
