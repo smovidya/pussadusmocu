@@ -10,7 +10,6 @@ import {
   CardTitle,
   CardDescription,
   CardContent,
-  CardFooter,
 } from "~/components/ui/card";
 import { Dialog, DialogContent, DialogTrigger } from "~/components/ui/dialog";
 import { Input } from "~/components/ui/input";
@@ -179,7 +178,7 @@ const ParcelAdmin = ({ parcel }: BlogProps) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Card className="h-auto w-44 font-noto-sans hover:scale-105 hover:cursor-pointer">
+        <Card className="h-auto min-w-44 font-noto-sans hover:scale-105 hover:cursor-pointer bg-slate-100 shadow-md">
           <CardHeader>
             <CardTitle>{parcel.title}</CardTitle>
             <CardDescription>{parcel.description}</CardDescription>
@@ -195,12 +194,12 @@ const ParcelAdmin = ({ parcel }: BlogProps) => {
               />
             )}
           </CardContent>
-          <CardFooter>
-            <p className="font-normal text-blue-950">
+          <p className="font-normal text-blue-950 text-center">
               Remain {parcel.amount} {parcel.unit}
             </p>
-            <p>{parcel.available}</p>
-          </CardFooter>
+            <p className={parcel.available ? "text-green-500 text-center" : "text-red-500 text-center"}>
+                {parcel.available ? "ใช้งานได้" : "ใช้ไม่ได้"}
+              </p>
         </Card>
       </DialogTrigger>
       <DialogContent className="min-w-[700px] font-noto-sans sm:max-w-[425px]">
