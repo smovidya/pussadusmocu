@@ -133,11 +133,13 @@ function Sta({
           border-black sm:grid-cols-5"
           >
             <div className="sm:col-span-1">
-              <img
+              <Image
                 src={parcelsProject.parcel.image_url}
                 alt={parcelsProject.id}
                 className="h-full w-full object-contain"
                 loading="eager"
+                width={120}
+                height={120}
               />
             </div>
 
