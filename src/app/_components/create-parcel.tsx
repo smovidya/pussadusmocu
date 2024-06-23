@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Compressor from "compressorjs"; // Import Compressor
 import { Input } from "~/components/ui/input";
 import { Button } from "~/components/ui/button";
 import { Label } from "~/components/ui/label";
@@ -95,20 +96,28 @@ export function CreateParcel() {
       return;
     }
 
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      //me.modelvalue = reader.result;
-      const result = reader.result?.toString() ?? "";
-      let split_result = result.split("data:image/png;base64,");
-      if (split_result.length !== 2) {
-        split_result = result.split("data:image/jpeg;base64,");
-      }
-      setImageUrl(split_result[1] ?? "");
-    };
-    reader.onerror = (error) => {
-      console.error("Error:", error);
-    };
+    new Compressor(file, {
+      quality: 0.6, // Adjust quality as needed
+      maxWidth: 1000, // Adjust max width as needed
+      success(compressedFile) {
+        const reader = new FileReader();
+        reader.readAsDataURL(compressedFile);
+        reader.onload = () => {
+          const result = reader.result?.toString() ?? "";
+          let split_result = result.split("data:image/png;base64,");
+          if (split_result.length !== 2) {
+            split_result = result.split("data:image/jpeg;base64,");
+          }
+          setImageUrl(split_result[1] ?? "");
+        };
+        reader.onerror = (error) => {
+          console.error("Error:", error);
+        };
+      },
+      error(err) {
+        console.error(err.message);
+      },
+    });
   }
 
   async function onSubmit(data: FormSchemaType) {
@@ -267,41 +276,28 @@ export function CreateParcel() {
                   className="col-span-3"
                 />
               </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="desc" className="text-right">
-                  ใช้งานได้
-                </Label>
+              <div className="flex items-center space-x-2">
                 <Input
                   disabled={disabled}
                   type="checkbox"
                   {...form.register("available")}
-                  className=" w-6"
                 />
+                <Label htmlFor="desc" className="text-right">
+                  ใช้งาน
+                </Label>
               </div>
             </div>
-            {!close && (
-              <Button
-                type="submit"
-                className="bg-black text-white hover:bg-grey01"
-                disabled={disabled}
-              >
-                {" "}
-                {createParcel.isPending ? "กำลังสร้าง..." : "สร้างเลย!!!"}
-              </Button>
-            )}
           </div>
-        </form>
-        {close && (
           <DialogClose asChild>
             <Button
+              disabled={disabled}
+              className="font-noto-sans"
               type="submit"
-              className="bg-red01 text-white hover:bg-red-500"
-              onClick={() => setClose(false)}
             >
-              ปิด
+              บันทึก
             </Button>
           </DialogClose>
-        )}
+        </form>
       </DialogContent>
     </Dialog>
   );
