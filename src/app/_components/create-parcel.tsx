@@ -3,10 +3,10 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Compressor from "compressorjs"; // Import Compressor
 import { Input } from "~/components/ui/input";
 import { Button } from "~/components/ui/button";
 import { Label } from "~/components/ui/label";
+import Compressor from "compressorjs"; // Import Compressor
 import {
   Dialog,
   DialogClose,
@@ -132,6 +132,7 @@ export function CreateParcel() {
           },
           body: JSON.stringify({
             body: image_url,
+            height: 100,
           }),
         },
       );
@@ -276,28 +277,41 @@ export function CreateParcel() {
                   className="col-span-3"
                 />
               </div>
-              <div className="flex items-center space-x-2">
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="desc" className="text-right">
+                  ใช้งานได้
+                </Label>
                 <Input
                   disabled={disabled}
                   type="checkbox"
                   {...form.register("available")}
+                  className=" w-6"
                 />
-                <Label htmlFor="desc" className="text-right">
-                  ใช้งาน
-                </Label>
               </div>
             </div>
+            {!close && (
+              <Button
+                type="submit"
+                className="bg-black text-white hover:bg-grey01"
+                disabled={disabled}
+              >
+                {" "}
+                {createParcel.isPending ? "กำลังสร้าง..." : "สร้างเลย!!!"}
+              </Button>
+            )}
           </div>
+        </form>
+        {close && (
           <DialogClose asChild>
             <Button
-              disabled={disabled}
-              className="font-noto-sans"
               type="submit"
+              className="bg-red01 text-white hover:bg-red-500"
+              onClick={() => setClose(false)}
             >
-              บันทึก
+              ปิด
             </Button>
           </DialogClose>
-        </form>
+        )}
       </DialogContent>
     </Dialog>
   );
