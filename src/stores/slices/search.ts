@@ -9,14 +9,14 @@ type OptionPayload = {
   name: string;
 };
 
-const initialValue: StateProp = { name : ""};
+const initialValue: StateProp = { name: "" };
 
 const appSlice = createSlice({
   name: "parcel_name",
   initialState: initialValue,
   reducers: {
     selectedOption: (state, action: PayloadAction<OptionPayload>) => {
-        state.name = action.payload.name;
+      state.name = action.payload.name;
     },
   },
 });

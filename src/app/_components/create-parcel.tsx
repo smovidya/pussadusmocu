@@ -123,8 +123,6 @@ export function CreateParcel() {
           },
           body: JSON.stringify({
             body: image_url,
-            width: 100,
-            height: 100,
           }),
         },
       );
