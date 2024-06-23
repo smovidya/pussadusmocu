@@ -24,7 +24,7 @@ export function Parcels({ parcels }: ParcelProps) {
     <div className="flex h-full w-full flex-col gap-2 font-noto-sans">
       <Navbar />
       <div className="flex flex-col items-center gap-6 p-4">
-      <div className="flex w-full flex-col items-center gap-2 sm:flex-row sm:justify-center sm:gap-4">
+        <div className="flex w-full flex-col items-center gap-2 sm:flex-row sm:justify-center sm:gap-4">
           <TypeDropdown setSelectedType={setSelectedType} />
           <GroupDropdown setSelectedType={setSelectedGroup} />
           <CreateParcel />

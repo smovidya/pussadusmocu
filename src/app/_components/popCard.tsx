@@ -29,7 +29,6 @@ const PopupCard: React.FC<PopupCardProps> = ({
   onReturn,
   parcelProject,
 }) => {
-
   const [returnQuantity, setReturnQuantity] = useState<number>(0);
   const [error, setError] = useState<string | null>(null);
   const [description, setDescription] = useState<string>("");
@@ -44,7 +43,9 @@ const PopupCard: React.FC<PopupCardProps> = ({
     }
   };
 
-  const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleDescriptionChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement>,
+  ) => {
     setDescription(e.target.value);
   };
 
@@ -54,7 +55,7 @@ const PopupCard: React.FC<PopupCardProps> = ({
         return (
           <>
             <div className="">
-            <textarea
+              <textarea
                 className="form-textarea border border-gray-300 px-2"
                 placeholder="หมายเหตุ"
                 value={description}

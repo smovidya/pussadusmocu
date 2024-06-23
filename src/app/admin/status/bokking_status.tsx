@@ -176,8 +176,12 @@ function Sta({
                 {isOpen && currentParcelProject?.id === parcelsProject.id && (
                   <PopupCard
                     onClose={closePopup}
-                    onAccept={(description_input:string) => updateAccept(parcelsProject.id,description_input)}
-                    onReject={(description_input:string) => updateReject(parcelsProject.id,description_input)}
+                    onAccept={(description_input: string) =>
+                      updateAccept(parcelsProject.id, description_input)
+                    }
+                    onReject={(description_input: string) =>
+                      updateReject(parcelsProject.id, description_input)
+                    }
                     onReturn={(quantity: number) =>
                       updateTostock(parcelsProject.id, quantity)
                     }
