@@ -10,7 +10,7 @@ const Home = async () => {
     <div className="flex h-full w-full flex-col gap-2">
       <Navbar />
       <div className="flex flex-wrap justify-center gap-6">
-        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
           {mockParcels.map((parcel) => (
             <ParcelAdmin key={parcel.parcel_id} parcel={parcel} />
           ))}
