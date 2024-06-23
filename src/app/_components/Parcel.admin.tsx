@@ -178,7 +178,7 @@ const ParcelAdmin = ({ parcel }: BlogProps) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Card className="h-auto min-w-44 font-noto-sans hover:scale-105 hover:cursor-pointer bg-slate-100 shadow-md">
+        <Card className="h-auto w-44 bg-slate-100 font-noto-sans shadow-md hover:scale-105 hover:cursor-pointer">
           <CardHeader>
             <CardTitle>{parcel.title}</CardTitle>
             <CardDescription>{parcel.description}</CardDescription>
@@ -194,12 +194,18 @@ const ParcelAdmin = ({ parcel }: BlogProps) => {
               />
             )}
           </CardContent>
-          <p className="font-normal text-blue-950 text-center">
-              Remain {parcel.amount} {parcel.unit}
-            </p>
-            <p className={parcel.available ? "text-green-500 text-center" : "text-red-500 text-center"}>
-                {parcel.available ? "ใช้งานได้" : "ใช้ไม่ได้"}
-              </p>
+          <p className="text-center font-normal text-blue-950">
+            Remain {parcel.amount} {parcel.unit}
+          </p>
+          <p
+            className={
+              parcel.available
+                ? "text-center text-green-500"
+                : "text-center text-red-500"
+            }
+          >
+            {parcel.available ? "ใช้งานได้" : "ใช้ไม่ได้"}
+          </p>
         </Card>
       </DialogTrigger>
       <DialogContent className="min-w-[700px] font-noto-sans sm:max-w-[425px]">
