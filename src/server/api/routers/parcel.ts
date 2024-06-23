@@ -124,7 +124,7 @@ export const parcelRouter = createTRPCRouter({
         await new Promise((resolve) => setTimeout(resolve, 1000));
         const newParcel = await ctx.db.parcel.create({
           data: {
-            parcel_id: input.id,
+            parcel_id: input.id.toUpperCase(),
             title: input.name,
             description: input.description,
             image_url: input.image_url,
@@ -177,7 +177,7 @@ export const parcelRouter = createTRPCRouter({
             department: input.department,
             group: input.group,
             type: input.type,
-            unit: input.unit
+            unit: input.unit,
           },
         });
         return updatedParcel;

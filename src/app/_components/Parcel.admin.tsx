@@ -196,7 +196,9 @@ const ParcelAdmin = ({ parcel }: BlogProps) => {
             )}
           </CardContent>
           <CardFooter>
-            <p className="text-blue-950 font-normal">Remain {parcel.amount} {parcel.unit}</p>
+            <p className="font-normal text-blue-950">
+              Remain {parcel.amount} {parcel.unit}
+            </p>
             <p>{parcel.available}</p>
           </CardFooter>
         </Card>

@@ -15,7 +15,7 @@ const Home = async () => {
             <ParcelAdmin key={parcel.parcel_id} parcel={parcel} />
           ))}
         </div>
-        <div className="w-full sm:w-24 flex flex-col gap-1 font-noto-sans">
+        <div className="flex w-full flex-col gap-1 font-noto-sans sm:w-24">
           <CreateParcel />
         </div>
       </div>
