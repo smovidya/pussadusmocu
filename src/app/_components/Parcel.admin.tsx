@@ -218,7 +218,7 @@ const ParcelAdmin = ({ parcel }: BlogProps) => {
                 />
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="desc" className="">
+                <Label htmlFor="desc" className="">
                   หน่วยงาน
                 </Label>
                 <Departments
@@ -226,7 +226,6 @@ const ParcelAdmin = ({ parcel }: BlogProps) => {
                   options={departments}
                   {...form.register("department")}
                 />
-
               </div>
             </div>
             <div className="grid grid-cols-2 gap-2">
@@ -289,7 +288,7 @@ const ParcelAdmin = ({ parcel }: BlogProps) => {
               </div>
 
               <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="name" className="text-right">
+                <Label htmlFor="name" className="text-right">
                   ชื่อพัสดุ
                 </Label>
                 <Input
