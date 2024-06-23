@@ -69,17 +69,19 @@ function Sta({
     setCurrentParcelProject(null);
   };
 
-  const updateAccept = async (id: string) => {
+  const updateAccept = async (id: string, description_input: string) => {
     setIsOpen(false);
     updateparcel.mutate({
       parcel_project_id: id,
+      description: description_input,
     });
   };
 
-  const updateReject = async (id: string) => {
+  const updateReject = async (id: string, description_input: string) => {
     setIsOpen(false);
     rejectParcel.mutate({
       parcel_project_id: id,
+      description: description_input,
     });
   };
 
@@ -113,68 +115,74 @@ function Sta({
   return (
     <div className="flex h-full w-full flex-col items-center gap-2 font-noto-sans">
       <Navbar />
-      <div className="flex-grid flex w-4/6">
+      <div className="flex-grid mx-5 flex w-full sm:w-5/6 lg:w-4/6">
         <Dropdown setSelectedProjectId={setSelectedProjectId} />
         <StatusDropdown setSelectedStatus={setSelectedStatus} />
       </div>
       {filteredParcelsProjects?.map((parcelsProject) => (
         <div
           key={parcelsProject.id}
-          className="flex w-4/6 flex-grow flex-col rounded-lg border-gray-300 px-6 py-4 shadow-md"
+          className="mx-20 flex w-full flex-grow flex-col rounded-lg border-gray-300 px-6 py-4 shadow-md lg:w-4/6"
         >
           <h1 className="mb-3 border-b border-gray-300 pb-2">
             {parcelsProject.project.project_id} | {parcelsProject.project.title}
           </h1>
-          <div className="text-md grid grid-cols-5 items-center justify-center gap-3 border-black">
-            <div>
-              <Image
+
+          <div
+            className="text-md grid grid-cols-2 items-center justify-center gap-3 
+          border-black sm:grid-cols-5"
+          >
+            <div className="sm:col-span-1">
+              <img
                 src={parcelsProject.parcel.image_url}
                 alt={parcelsProject.id}
-                width={100}
-                height={100}
+                className="h-full w-full object-contain"
                 loading="eager"
               />
             </div>
-            <div>
-              <p>
-                {parcelsProject.parcel.parcel_id} |{" "}
-                {parcelsProject.parcel.title}
-              </p>
-            </div>
-            <div>
-              <p>{parcelsProject.amount}</p>
-            </div>
-            <div>
-              <p>{formatDate(parcelsProject.startDate.toString())}</p>
-              <p>{formatDate(parcelsProject.endDate.toString())}</p>
-            </div>
-            <div>
-              <Button
-                type="button"
-                onClick={() => openPopup(parcelsProject)}
-                className={`text-base font-bold text-white ${
-                  parcelsProject.status === "BORROWING"
-                    ? "text-blue-700"
-                    : parcelsProject.status === "REJECT"
-                      ? "text-red-700"
-                      : parcelsProject.status === "PENDING"
-                        ? "text-yellow02"
-                        : "text-green-700"
-                }`}
-              >
-                {parcelsProject.status}
-              </Button>
-              {isOpen && currentParcelProject?.id === parcelsProject.id && (
-                <PopupCard
-                  onClose={closePopup}
-                  onAccept={() => updateAccept(parcelsProject.id)}
-                  onReject={() => updateReject(parcelsProject.id)}
-                  onReturn={(quantity: number) =>
-                    updateTostock(parcelsProject.id, quantity)
-                  }
-                  parcelProject={currentParcelProject}
-                />
-              )}
+
+            <div className="flex flex-col justify-items-center sm:col-span-4 sm:grid sm:grid-cols-4 ">
+              <div>
+                <p>
+                  {parcelsProject.parcel.parcel_id} |{" "}
+                  {parcelsProject.parcel.title}
+                </p>
+              </div>
+              <div>
+                <p>{parcelsProject.amount}</p>
+              </div>
+              <div>
+                <p>{formatDate(parcelsProject.startDate.toString())}</p>
+                <p>{formatDate(parcelsProject.endDate.toString())}</p>
+              </div>
+              <div>
+                <Button
+                  type="button"
+                  onClick={() => openPopup(parcelsProject)}
+                  className={`text-base font-bold text-white ${
+                    parcelsProject.status === "BORROWING"
+                      ? "text-blue-700"
+                      : parcelsProject.status === "REJECT"
+                        ? "text-red-700"
+                        : parcelsProject.status === "PENDING"
+                          ? "text-yellow02"
+                          : "text-green-700"
+                  }`}
+                >
+                  {parcelsProject.status}
+                </Button>
+                {isOpen && currentParcelProject?.id === parcelsProject.id && (
+                  <PopupCard
+                    onClose={closePopup}
+                    onAccept={(description_input:string) => updateAccept(parcelsProject.id,description_input)}
+                    onReject={(description_input:string) => updateReject(parcelsProject.id,description_input)}
+                    onReturn={(quantity: number) =>
+                      updateTostock(parcelsProject.id, quantity)
+                    }
+                    parcelProject={currentParcelProject}
+                  />
+                )}
+              </div>
             </div>
           </div>
         </div>

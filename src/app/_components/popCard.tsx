@@ -7,8 +7,8 @@ import { Input } from "~/components/ui/input";
 
 interface PopupCardProps {
   onClose: () => void;
-  onAccept: () => void;
-  onReject: () => void;
+  onAccept: (description: string) => void;
+  onReject: (description: string) => void;
   onReturn: (quantity: number) => void;
   parcelProject: ParcelProjectWithDetails;
 }
@@ -29,8 +29,10 @@ const PopupCard: React.FC<PopupCardProps> = ({
   onReturn,
   parcelProject,
 }) => {
+
   const [returnQuantity, setReturnQuantity] = useState<number>(0);
   const [error, setError] = useState<string | null>(null);
+  const [description, setDescription] = useState<string>("");
 
   const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value, 10);
@@ -42,23 +44,35 @@ const PopupCard: React.FC<PopupCardProps> = ({
     }
   };
 
+  const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setDescription(e.target.value);
+  };
+
   const renderButton = () => {
     switch (parcelProject.status) {
       case "PENDING":
         return (
           <>
+            <div className="">
+            <textarea
+                className="form-textarea border border-gray-300 px-2"
+                placeholder="หมายเหตุ"
+                value={description}
+                onChange={handleDescriptionChange}
+              />
+            </div>
             <div className="grid grid-cols-2 gap-2">
               <Button
                 type="button"
                 className="bg-green01 text-white"
-                onClick={onAccept}
+                onClick={() => onAccept(description)}
               >
                 Accept
               </Button>
               <Button
                 type="button"
                 className="bg-red01 text-white"
-                onClick={onReject}
+                onClick={() => onReject(description)}
               >
                 Reject
               </Button>

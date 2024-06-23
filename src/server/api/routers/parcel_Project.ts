@@ -45,6 +45,7 @@ export const Parcel_projectRouter = createTRPCRouter({
     .input(
       z.object({
         parcel_project_id: z.string(),
+        description: z.string(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -55,6 +56,7 @@ export const Parcel_projectRouter = createTRPCRouter({
         },
         data: {
           status: BORROWING_STATUS.BORROWING,
+          description_admin: input.description,
         },
       });
     }),
@@ -63,6 +65,7 @@ export const Parcel_projectRouter = createTRPCRouter({
     .input(
       z.object({
         parcel_project_id: z.string(),
+        description: z.string(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -82,6 +85,7 @@ export const Parcel_projectRouter = createTRPCRouter({
           },
           data: {
             status: BORROWING_STATUS.REJECT,
+            description_admin: input.description,
           },
         });
         const current_amount = parcel?.parcel.amount ?? 0;
