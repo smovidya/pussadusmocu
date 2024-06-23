@@ -190,14 +190,12 @@ export function CreateParcel() {
             <div className="grid grid-cols-2 gap-2">
               <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="desc" className="text-right">
-                  รูปพัสดุ
+                  หมวดหมู่
                 </Label>
-                <Input
+                <Group
                   disabled={disabled}
-                  type="file"
-                  {...form.register("image")}
-                  className="col-span-3 hover:cursor-pointer"
-                  onChange={(event) => getBase64(event.target)}
+                  options={groups}
+                  {...form.register("group")}
                 />
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
@@ -214,12 +212,14 @@ export function CreateParcel() {
             <div className="grid grid-cols-2 gap-2">
               <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="desc" className="text-right">
-                  หมวดหมู่
+                  รูปพัสดุ
                 </Label>
-                <Group
+                <Input
                   disabled={disabled}
-                  options={groups}
-                  {...form.register("group")}
+                  type="file"
+                  {...form.register("image")}
+                  className="col-span-3 hover:cursor-pointer"
+                  onChange={(event) => getBase64(event.target)}
                 />
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
@@ -271,7 +271,7 @@ export function CreateParcel() {
             {!close && (
               <Button
                 type="submit"
-                className="bg-black text-white"
+                className="bg-black text-white hover:bg-grey01"
                 disabled={disabled}
               >
                 {" "}
