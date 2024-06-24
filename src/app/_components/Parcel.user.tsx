@@ -82,6 +82,7 @@ const ParcelUser = ({ parcel, project_id }: BlogProps) => {
                 width={172}
                 height={172}
                 alt="Parcel Image"
+                loading="eager"
               />
             )}
           </CardContent>
@@ -139,6 +140,8 @@ const ParcelUser = ({ parcel, project_id }: BlogProps) => {
                   type="number"
                   {...form.register("amount")}
                   className="col-span-3"
+                  max={parcel.amount}
+                  min={0}
                 />
               </div>
               <div className="grid grid-cols-4 items-center gap-4">

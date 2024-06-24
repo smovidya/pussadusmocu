@@ -13,7 +13,7 @@ interface Props {
 
 export const ProjectBlog = ({ project }: Props) => {
   return (
-    <Card className="h-auto w-44 font-noto-sans hover:scale-105 hover:cursor-pointer">
+    <Card className="h-auto w-64 font-noto-sans hover:scale-105 hover:cursor-pointer">
       <CardHeader>
         <CardTitle>{project.title}</CardTitle>
         <CardDescription>{project.project_id}</CardDescription>
