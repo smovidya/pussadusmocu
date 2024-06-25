@@ -1,20 +1,42 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+import { SignJWT, jwtVerify } from "jose";
 import { encryptionKey, STUDENT_ID, type UserData } from "./constant";
-import jwt from "jsonwebtoken";
 
-export const encrypt = (data: object) => {
-  return jwt.sign(data, encryptionKey, { algorithm: "HS256", expiresIn: "1d" });
+export const encrypt = async (data: object): Promise<string> => {
+  const iat = Math.floor(Date.now() / 1000);
+  const exp = iat + 60 * 60 * 24; // one day
+  const secret = new TextEncoder().encode(encryptionKey);
+
+  return new SignJWT({ ...data })
+    .setProtectedHeader({ alg: "HS256", typ: "JWT" })
+    .setExpirationTime(exp)
+    .setIssuedAt(iat)
+    .setNotBefore(iat)
+    .sign(secret);
 };
 
-export const decrypt = (token: string) => {
+export const decrypt = async (
+  token: string,
+): Promise<UserData | { error: string }> => {
   try {
-    const decrypt_data = jwt.verify(token, encryptionKey, {
+    const secret = new TextEncoder().encode(encryptionKey);
+    const { payload } = await jwtVerify(token, secret, {
       algorithms: ["HS256"],
-    }) as UserData;
-    return decrypt_data;
+    });
+
+    // Ensure the payload is of type UserData
+    if (typeof payload === "object" && payload !== null) {
+      return payload as UserData;
+    } else {
+      throw new Error("Invalid token payload");
+    }
   } catch (err) {
     const errorMessage = err instanceof Error ? err.message : String(err);
     if (process.env.NODE_ENV === "development") {
-      return STUDENT_ID;
+      return STUDENT_ID as unknown as UserData; // Ensure STUDENT_ID is of type UserData
     } else {
       return { error: errorMessage };
     }
