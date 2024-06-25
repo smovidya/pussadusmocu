@@ -8,7 +8,7 @@ export function middleware(request: NextRequest) {
   const encryptionCookie = decrypt(cookie ?? "") as UserData;
   if (encryptionCookie || process.env.NODE_ENV === "development") {
     // return NextResponse.rewrite(request.url);
-    return NextResponse.json(cookie);
+    return NextResponse.json(encryptionCookie);
   }
 
   return NextResponse.rewrite("https://pussadusmocu.vercel.app/login");
