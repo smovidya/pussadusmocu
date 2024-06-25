@@ -3,7 +3,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import { SignJWT, jwtVerify } from "jose";
-import { encryptionKey, STUDENT_ID, type UserData } from "./constant";
+import { encryptionKey, STUDENT_ID } from "./constant";
+import { type Student } from "@prisma/client";
 
 export const encrypt = async (data: object): Promise<string> => {
   const iat = Math.floor(Date.now() / 1000);
@@ -24,10 +25,9 @@ export const decrypt = async (token: string) => {
     const { payload } = await jwtVerify(token, secret, {
       algorithms: ["HS256"],
     });
-    console.log(payload);
     // Ensure the payload is of type UserData
     if (typeof payload === "object" && payload !== null) {
-      return payload as UserData;
+      return payload as Student;
     } else {
       throw new Error("Invalid token payload");
     }

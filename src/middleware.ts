@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { type NextRequest } from "next/server";
 import { decrypt } from "./utils/function";
-import { type UserData } from "./utils/constant";
+import { type Student } from "@prisma/client";
 
 export async function middleware(request: NextRequest) {
   try {
@@ -22,12 +22,17 @@ export async function middleware(request: NextRequest) {
       return Response.redirect(new URL("/login", request.url));
     }
 
-    const ouid = (decryptedCookie as unknown as UserData).ouid;
+    const student = decryptedCookie as Student;
 
-    if (ouid.length !== 10 || !ouid.endsWith("23")) {
-      console.log(`Invalid OUID: ${ouid}`);
+    if (student.student_id.length !== 10 || !student.student_id.endsWith("23")) {
+      console.log(`Invalid OUID: ${student.student_id}`);
       return Response.redirect(new URL("/login", request.url));
     }
+
+    if (!student.isAdmin && request.nextUrl.pathname.startsWith('/admin')) {
+      return Response.redirect(new URL('/users/home', request.url))
+    }
+    
 
     return NextResponse.rewrite(request.url);
   } catch (error) {
