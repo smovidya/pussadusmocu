@@ -10,7 +10,7 @@ import { redirect } from "next/navigation";
 
 const Profile = async () => {
   const encryptedCookie = getCookie("student_id", { cookies });
-  const student_id = JSON.parse(decrypt(encryptedCookie ?? "")) as UserData;
+  const student_id = decrypt(encryptedCookie ?? "") as UserData;
 
   try {
     const projects: Project[] = await api.project.getProjectByStudent({

@@ -5,7 +5,7 @@ import { type UserData } from "./utils/constant";
 
 export function middleware(request: NextRequest) {
   const cookie = request.cookies.get("student_id")?.value;
-  const encryptionCookie = JSON.parse(decrypt(cookie ?? "")) as UserData;
+  const encryptionCookie = decrypt(cookie ?? "") as UserData;
   if (
     (encryptionCookie.ouid.length === 10 &&
       encryptionCookie.ouid.endsWith("23")) ||
