@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { type NextRequest, NextResponse } from "next/server";
 import { DeeAppId, DeeAppSecret, type UserData } from "~/utils/constant";
-import { decrypt, encrypt } from "../../../utils/function";
+import { encrypt } from "../../../utils/function";
 
 type ServiceValidationResponse = {
   status: number;
@@ -85,15 +85,8 @@ export async function GET(req: NextRequest) {
   const oneDay = 24 * 60 * 60 * 1000;
 
   const token: string = encrypt(data);
-  const detoken = JSON.stringify(decrypt(token));
 
   cookieStore.set("student_id", token, {
-    secure: true,
-    httpOnly: true,
-    expires: new Date(Date.now() + oneDay),
-  });
-
-  cookieStore.set("detoken", detoken, {
     secure: true,
     httpOnly: true,
     expires: new Date(Date.now() + oneDay),

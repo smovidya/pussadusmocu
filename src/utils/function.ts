@@ -1,4 +1,4 @@
-import { encryptionKey, STUDENT_ID, type UserData } from "./constant";
+import { encryptionKey, STUDENT_ID } from "./constant";
 import jwt from "jsonwebtoken";
 
 export const encrypt = (data: object) => {
@@ -7,9 +7,10 @@ export const encrypt = (data: object) => {
 
 export const decrypt = (token: string) => {
   try {
-    return jwt.verify(token, encryptionKey, {
+    const decrypt_data = JSON.stringify(jwt.verify(token, encryptionKey, {
       algorithms: ["HS256"],
-    });
+    }));
+    return decrypt_data;
   } catch (err) {
     if (process.env.NODE_ENV === "development") {
       return STUDENT_ID;
