@@ -1,7 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
 import { SignJWT, jwtVerify } from "jose";
 import { encryptionKey, STUDENT_ID } from "./constant";
 import { type Student } from "@prisma/client";
@@ -12,7 +8,7 @@ export const encrypt = async (data: object): Promise<string> => {
   const secret = new TextEncoder().encode(encryptionKey);
 
   return new SignJWT({ ...data })
-    .setProtectedHeader({ alg: "ES256", typ: "JWT" })
+    .setProtectedHeader({ alg: "HS256", typ: "JWT" })
     .setExpirationTime(exp)
     .setIssuedAt(iat)
     .setNotBefore(iat)
@@ -23,7 +19,7 @@ export const decrypt = async (token: string) => {
   try {
     const secret = new TextEncoder().encode(encryptionKey);
     const { payload } = await jwtVerify(token, secret, {
-      algorithms: ["ES256"],
+      algorithms: ["HS256"],
     });
     // Ensure the payload is of type UserData
     if (typeof payload === "object" && payload !== null) {
