@@ -26,6 +26,7 @@ export const decrypt = async (
     const { payload } = await jwtVerify(token, secret, {
       algorithms: ["HS256"],
     });
+    console.log(payload);
 
     // Ensure the payload is of type UserData
     if (typeof payload === "object" && payload !== null) {
