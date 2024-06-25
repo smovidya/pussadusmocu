@@ -28,7 +28,7 @@ export async function middleware(request: NextRequest) {
       console.log(`Invalid OUID: ${ouid}`);
       return Response.redirect(new URL("/login", request.url));
     }
-    
+
     return NextResponse.rewrite(request.url);
   } catch (error) {
     if (error instanceof Error) {
