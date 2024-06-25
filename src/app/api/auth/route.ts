@@ -92,5 +92,5 @@ export async function GET(req: NextRequest) {
     expires: new Date(Date.now() + oneDay),
   });
 
-  return NextResponse.redirect("https://pussadusmocu.vercel.app/admin/home");
+  return NextResponse.redirect("https://pussadusmocu.vercel.app/users/home");
 }
