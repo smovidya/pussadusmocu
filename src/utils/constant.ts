@@ -16,6 +16,9 @@ export type UserData = {
   roles: string[];
   firtnameth: string;
   lastnameth: string;
+  exp: number;
+  iat: number;
+  nbf: number;
 };
 
 export const ParcelGroupSchema = z.enum([

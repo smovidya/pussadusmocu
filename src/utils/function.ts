@@ -27,7 +27,6 @@ export const decrypt = async (
       algorithms: ["HS256"],
     });
     console.log(payload);
-
     // Ensure the payload is of type UserData
     if (typeof payload === "object" && payload !== null) {
       return payload as UserData;
