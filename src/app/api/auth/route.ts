@@ -82,7 +82,7 @@ export async function GET(req: NextRequest) {
   }
 
   const data: UserData = validationResponse.message as UserData;
-  const users = await api.auth.getUser({student_id: data.ouid});
+  const users = await api.auth.getUser({ student_id: data.ouid });
   const cookieStore = cookies();
   const oneDay = 24 * 60 * 60 * 1000;
 

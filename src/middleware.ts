@@ -24,15 +24,17 @@ export async function middleware(request: NextRequest) {
 
     const student = decryptedCookie as Student;
 
-    if (student.student_id.length !== 10 || !student.student_id.endsWith("23")) {
+    if (
+      student.student_id.length !== 10 ||
+      !student.student_id.endsWith("23")
+    ) {
       console.log(`Invalid OUID: ${student.student_id}`);
       return Response.redirect(new URL("/login", request.url));
     }
 
-    if (!student.isAdmin && request.nextUrl.pathname.startsWith('/admin')) {
-      return Response.redirect(new URL('/users/home', request.url))
+    if (!student.isAdmin && request.nextUrl.pathname.startsWith("/admin")) {
+      return Response.redirect(new URL("/users/home", request.url));
     }
-    
 
     return NextResponse.rewrite(request.url);
   } catch (error) {
