@@ -3,21 +3,21 @@ import { cookies } from "next/headers";
 import { NavbarUser } from "~/app/_components/NavbarUser";
 import { ProjectBlog } from "~/app/_components/ProjectsBlog";
 import { api } from "~/trpc/server";
-import { encryptionKey } from "~/utils/constant";
+import {type UserData } from "~/utils/constant";
 import { getCookie } from "cookies-next";
 import { decrypt } from "~/utils/function";
 import { redirect } from "next/navigation";
 
 const Profile = async () => {
   const encryptedCookie = getCookie("student_id", { cookies });
-  const student_id = decrypt(encryptedCookie ?? "", encryptionKey);
+  const student_id = decrypt(encryptedCookie ?? "") as UserData;
 
   try {
     const projects: Project[] = await api.project.getProjectByStudent({
-      student_id: student_id,
+      student_id: student_id.ouid,
     });
     const student = await api.auth.getUser({
-      student_id: student_id,
+      student_id: student_id.ouid,
     });
 
     if (!student) {

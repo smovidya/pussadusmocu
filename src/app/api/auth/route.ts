@@ -1,20 +1,7 @@
 import { cookies } from "next/headers";
 import { type NextRequest, NextResponse } from "next/server";
-import { encrypt } from "~/utils/function";
-import { DeeAppId, DeeAppSecret, encryptionKey } from "~/utils/constant";
-
-type UserData = {
-  firstname: string;
-  lastname: string;
-  ouid: string;
-  username: string;
-  gecos: string;
-  email: string;
-  disable: boolean;
-  roles: string[];
-  firtnameth: string;
-  lastnameth: string;
-};
+import { DeeAppId, DeeAppSecret, type UserData } from "~/utils/constant";
+import { encrypt } from "../../../utils/function";
 
 type ServiceValidationResponse = {
   status: number;
@@ -54,10 +41,11 @@ const serviceValidation = async (
         message: jsonResponse,
       };
     }
-  } catch (error) {
+  } catch (err: unknown) {
+    const error = err as Error;
     return {
       status: 500,
-      message: error instanceof Error ? error.message : String(error),
+      message: error.message,
     };
   }
 };
@@ -85,16 +73,24 @@ export async function GET(req: NextRequest) {
     DeeAppSecret,
   );
 
+  if (validationResponse.status !== 200) {
+    return NextResponse.json({
+      status: validationResponse.status,
+      message: validationResponse.message,
+    });
+  }
+
   const data: UserData = validationResponse.message as UserData;
   const cookieStore = cookies();
   const oneDay = 24 * 60 * 60 * 1000;
 
-  const encryptedOuid = encrypt(data.ouid, encryptionKey);
+  const token : string = encrypt(data);
 
-  cookieStore.set("student_id", encryptedOuid, {
+  cookieStore.set("user_data", token, {
     secure: true,
     httpOnly: true,
-    expires: Date.now() + oneDay,
+    expires: new Date(Date.now() + oneDay),
   });
+
   return NextResponse.redirect("https://pussadusmocu.vercel.app/admin/home");
 }

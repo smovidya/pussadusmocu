@@ -5,6 +5,19 @@ import {
   type Parcel,
 } from "@prisma/client";
 
+export type UserData = {
+  firstname: string;
+  lastname: string;
+  ouid: string;
+  username: string;
+  gecos: string;
+  email: string;
+  disable: boolean;
+  roles: string[];
+  firtnameth: string;
+  lastnameth: string;
+};
+
 export const ParcelGroupSchema = z.enum([
   "OFFICE",
   "ELECTRONIC",
