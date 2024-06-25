@@ -12,7 +12,7 @@ export const encrypt = async (data: object): Promise<string> => {
   const secret = new TextEncoder().encode(encryptionKey);
 
   return new SignJWT({ ...data })
-    .setProtectedHeader({ alg: "HS256", typ: "JWT" })
+    .setProtectedHeader({ alg: "ES256", typ: "JWT" })
     .setExpirationTime(exp)
     .setIssuedAt(iat)
     .setNotBefore(iat)
@@ -23,7 +23,7 @@ export const decrypt = async (token: string) => {
   try {
     const secret = new TextEncoder().encode(encryptionKey);
     const { payload } = await jwtVerify(token, secret, {
-      algorithms: ["HS256"],
+      algorithms: ["ES256"],
     });
     // Ensure the payload is of type UserData
     if (typeof payload === "object" && payload !== null) {
