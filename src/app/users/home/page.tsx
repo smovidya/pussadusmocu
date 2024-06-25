@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import { NavbarUser } from "~/app/_components/NavbarUser";
 import { ProjectBlog } from "~/app/_components/ProjectsBlog";
 import { api } from "~/trpc/server";
-import {type UserData } from "~/utils/constant";
+import { type UserData } from "~/utils/constant";
 import { getCookie } from "cookies-next";
 import { decrypt } from "~/utils/function";
 import { redirect } from "next/navigation";

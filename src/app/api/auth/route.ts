@@ -84,9 +84,9 @@ export async function GET(req: NextRequest) {
   const cookieStore = cookies();
   const oneDay = 24 * 60 * 60 * 1000;
 
-  const token : string = encrypt(data);
+  const token: string = encrypt(data);
 
-  cookieStore.set("user_data", token, {
+  cookieStore.set("student_id", token, {
     secure: true,
     httpOnly: true,
     expires: new Date(Date.now() + oneDay),
