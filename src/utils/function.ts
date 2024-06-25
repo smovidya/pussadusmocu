@@ -7,10 +7,9 @@ export const encrypt = (data: object) => {
 
 export const decrypt = (token: string) => {
   try {
-    const decrypt_data = 
-      jwt.verify(token, encryptionKey, {
-        algorithms: ["HS256"],
-      }) as UserData;
+    const decrypt_data = jwt.verify(token, encryptionKey, {
+      algorithms: ["HS256"],
+    }) as UserData;
     return decrypt_data;
   } catch (err) {
     if (process.env.NODE_ENV === "development") {
