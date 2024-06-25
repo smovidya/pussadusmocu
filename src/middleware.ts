@@ -32,8 +32,6 @@ export async function middleware(request: NextRequest) {
       return Response.redirect(new URL("/login", request.url));
     }
 
-    console.log("JSJSJSJS", request.nextUrl.pathname.toString());
-
     if (!student.isAdmin && request.nextUrl.pathname.startsWith("/admin")) {
       return Response.redirect(new URL("/users/home", request.url));
     }
