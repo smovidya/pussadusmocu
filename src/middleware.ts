@@ -7,8 +7,7 @@ export async function middleware(request: NextRequest) {
   const encryptionCookie = await decrypt(cookie ?? "");
   console.log(encryptionCookie);
   if (encryptionCookie || process.env.NODE_ENV === "development") {
-    // return NextResponse.rewrite(request.url);
-    return NextResponse.json(encryptionCookie);
+    return NextResponse.rewrite(request.url);
   }
 
   return NextResponse.rewrite("https://pussadusmocu.vercel.app/login");
