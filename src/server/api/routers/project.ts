@@ -26,6 +26,18 @@ export const projectRouter = createTRPCRouter({
       }),
     )
     .query(async ({ ctx, input }) => {
+      const student = await ctx.db.student.findFirst({
+        where: {
+          student_id: input.student_id,
+        },
+      });
+      if (student?.isAdmin) {
+        return await ctx.db.project.findMany({
+          where: {
+            status: "INPROGRESS",
+          },
+        });
+      }
       return await ctx.db.project.findMany({
         where: {
           students: {

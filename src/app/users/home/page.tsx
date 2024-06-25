@@ -10,14 +10,17 @@ import { redirect } from "next/navigation";
 
 const Profile = async () => {
   const encryptedCookie = getCookie("student_id", { cookies });
-  const student_id = await decrypt(encryptedCookie ?? "") as UserData;
-
+  const student_id = await decrypt(encryptedCookie ?? "");
+  const ouid =
+    typeof student_id === "string"
+      ? (student_id as string)
+      : (student_id as UserData).ouid;
   try {
     const projects: Project[] = await api.project.getProjectByStudent({
-      student_id: student_id.ouid,
+      student_id: ouid,
     });
     const student = await api.auth.getUser({
-      student_id: student_id.ouid,
+      student_id: ouid,
     });
 
     if (!student) {
@@ -44,7 +47,6 @@ const Profile = async () => {
   } catch (error) {
     console.error("Error fetching data", error);
     redirect("/login");
-    return <div>Session expires</div>;
   }
 };
 

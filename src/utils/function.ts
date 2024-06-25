@@ -18,9 +18,7 @@ export const encrypt = async (data: object): Promise<string> => {
     .sign(secret);
 };
 
-export const decrypt = async (
-  token: string,
-): Promise<UserData | { error: string }> => {
+export const decrypt = async (token: string) => {
   try {
     const secret = new TextEncoder().encode(encryptionKey);
     const { payload } = await jwtVerify(token, secret, {
@@ -36,7 +34,7 @@ export const decrypt = async (
   } catch (err) {
     const errorMessage = err instanceof Error ? err.message : String(err);
     if (process.env.NODE_ENV === "development") {
-      return STUDENT_ID as unknown as UserData; // Ensure STUDENT_ID is of type UserData
+      return STUDENT_ID; // Ensure STUDENT_ID is of type UserData
     } else {
       return { error: errorMessage };
     }

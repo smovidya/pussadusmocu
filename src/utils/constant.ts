@@ -13,6 +13,7 @@ export type UserData = {
   gecos: string;
   email: string;
   disable: boolean;
+  admin: boolean;
   roles: string[];
   firtnameth: string;
   lastnameth: string;
