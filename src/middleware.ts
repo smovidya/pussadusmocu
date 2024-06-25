@@ -21,7 +21,7 @@ export async function middleware(request: NextRequest) {
     }
 
     const decryptedCookie = await decrypt(cookie);
-    if (!decryptedCookie || typeof decryptedCookie !== "string") {
+    if (!decryptedCookie) {
       console.log("Decryption failed or invalid cookie");
       return Response.redirect(new URL("/login", request.url));
     }
