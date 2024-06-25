@@ -2,10 +2,6 @@ import { NextResponse } from "next/server";
 import { type NextRequest } from "next/server";
 import { decrypt } from "./utils/function";
 import { type UserData } from "./utils/constant";
-import { PrismaClient } from "@prisma/client";
-
-// Initialize PrismaClient once and reuse it
-const prisma = new PrismaClient();
 
 export async function middleware(request: NextRequest) {
   try {
@@ -32,21 +28,7 @@ export async function middleware(request: NextRequest) {
       console.log(`Invalid OUID: ${ouid}`);
       return Response.redirect(new URL("/login", request.url));
     }
-
-    const user = await prisma.student.findFirst({
-      where: { student_id: ouid },
-    });
-
-    if (!user) {
-      console.log(`User not found: ${ouid}`);
-      return Response.redirect(new URL("/login", request.url));
-    }
-
-    if (!user.isAdmin && request.nextUrl.pathname.startsWith("/admin")) {
-      console.log(`User not admin: ${ouid}`);
-      return Response.redirect(new URL("/users/home", request.url));
-    }
-
+    
     return NextResponse.rewrite(request.url);
   } catch (error) {
     if (error instanceof Error) {
