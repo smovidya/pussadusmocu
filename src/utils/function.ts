@@ -12,10 +12,11 @@ export const decrypt = (token: string) => {
     }) as UserData;
     return decrypt_data;
   } catch (err) {
+    const errorMessage = err instanceof Error ? err.message : String(err);
     if (process.env.NODE_ENV === "development") {
       return STUDENT_ID;
     } else {
-      return "default";
+      return { error: errorMessage };
     }
   }
 };
