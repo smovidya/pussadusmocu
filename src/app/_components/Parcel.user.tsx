@@ -10,7 +10,6 @@ import {
   CardTitle,
   CardDescription,
   CardContent,
-  CardFooter,
 } from "~/components/ui/card";
 import { Dialog, DialogContent, DialogTrigger } from "~/components/ui/dialog";
 import { Input } from "~/components/ui/input";
@@ -85,11 +84,22 @@ const ParcelUser = ({ parcel, project_id }: BlogProps) => {
                 loading="eager"
               />
             )}
+            <div className="mt-3 flex items-center gap-2">
+              <div
+                className={`h-4 w-4 rounded-full ${
+                  parcel.amount > 10
+                    ? "bg-green-500"
+                    : parcel.amount > 2
+                      ? "bg-yellow-500"
+                      : "bg-red-500"
+                }`}
+              ></div>
+              <p className="text-base">
+                {parcel.amount} {parcel.unit}
+              </p>
+            </div>
+            <p className="text-sm">{parcel.available}</p>
           </CardContent>
-          <CardFooter>
-            <p>Remain {parcel.amount}</p>
-            <p>{parcel.available}</p>
-          </CardFooter>
         </Card>
       </DialogTrigger>
       <DialogContent className="min-w-[700px] font-noto-sans sm:max-w-[425px]">

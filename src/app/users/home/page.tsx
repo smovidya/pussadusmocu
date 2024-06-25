@@ -28,25 +28,33 @@ const Profile = async () => {
     }
 
     return (
-      <div className="flex h-full w-full flex-col gap-2">
+      <div className="flex min-h-full w-full flex-col gap-2 bg-slate-100 text-gray-900">
         <NavbarUser />
         <div className="flex flex-row justify-center gap-6">
-          <div className="grid grid-cols-5 gap-2">
-            {projects.map((project) => (
-              <a
-                key={project.project_id}
-                href={`/users/shipping/${project.project_id}`}
-              >
-                <ProjectBlog project={project} />
-              </a>
-            ))}
+          <div className="w-full max-w-5xl p-4">
+            <div className="font-noto-sans text-lg font-medium md:text-2xl">
+              สวัสดี <span className="font-bold">{student.name}</span>{" "}
+              ยินดีต้อนรับสู่เว็บพัสดุ สามารถเลือกโครงและยืมของได้เลย 😙
+            </div>
+            <div className="mt-4 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+              {projects.map((project) => (
+                <a
+                  key={project.project_id}
+                  href={`/users/shipping/${project.project_id}`}
+                  className="transform transition-transform duration-300 hover:scale-105"
+                >
+                  <ProjectBlog project={project} />
+                </a>
+              ))}
+              
+            </div>
           </div>
         </div>
       </div>
     );
   } catch (error) {
     console.error("Error fetching data", error);
-    redirect("/login");
+    return redirect("/login");
   }
 };
 
