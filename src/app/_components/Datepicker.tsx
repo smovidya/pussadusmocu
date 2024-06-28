@@ -20,8 +20,8 @@ export function DatePickerWithRange({
   className,
 }: React.HTMLAttributes<HTMLDivElement>) {
   const [date, setDateState] = React.useState<DateRange | undefined>({
-    from: new Date(2023, 0, 20),
-    to: addDays(new Date(2023, 0, 20), 20),
+    from: new Date(),
+    to: addDays(new Date(), 20),
   });
 
   const datepickerReducer = useSelector(datepickerSelector);

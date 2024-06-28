@@ -1,8 +1,21 @@
+"use client"
+
 import { Home, Lock, ShoppingCart, User } from "lucide-react";
 import Image from "next/image";
 import { Input } from "~/components/ui/input";
+import { selectedOption } from "~/stores/slices/search";
+import { useAppDispatch } from "~/stores/store";
 
 export const NavbarUser = () => {
+  const dispatch = useAppDispatch();
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(
+      selectedOption({
+        name: e.target.value,
+      }),
+    );
+  };
   return (
     <div className="grid h-24 w-full grid-cols-3 items-center justify-start gap-[38px] bg-yellow01 px-5 py-1.5">
       <div className="flex w-auto flex-row items-center font-noto-sans">
@@ -15,6 +28,7 @@ export const NavbarUser = () => {
         <Input
           className="w-80 justify-center rounded-full"
           placeholder="ค้นหาพัสดุ"
+          onChange={handleInputChange}
         />
       </div>
       <div className="grid w-full grid-cols-3 justify-items-center font-noto-sans">
