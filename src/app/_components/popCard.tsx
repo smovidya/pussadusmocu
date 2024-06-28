@@ -65,14 +65,14 @@ const PopupCard: React.FC<PopupCardProps> = ({
             <div className="grid grid-cols-2 gap-2">
               <Button
                 type="button"
-                className="bg-green01 hover:bg-green-100 text-white"
+                className="bg-green01 text-white hover:bg-green-100"
                 onClick={() => onAccept(description)}
               >
                 Accept
               </Button>
               <Button
                 type="button"
-                className="bg-red01 hover:bg-red-100 text-white"
+                className="bg-red01 text-white hover:bg-red-100"
                 onClick={() => onReject(description)}
               >
                 Reject
@@ -92,7 +92,7 @@ const PopupCard: React.FC<PopupCardProps> = ({
             {error && <p className="text-red-500">{error}</p>}
             <Button
               type="button"
-              className="bg-green01 text-white"
+              className="bg-green01 text-white hover:bg-green-100"
               onClick={() => onReturn(returnQuantity)}
               disabled={returnQuantity > parcelProject.amount}
             >
@@ -138,10 +138,12 @@ const PopupCard: React.FC<PopupCardProps> = ({
               <h3>{formatDate(parcelProject.endDate.toString())}</h3>
             </div>
             <div>
-              <h3>จำนวน: {parcelProject.amount} {parcelProject.parcel.unit}</h3>
+              <h3>
+                จำนวน: {parcelProject.amount} {parcelProject.parcel.unit}
+              </h3>
             </div>
             <div>
-              <h3>หมายเหตุ: {parcelProject.description}</h3>
+              <h3>คำอธิบาย: {parcelProject.description}</h3>
             </div>
             {renderButton()}
           </div>
