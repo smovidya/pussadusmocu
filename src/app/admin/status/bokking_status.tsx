@@ -70,27 +70,27 @@ function Sta({
   };
 
   const updateAccept = async (id: string, description_input: string) => {
-    setIsOpen(false);
     updateparcel.mutate({
       parcel_project_id: id,
       description: description_input,
     });
+    setIsOpen(false);
   };
 
   const updateReject = async (id: string, description_input: string) => {
-    setIsOpen(false);
     rejectParcel.mutate({
       parcel_project_id: id,
       description: description_input,
     });
+    setIsOpen(false);
   };
 
   const updateTostock = async (id: string, quantity: number) => {
-    setIsOpen(false);
     returnParcel.mutate({
       parcel_project_id: id,
       parcel_return: quantity,
     });
+    setIsOpen(false);
   };
 
   const formatDate = (dateString: string) => {

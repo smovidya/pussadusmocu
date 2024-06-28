@@ -32,6 +32,7 @@ const PopupCard: React.FC<PopupCardProps> = ({
   const [returnQuantity, setReturnQuantity] = useState<number>(0);
   const [error, setError] = useState<string | null>(null);
   const [description, setDescription] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value, 10);
@@ -47,6 +48,24 @@ const PopupCard: React.FC<PopupCardProps> = ({
     e: React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
     setDescription(e.target.value);
+  };
+
+  const handleAccept = async () => {
+    setIsLoading(true);
+    onAccept(description);
+    setIsLoading(false);
+  };
+
+  const handleReject = async () => {
+    setIsLoading(true);
+    onReject(description);
+    setIsLoading(false);
+  };
+
+  const handleReturn = async () => {
+    setIsLoading(true);
+    onReturn(returnQuantity);
+    setIsLoading(false);
   };
 
   const renderButton = () => {
@@ -66,16 +85,18 @@ const PopupCard: React.FC<PopupCardProps> = ({
               <Button
                 type="button"
                 className="bg-green01 text-white hover:bg-green-100"
-                onClick={() => onAccept(description)}
+                onClick={handleAccept}
+                disabled={isLoading}
               >
-                Accept
+                {isLoading ? "กำลังดำเนินการ..." : "Accept"}
               </Button>
               <Button
                 type="button"
                 className="bg-red01 text-white hover:bg-red-100"
-                onClick={() => onReject(description)}
+                onClick={handleReject}
+                disabled={isLoading}
               >
-                Reject
+                {isLoading ? "กำลังดำเนินการ..." : "Reject"}
               </Button>
             </div>
           </>
@@ -93,10 +114,10 @@ const PopupCard: React.FC<PopupCardProps> = ({
             <Button
               type="button"
               className="bg-green01 text-white hover:bg-green-100"
-              onClick={() => onReturn(returnQuantity)}
-              disabled={returnQuantity > parcelProject.amount}
+              onClick={handleReturn}
+              disabled={isLoading || returnQuantity > parcelProject.amount}
             >
-              Return
+              {isLoading ? "กำลังดำเนินการ..." : "Return"}
             </Button>
           </>
         );
