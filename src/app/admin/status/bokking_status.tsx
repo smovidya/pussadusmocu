@@ -151,9 +151,6 @@ function Sta({
                 </p>
               </div>
               <div>
-                <p>ยืมโดย {parcelsProject.student.name}</p>
-              </div>
-              <div>
                 <p>{parcelsProject.amount}</p>
               </div>
               <div>

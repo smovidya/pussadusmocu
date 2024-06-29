@@ -164,6 +164,9 @@ const PopupCard: React.FC<PopupCardProps> = ({
               </h3>
             </div>
             <div>
+              <h3>ยืมโดย {parcelProject.student.name}</h3>
+            </div>
+            <div>
               <h3>คำอธิบาย: {parcelProject.description}</h3>
             </div>
             {renderButton()}
