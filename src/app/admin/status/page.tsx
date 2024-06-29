@@ -1,4 +1,9 @@
-import { type Parcel_Project, type Project, type Parcel, type Student } from "@prisma/client";
+import {
+  type Parcel_Project,
+  type Project,
+  type Parcel,
+  type Student,
+} from "@prisma/client";
 import Sta from "./bokking_status";
 import { api } from "~/trpc/server";
 

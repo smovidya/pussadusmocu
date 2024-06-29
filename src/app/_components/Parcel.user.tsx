@@ -34,7 +34,6 @@ interface BlogProps {
 }
 
 const ParcelUser = ({ parcel, project_id }: BlogProps) => {
-
   const router = useRouter();
   const bookedParcel = api.parcel.booking.useMutation({
     onSuccess: () => {
@@ -60,9 +59,10 @@ const ParcelUser = ({ parcel, project_id }: BlogProps) => {
   async function onSubmit(data: FormSchemaBookingType) {
     const encryptedCookie = getCookie("student_id");
     const student_id = await decrypt(encryptedCookie ?? "");
-    const _student_id =  process.env.NODE_ENV === "development"
-    ? (student_id as unknown as string)
-    : (student_id as unknown as Student).student_id;
+    const _student_id =
+      process.env.NODE_ENV === "development"
+        ? (student_id as unknown as string)
+        : (student_id as unknown as Student).student_id;
     bookedParcel.mutate({
       student_id: _student_id,
       amount: data.amount,
