@@ -58,11 +58,13 @@ const ParcelUser = ({ parcel, project_id }: BlogProps) => {
 
   async function onSubmit(data: FormSchemaBookingType) {
     const encryptedCookie = getCookie("student_id");
+    console.log("en ", encryptedCookie);
     const student_id = await decrypt(encryptedCookie ?? "");
+    console.log("de ", student_id);
     const _student_id =
       process.env.NODE_ENV === "development"
-        ? (student_id as unknown as string)
-        : (student_id as unknown as Student).student_id;
+        ? (student_id as string)
+        : (student_id as Student).student_id;
     bookedParcel.mutate({
       student_id: _student_id,
       amount: data.amount,
