@@ -1,29 +1,67 @@
-# Create T3 App
+# Pussadusmocu
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+Pussadusmocu is a parcel borrowing project for the Faculty of Science at Chulalongkorn University. It allows users to borrow parcels and provides an admin interface for managing parcel stock and approving borrowing requests. The project is written in TypeScript and follows a monolith architecture using Next.js and tRPC.
 
-## What's next? How do I make an app with this?
+![Contribute](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+## Table of Contents
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+- [Pussadusmocu](#pussadusmocu)
+  - [Table of Contents](#table-of-contents)
+  - [Features](#features)
+  - [Project Structure](#project-structure)
+  - [Contributing](#contributing)
+  - [License](#license)
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+## Features
 
-## Learn More
+- **User Interface**: Allows users to browse and borrow parcels.
+- **Admin Interface**: Allows admins to approve borrowing requests and manage parcel stock (CRUD operations).
+- **TypeScript**: Written entirely in TypeScript for better type safety and developer experience.
+- **Monolith Architecture**: Uses a monolithic architecture for simplicity and ease of deployment.
+- **Next.js**: Utilizes Next.js for server-side rendering and a seamless development experience.
+- **tRPC**: Uses tRPC for typesafe API calls between the client and server.
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+## Project Structure
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+```plaintext
+pussadusmocu/
+├── public/                  # Static files
+│   └── ...
+├── src/
+│   ├── components/          # React components
+│   │   └── ...
+│   ├── app/               # Next.js pages
+│   │   ├── api/             # API routes
+│   │   │   └── ...
+│   │   ├── page.tsx         # Custom App component
+│   │   ├── index.tsx        # Home page
+│   │   ├── admin/           # Admin pages
+│   │   │   └── ...
+│   │   └── user/            # User pages
+│   │       └── ...
+│   ├── server/              # tRPC server configuration
+│   │   └── ...
+│   ├── styles/              # Global and component-specific styles
+│   │   └── ...
+│   ├── utils/               # Utility functions and types
+│   │   └── ...
+│   └── ...
+├── .eslintrc.js             # ESLint configuration
+├── .gitignore               # Git ignore file
+├── next.config.js           # Next.js configuration
+├── package.json             # NPM package configuration
+├── tsconfig.json            # TypeScript configuration
+└── README.md                # Project README file
+```
+## Contributing
+We welcome contributions! Please follow these steps:
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+1. Fork the repository.
+2. Create a new branch (git checkout -b feature/your-feature-name).
+3. Commit your changes (git commit -m 'Add some feature').
+4. Push to the branch (git push origin feature/your-feature-name).
+5. Create a new Pull Request.
 
-## How do I deploy this?
-
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+## License
+This project is licensed under the MIT License. See the LICENSE file for details.
