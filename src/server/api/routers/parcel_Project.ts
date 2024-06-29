@@ -4,27 +4,38 @@ import { TRPCError } from "@trpc/server";
 import { BORROWING_STATUS } from "@prisma/client";
 
 export const Parcel_projectRouter = createTRPCRouter({
-  getAll: publicProcedure.query(async ({ ctx }) => {
-    try {
-      const parcels = await ctx.db.parcel_Project.findMany({
-        include: {
-          project: true,
-          parcel: true,
-        },
-      });
-      return parcels;
-    } catch (error) {
-      throw new TRPCError({
-        code: "INTERNAL_SERVER_ERROR",
-        message: "Failed to fetch parcels",
-        cause: error,
-      });
-    }
-  }),
+  getAll: publicProcedure
+    .input(
+      z.object({
+        student_id: z.string().optional(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      try {
+        const parcels = await ctx.db.parcel_Project.findMany({
+          where: input.student_id
+            ? { student_id: input.student_id }
+            : undefined,
+          include: {
+            project: true,
+            parcel: true,
+            student: true,
+          },
+        });
+        return parcels;
+      } catch (error) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Failed to fetch parcels",
+          cause: error,
+        });
+      }
+    }),
   updatestatus: publicProcedure
     .input(
       z.object({
         project_id: z.string(),
+        student_id: z.string(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -32,6 +43,7 @@ export const Parcel_projectRouter = createTRPCRouter({
       return ctx.db.$transaction(async (tx) => {
         await tx.parcel_Project.updateMany({
           where: {
+            student_id: input.student_id,
             project_id: input.project_id, // Use project_id directly
             status: BORROWING_STATUS.BORROWING,
           },

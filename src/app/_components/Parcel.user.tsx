@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { type Parcel } from "@prisma/client";
+import { type Student, type Parcel } from "@prisma/client";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
 import {
@@ -25,6 +25,8 @@ import { useRouter } from "next/navigation";
 import { DatePickerWithRange } from "./Datepicker";
 import { useSelector } from "react-redux";
 import { datepickerSelector } from "~/stores/slices/datepicker";
+import { decrypt } from "~/utils/function";
+import { getCookie } from "cookies-next";
 
 interface BlogProps {
   parcel: Parcel;
@@ -32,6 +34,7 @@ interface BlogProps {
 }
 
 const ParcelUser = ({ parcel, project_id }: BlogProps) => {
+
   const router = useRouter();
   const bookedParcel = api.parcel.booking.useMutation({
     onSuccess: () => {
@@ -55,8 +58,13 @@ const ParcelUser = ({ parcel, project_id }: BlogProps) => {
   const _date = datepickerReducer.date;
 
   async function onSubmit(data: FormSchemaBookingType) {
-    console.log("Work");
+    const encryptedCookie = getCookie("student_id");
+    const student_id = await decrypt(encryptedCookie ?? "");
+    const _student_id =  process.env.NODE_ENV === "development"
+    ? (student_id as unknown as string)
+    : (student_id as unknown as Student).student_id;
     bookedParcel.mutate({
+      student_id: _student_id,
       amount: data.amount,
       parcel_id: parcel.parcel_id,
       description: data.description,

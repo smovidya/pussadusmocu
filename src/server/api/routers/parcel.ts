@@ -65,6 +65,7 @@ export const parcelRouter = createTRPCRouter({
   booking: publicProcedure
     .input(
       z.object({
+        student_id: z.string(),
         parcel_id: z.string(),
         project_id: z.string(),
         amount: z.number(),
@@ -84,6 +85,7 @@ export const parcelRouter = createTRPCRouter({
         const amount = parcel?.amount ?? 0;
         await tx.parcel_Project.create({
           data: {
+            student_id: input.student_id,
             parcel_id: input.parcel_id,
             project_id: input.project_id,
             amount: input.amount,

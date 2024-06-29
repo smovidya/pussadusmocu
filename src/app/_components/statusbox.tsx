@@ -14,6 +14,9 @@ import { type Parcellist } from "~/utils/constant";
 import Image from "next/image";
 import { Button } from "~/components/ui/button";
 import { format } from "date-fns";
+import { getCookie } from "cookies-next";
+import { decrypt } from "~/utils/function";
+import { type Student } from "@prisma/client";
 
 interface Props {
   parcelslist: Parcellist;
@@ -31,8 +34,14 @@ export const Statuesbox = ({ parcelslist }: Props) => {
     },
   });
   async function Updatestatus(project_id: string) {
-    console.log("StatusINUSE");
+    const encryptedCookie = getCookie("student_id");
+    const student_id = await decrypt(encryptedCookie ?? "");
+    const _student_id =
+      process.env.NODE_ENV === "development"
+        ? (student_id as unknown as string)
+        : (student_id as unknown as Student).student_id;
     updateparcel.mutate({
+      student_id: _student_id,
       project_id: project_id,
     });
   }
