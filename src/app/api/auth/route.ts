@@ -90,7 +90,7 @@ export async function GET(req: NextRequest) {
 
   cookieStore.set("student_id", token, {
     secure: true,
-    sameSite: "strict",
+    httpOnly: true,
     expires: new Date(Date.now() + oneDay),
   });
 

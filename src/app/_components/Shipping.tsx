@@ -12,9 +12,10 @@ import { TypeDropdown } from "./TypeDropdown";
 interface ParcelProps {
   parcels: Parcel[];
   id: string;
+  student_id: string;
 }
 
-export const Shipping = ({ id, parcels }: ParcelProps) => {
+export const Shipping = ({ id, parcels, student_id }: ParcelProps) => {
   const [selectedType, setSelectedType] = useState<string | null>(null);
   const [selectedGroup, setSelectedGroup] = useState<string | null>(null);
   const parcelReducer = useSelector(parcelSelector);
@@ -38,6 +39,7 @@ export const Shipping = ({ id, parcels }: ParcelProps) => {
               key={parcel.parcel_id}
               parcel={parcel}
               project_id={id}
+              student_id={student_id}
             />
           ))}
         </div>
