@@ -19,7 +19,7 @@ export const NavbarUser = () => {
   return (
     <div className="grid h-24 w-full grid-cols-3 items-center justify-start gap-[38px] bg-yellow01 px-5 py-1.5">
       <div className="flex w-auto flex-row items-center font-noto-sans">
-        <a href="/user/home">
+        <a href="/users/home">
           <Image
             src={"/picture/yellowBox.svg"}
             alt="iconBox"
