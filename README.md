@@ -54,7 +54,9 @@ pussadusmocu/
 ├── tsconfig.json            # TypeScript configuration
 └── README.md                # Project README file
 ```
+
 ## Contributing
+
 We welcome contributions! Please follow these steps:
 
 1. Fork the repository.
@@ -64,4 +66,5 @@ We welcome contributions! Please follow these steps:
 5. Create a new Pull Request.
 
 ## License
+
 This project is licensed under the MIT License. See the LICENSE file for details.

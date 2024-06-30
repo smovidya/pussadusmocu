@@ -1,13 +1,14 @@
 version: "3.9"
 
 services:
-  postgres:
-    image: postgres:14-alpine
+  mysql:
+    image: mysql:8.0
     ports:
-      - 5432:5432
+      - 3309:3306
     volumes:
-      - ~/apps/postgres:/var/lib/postgresql/data
+      - ~/apps/mysql:/var/lib/mysql
     environment:
-      - POSTGRES_PASSWORD=asd4263
-      - POSTGRES_USER=root
-      - POSTGRES_DB=smo-dev
+      - MYSQL_ROOT_PASSWORD=asd4263
+      - MYSQL_DATABASE=smo-dev
+      - MYSQL_USER=smodb
+      - MYSQL_PASSWORD=asd4263
