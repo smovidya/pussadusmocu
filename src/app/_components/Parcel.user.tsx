@@ -11,7 +11,12 @@ import {
   CardDescription,
   CardContent,
 } from "~/components/ui/card";
-import { Dialog, DialogContent, DialogTrigger } from "~/components/ui/dialog";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogTrigger,
+} from "~/components/ui/dialog";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import {
@@ -25,6 +30,9 @@ import { useRouter } from "next/navigation";
 import { DatePickerWithRange } from "./Datepicker";
 import { useSelector } from "react-redux";
 import { datepickerSelector } from "~/stores/slices/datepicker";
+import { useState } from "react";
+import { useToast } from "~/components/ui/use-toast";
+import { ToastAction } from "@radix-ui/react-toast";
 
 interface BlogProps {
   parcel: Parcel;
@@ -34,8 +42,18 @@ interface BlogProps {
 
 const ParcelUser = ({ parcel, project_id, student_id }: BlogProps) => {
   const router = useRouter();
+  const { toast } = useToast();
+  const [close, setClose] = useState(false);
   const bookedParcel = api.parcel.booking.useMutation({
     onSuccess: () => {
+      setClose(true);
+      toast({
+        title: "แจ้งเตือน",
+        variant: "default",
+        description: "ยืมพัสดุสำเร็จ",
+        className: "font-noto-sans",
+        action: <ToastAction altText="close button">close</ToastAction>,
+      });
       router.refresh();
     },
     onError: (error) => {
@@ -172,17 +190,30 @@ const ParcelUser = ({ parcel, project_id, student_id }: BlogProps) => {
                 </Label>
                 <DatePickerWithRange />
               </div>
-              <Button
-                type="submit"
-                className="bg-black text-white"
-                disabled={bookedParcel.isPending}
-              >
-                {bookedParcel.isPending ? "กำลังยืม..." : "ยืมเลย!!!"}
-              </Button>
+              {!close && (
+                <Button
+                  type="submit"
+                  className="bg-black text-white"
+                  disabled={bookedParcel.isPending}
+                >
+                  {bookedParcel.isPending ? "กำลังยืม..." : "ยืมเลย!!!"}
+                </Button>
+              )}
             </div>
           </div>
         </form>
       </DialogContent>
+      {close && (
+        <DialogClose asChild>
+          <Button
+            type="submit"
+            className="bg-red01 text-white hover:bg-red-500"
+            onClick={() => setClose(false)}
+          >
+            ปิด
+          </Button>
+        </DialogClose>
+      )}
     </Dialog>
   );
 };

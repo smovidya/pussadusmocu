@@ -90,6 +90,9 @@ export const parcelRouter = createTRPCRouter({
           },
         });
         const amount = parcel?.amount ?? 0;
+        if (input.amount > amount) {
+          throw new Error("Requested amount exceeds available amount");
+        }
         await tx.parcel_Project.create({
           data: {
             student_id: input.student_id,
