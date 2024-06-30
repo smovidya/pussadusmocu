@@ -3,7 +3,11 @@ import { NavbarUser } from "~/app/_components/NavbarUser";
 import { Statuesbox } from "~/app/_components/statusbox";
 import { api } from "~/trpc/server";
 import { cookies } from "next/headers";
-import { type Projectinparcel, type Parcellist } from "~/utils/constant";
+import {
+  type Projectinparcel,
+  type Parcellist,
+  STUDENT_ID,
+} from "~/utils/constant";
 import { decrypt } from "~/utils/function";
 import { type Student } from "@prisma/client";
 
@@ -17,7 +21,7 @@ const Profile = async () => {
         })
       : (student_id as Student);
   const Parcel_Project: Projectinparcel[] = await api.parcel_Project.getAll({
-    student_id: student?.student_id ?? "",
+    student_id: student?.student_id ?? STUDENT_ID,
   });
 
   const grouped = Parcel_Project.reduce<Parcellist>((result, currentValue) => {
@@ -28,7 +32,10 @@ const Profile = async () => {
 
   const rows = Object.keys(grouped).map((projectId) => (
     <div key={projectId} className="mb-4 flex justify-center py-8">
-      <Statuesbox parcelslist={{ [projectId]: grouped[projectId] ?? [] }} />
+      <Statuesbox
+        parcelslist={{ [projectId]: grouped[projectId] ?? [] }}
+        student_id={student?.student_id ?? STUDENT_ID}
+      />
     </div>
   ));
 

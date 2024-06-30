@@ -14,16 +14,12 @@ import { type Parcellist } from "~/utils/constant";
 import Image from "next/image";
 import { Button } from "~/components/ui/button";
 import { format } from "date-fns";
-import { getCookie } from "cookies-next";
-import { decrypt } from "~/utils/function";
-import { type Student } from "@prisma/client";
 
 interface Props {
-  parcelslist: Parcellist;
+  parcelslist: Parcellist;student_id: string;
 }
 
-export const Statuesbox = ({ parcelslist }: Props) => {
-  // console.log(parcelslist)
+export const Statuesbox = ({ parcelslist, student_id }: Props) => {
   const router = useRouter();
   const updateparcel = api.parcel_Project.updatestatus.useMutation({
     onSuccess: () => {
@@ -34,14 +30,8 @@ export const Statuesbox = ({ parcelslist }: Props) => {
     },
   });
   async function Updatestatus(project_id: string) {
-    const encryptedCookie = getCookie("student_id");
-    const student_id = await decrypt(encryptedCookie ?? "");
-    const _student_id =
-      process.env.NODE_ENV === "development"
-        ? (student_id as unknown as string)
-        : (student_id as unknown as Student).student_id;
     updateparcel.mutate({
-      student_id: _student_id,
+      student_id: student_id,
       project_id: project_id,
     });
   }
