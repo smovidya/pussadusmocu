@@ -202,18 +202,18 @@ const ParcelUser = ({ parcel, project_id, student_id }: BlogProps) => {
             </div>
           </div>
         </form>
+        {close && (
+          <DialogClose asChild>
+            <Button
+              type="submit"
+              className="bg-red01 text-white hover:bg-red-500"
+              onClick={() => setClose(false)}
+            >
+              ปิด
+            </Button>
+          </DialogClose>
+        )}
       </DialogContent>
-      {close && (
-        <DialogClose asChild>
-          <Button
-            type="submit"
-            className="bg-red01 text-white hover:bg-red-500"
-            onClick={() => setClose(false)}
-          >
-            ปิด
-          </Button>
-        </DialogClose>
-      )}
     </Dialog>
   );
 };
