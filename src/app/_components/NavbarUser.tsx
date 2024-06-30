@@ -1,6 +1,6 @@
 "use client";
 
-import { Home, Lock, ShoppingCart, User } from "lucide-react";
+import { Home, Lock, ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import { Input } from "~/components/ui/input";
 import { selectedOption } from "~/stores/slices/search";
@@ -19,12 +19,14 @@ export const NavbarUser = () => {
   return (
     <div className="grid h-24 w-full grid-cols-3 items-center justify-start gap-[38px] bg-yellow01 px-5 py-1.5">
       <div className="flex w-auto flex-row items-center font-noto-sans">
-        <Image
-          src={"/picture/yellowBox.svg"}
-          alt="iconBox"
-          width={88}
-          height={88}
-        />
+        <a href="/user/home">
+          <Image
+            src={"/picture/yellowBox.svg"}
+            alt="iconBox"
+            width={88}
+            height={88}
+          />
+        </a>
         <Input
           className="w-80 justify-center rounded-full"
           placeholder="ค้นหาพัสดุ"
@@ -32,18 +34,15 @@ export const NavbarUser = () => {
         />
       </div>
       <div className="grid w-full grid-cols-3 justify-items-center font-noto-sans">
-        <a href="/users/profile">
-          <User className="h-8 w-8 hover:cursor-pointer" />
-        </a>
-        <a href="/users/home">
+        <a href="/users/home" title="Home">
           <Home className="h-8 w-8 hover:cursor-pointer" />
         </a>
-        <a href="/users/cart">
+        <a href="/users/cart" title="Cart">
           <ShoppingCart className="h-8 w-8 hover:cursor-pointer" />
         </a>
       </div>
       <div className="flex items-center justify-end gap-4">
-        <a href="/admin/home">
+        <a href="/admin/home" title="Admin Home">
           <Lock className="h-8 w-8 hover:cursor-pointer" />
         </a>
       </div>
