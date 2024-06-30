@@ -83,7 +83,6 @@ const ParcelUser = ({ parcel, project_id, student_id }: BlogProps) => {
       endDate: _date?.to ?? new Date(),
       project_id: data.project_id,
     });
-    setClose(true);
   }
 
   return (
@@ -206,8 +205,8 @@ const ParcelUser = ({ parcel, project_id, student_id }: BlogProps) => {
         {close && (
           <DialogClose asChild>
             <Button
-              type="submit"
-              className="bg-red01 text-white hover:bg-red-500"
+              type="button"
+              className="bg-red-500 text-white hover:bg-red-600"
               onClick={() => setClose(false)}
             >
               ปิด
