@@ -27,6 +27,7 @@ export const parcelRouter = createTRPCRouter({
       where: {
         NOT: {
           amount: 0,
+          available: false,
         },
       },
     });
