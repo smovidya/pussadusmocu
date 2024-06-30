@@ -21,6 +21,7 @@ Pussadusmocu is a parcel borrowing project for the Faculty of Science at Chulalo
 - **Monolith Architecture**: Uses a monolithic architecture for simplicity and ease of deployment.
 - **Next.js**: Utilizes Next.js for server-side rendering and a seamless development experience.
 - **tRPC**: Uses tRPC for typesafe API calls between the client and server.
+- **MySQL**: Use mysql for storing all data as a monolith architecture
 
 ## Project Structure
 
