@@ -16,7 +16,8 @@ import { Button } from "~/components/ui/button";
 import { format } from "date-fns";
 
 interface Props {
-  parcelslist: Parcellist;student_id: string;
+  parcelslist: Parcellist;
+  student_id: string;
 }
 
 export const Statuesbox = ({ parcelslist, student_id }: Props) => {
