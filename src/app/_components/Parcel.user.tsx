@@ -83,6 +83,7 @@ const ParcelUser = ({ parcel, project_id, student_id }: BlogProps) => {
       endDate: _date?.to ?? new Date(),
       project_id: data.project_id,
     });
+    setClose(true);
   }
 
   return (
