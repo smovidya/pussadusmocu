@@ -14,6 +14,7 @@ import { type Parcellist } from "~/utils/constant";
 import Image from "next/image";
 import { Button } from "~/components/ui/button";
 import { format } from "date-fns";
+import { useState } from "react"; // Import useState hook
 
 interface Props {
   parcelslist: Parcellist;
@@ -30,16 +31,27 @@ export const Statuesbox = ({ parcelslist, student_id }: Props) => {
       console.error("Booking error:", error);
     },
   });
+
+  // State to track expanded parcels
+  const [expandedProjectIds, setExpandedProjectIds] = useState<string[]>([]);
+
   async function Updatestatus(project_id: string) {
     updateparcel.mutate({
       student_id: student_id,
       project_id: project_id,
     });
   }
+
   const renderedCards = [];
+
   for (const projectId in parcelslist) {
     const parcels = parcelslist[projectId];
+
     if (parcels !== undefined) {
+      const isExpanded = expandedProjectIds.includes(projectId);
+
+      const shownParcels = isExpanded ? parcels : parcels.slice(0, 3);
+
       const table = (
         <Table
           className="h-auto w-full bg-white font-noto-sans"
@@ -47,15 +59,15 @@ export const Statuesbox = ({ parcelslist, student_id }: Props) => {
         >
           <TableHeader>
             <TableRow>
-              <TableCell className="text-right ">
+              <TableCell className="text-right">
                 {projectId} | {parcels[0]?.project.title}
               </TableCell>
             </TableRow>
           </TableHeader>
 
           <TableBody>
-            {Array.isArray(parcels) &&
-              parcels.map((parcel) => (
+            {Array.isArray(shownParcels) &&
+              shownParcels.map((parcel) => (
                 <TableRow className="" key={parcel.project_id}>
                   <TableCell>
                     <div>
@@ -67,8 +79,8 @@ export const Statuesbox = ({ parcelslist, student_id }: Props) => {
                       />
                     </div>
                   </TableCell>
-                  <TableCell className="grid grid-cols-2 ">
-                    <div className=" grid h-36 w-96 grid-rows-5 ">
+                  <TableCell className="grid grid-cols-2">
+                    <div className="grid h-36 w-96 grid-rows-5">
                       <div className="">
                         {parcel.parcel_id} | {parcel.parcel.title}
                       </div>
@@ -80,8 +92,8 @@ export const Statuesbox = ({ parcelslist, student_id }: Props) => {
 
                     <div className="grid h-36  grid-rows-5 text-right text-gray-500">
                       <div className="row-start-1">
-                        <div className="flex justify-end ">
-                          <p className="pr-6 ">ระยะเวลายืม</p>
+                        <div className="flex justify-end">
+                          <p className="pr-6">ระยะเวลายืม</p>
                           {parcel.startDate &&
                             format(new Date(parcel.startDate), "dd/MM/yyyy")}
                         </div>
@@ -118,7 +130,7 @@ export const Statuesbox = ({ parcelslist, student_id }: Props) => {
                   </p>
                   <p className="row-start-2 py-1 text-red-500">
                     {" "}
-                    12/02/2547 <br />
+                    {parcels[0]?.endDate.toISOString()} <br />
                     <br />
                   </p>
                   <p className="row-start-5 text-gray-500">
@@ -129,8 +141,19 @@ export const Statuesbox = ({ parcelslist, student_id }: Props) => {
               <TableCell className="text-right">
                 <div className="grid h-20 grid-rows-5">
                   <div className="row-start-1 text-yellow-300">
-                    <a href="">
-                      Read more <br></br>
+                    <a
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setExpandedProjectIds((prev) =>
+                          prev.includes(projectId)
+                            ? prev.filter((id) => id !== projectId)
+                            : [...prev, projectId],
+                        );
+                      }}
+                    >
+                      {isExpanded ? "Show less" : "Read more"}
+                      <br />
                     </a>
                   </div>
                   <div className="row-start-4">

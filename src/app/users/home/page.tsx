@@ -33,7 +33,7 @@ const Profile = async () => {
           <div className="w-full max-w-5xl p-4">
             <div className="font-noto-sans text-lg font-medium md:text-2xl">
               สวัสดี <span className="font-bold">{student.name}</span>{" "}
-              ยินดีต้อนรับสู่เว็บพัสดุ สามารถเลือกโครงและยืมของได้เลย 😙
+              สามารถเลือกโครงและยืมของได้เลย สู้ ๆ นะครับทุกคน 😙
             </div>
             <div className="mt-4 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
               {projects.map((project) => (
