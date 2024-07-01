@@ -21,7 +21,7 @@ export const NavbarUser = () => {
       <div className="flex h-[88px] w-[88px]">
         <a
           href="/users/home"
-          className="items-center justify-center hover:cursor-pointer mt-3"
+          className="mt-3 items-center justify-center hover:cursor-pointer"
         >
           <Image
             src={"/picture/yellowBox.svg"}
