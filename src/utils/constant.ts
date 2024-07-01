@@ -159,7 +159,7 @@ export const groups = [
   },
   {
     value: "MUSICAL",
-    label: "งานเพลง",
+    label: "งานเพลงและสันทนาการ",
   },
   {
     value: "CLOTHING",

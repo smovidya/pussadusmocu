@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { PARCEL_GROUP } from "@prisma/client";
+import { groups } from "~/utils/constant";
 
 type StatusDropdownProps = {
   setSelectedType: React.Dispatch<React.SetStateAction<string | null>>;
@@ -20,9 +20,9 @@ export function GroupDropdown({ setSelectedType }: StatusDropdownProps) {
         onChange={handleStatusChange}
       >
         <option value="">Select a group</option>
-        {Object.keys(PARCEL_GROUP).map((type) => (
-          <option key={type} value={type}>
-            {type}
+        {groups.map((group) => (
+          <option key={group.value} value={group.value}>
+            {group.label}
           </option>
         ))}
       </select>

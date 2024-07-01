@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { PARCEL_TYPE } from "@prisma/client";
+import { types } from "~/utils/constant";
 
 type StatusDropdownProps = {
   setSelectedType: React.Dispatch<React.SetStateAction<string | null>>;
@@ -20,9 +20,9 @@ export function TypeDropdown({ setSelectedType }: StatusDropdownProps) {
         onChange={handleStatusChange}
       >
         <option value="">Select a type</option>
-        {Object.keys(PARCEL_TYPE).map((type) => (
-          <option key={type} value={type}>
-            {type}
+        {types.map((type) => (
+          <option key={type.value} value={type.value}>
+            {type.label}
           </option>
         ))}
       </select>
