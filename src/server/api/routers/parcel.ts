@@ -26,14 +26,7 @@ export const parcelRouter = createTRPCRouter({
     return await ctx.db.parcel.findMany({
       where: {
         NOT: {
-          OR: [
-            {
-              amount: 0,
-            },
-            {
-              available: false,
-            },
-          ],
+          available: false,
         },
       },
     });

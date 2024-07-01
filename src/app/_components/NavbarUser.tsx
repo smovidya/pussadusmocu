@@ -48,7 +48,7 @@ export const NavbarUser = () => {
         <a href="/admin/home" title="Admin only">
           <Lock className="h-8 w-8 hover:cursor-pointer" />
         </a>
-        <a href="/api/auth/logout" title="ออกจากระบบ">
+        <a href="/api/logout" title="ออกจากระบบ">
           <LogOut className="h-8 w-8 hover:cursor-pointer" />
         </a>
       </div>
