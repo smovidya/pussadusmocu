@@ -1,6 +1,6 @@
 "use client";
 
-import { Home, Lock, ShoppingCart } from "lucide-react";
+import { Home, Lock, LogOut, ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import { Input } from "~/components/ui/input";
 import { selectedOption } from "~/stores/slices/search";
@@ -17,33 +17,39 @@ export const NavbarUser = () => {
     );
   };
   return (
-    <div className="grid h-24 w-full grid-cols-3 items-center justify-start gap-[38px] bg-yellow01 px-5 py-1.5">
-      <div className="flex w-auto flex-row items-center font-noto-sans">
-        <a href="/users/home">
+    <div className="inline-flex h-24 w-full items-center justify-start gap-[38px] bg-yellow01 px-5 py-1.5">
+      <div className="flex h-[88px] w-[88px]">
+        <a
+          href="/users/home"
+          className="items-center justify-center hover:cursor-pointer mt-3"
+        >
           <Image
             src={"/picture/yellowBox.svg"}
             alt="iconBox"
-            width={88}
-            height={88}
+            width={108}
+            height={108}
           />
         </a>
+      </div>
+      <div className="flex w-full font-noto-sans">
         <Input
-          className="w-80 justify-center rounded-full"
+          className="rounded-full"
           placeholder="ค้นหาพัสดุ"
           onChange={handleInputChange}
         />
       </div>
-      <div className="grid w-full grid-cols-3 justify-items-center font-noto-sans">
-        <a href="/users/home" title="Home">
+      <div className="flex items-center justify-start gap-4">
+        <a href="/users/home" title="หน้าหลัก">
           <Home className="h-8 w-8 hover:cursor-pointer" />
         </a>
-        <a href="/users/cart" title="Cart">
+        <a href="/users/cart" title="พัสดุที่จองไป">
           <ShoppingCart className="h-8 w-8 hover:cursor-pointer" />
         </a>
-      </div>
-      <div className="flex items-center justify-end gap-4">
-        <a href="/admin/home" title="Admin Home">
+        <a href="/admin/home" title="Admin only">
           <Lock className="h-8 w-8 hover:cursor-pointer" />
+        </a>
+        <a href="/api/auth/logout" title="ออกจากระบบ">
+          <LogOut className="h-8 w-8 hover:cursor-pointer" />
         </a>
       </div>
     </div>
