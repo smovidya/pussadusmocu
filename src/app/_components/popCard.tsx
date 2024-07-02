@@ -22,6 +22,17 @@ const formatDate = (dateString: string) => {
   return new Date(dateString).toLocaleDateString("en-GB", options);
 };
 
+const formatThaiTime = (date: Date) => {
+  return date.toLocaleString("th-TH", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  });
+};
+
 const PopupCard: React.FC<PopupCardProps> = ({
   onClose,
   onAccept,
@@ -73,14 +84,6 @@ const PopupCard: React.FC<PopupCardProps> = ({
       case "PENDING":
         return (
           <>
-            <div className="">
-              <textarea
-                className="form-textarea border border-gray-300 px-2"
-                placeholder="หมายเหตุ"
-                value={description}
-                onChange={handleDescriptionChange}
-              />
-            </div>
             <div className="grid grid-cols-2 gap-2">
               <Button
                 type="button"
@@ -126,7 +129,7 @@ const PopupCard: React.FC<PopupCardProps> = ({
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="h-2/3 w-3/4 max-w-xl rounded-lg bg-white p-1 shadow-lg">
+      <div className="h-auto w-full max-w-xl rounded-lg bg-white p-1 shadow-lg">
         <div className="flex items-end justify-end">
           <button onClick={onClose}>
             <X />
@@ -145,7 +148,6 @@ const PopupCard: React.FC<PopupCardProps> = ({
           <div className="flex flex-col gap-4 p-2">
             <div>
               <h2>
-                {parcelProject.project.project_id} |{" "}
                 {parcelProject.project.title}
               </h2>
             </div>
@@ -155,8 +157,10 @@ const PopupCard: React.FC<PopupCardProps> = ({
               </h3>
             </div>
             <div>
-              <h3>{formatDate(parcelProject.startDate.toString())}</h3>
-              <h3>{formatDate(parcelProject.endDate.toString())}</h3>
+              <h3>{formatDate(parcelProject.startDate.toString())} ถึง {formatDate(parcelProject.endDate.toString())}</h3>
+            </div>
+            <div>
+              <h3>เวลายืม: {formatThaiTime(new Date(parcelProject.createdAt))}</h3>
             </div>
             <div>
               <h3>
