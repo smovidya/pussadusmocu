@@ -147,9 +147,7 @@ const PopupCard: React.FC<PopupCardProps> = ({
           </div>
           <div className="flex flex-col gap-4 p-2">
             <div>
-              <h2>
-                {parcelProject.project.title}
-              </h2>
+              <h2>{parcelProject.project.title}</h2>
             </div>
             <div>
               <h3>
@@ -157,10 +155,15 @@ const PopupCard: React.FC<PopupCardProps> = ({
               </h3>
             </div>
             <div>
-              <h3>{formatDate(parcelProject.startDate.toString())} ถึง {formatDate(parcelProject.endDate.toString())}</h3>
+              <h3>
+                {formatDate(parcelProject.startDate.toString())} ถึง{" "}
+                {formatDate(parcelProject.endDate.toString())}
+              </h3>
             </div>
             <div>
-              <h3>เวลายืม: {formatThaiTime(new Date(parcelProject.createdAt))}</h3>
+              <h3>
+                เวลายืม: {formatThaiTime(new Date(parcelProject.createdAt))}
+              </h3>
             </div>
             <div>
               <h3>
