@@ -98,7 +98,7 @@ export async function GET(req: NextRequest) {
   }
 
   const token: string = await encrypt(users as object);
-  console.log("TOKEN P OAT : ",token);
+  console.log("TOKEN P OAT : ", token);
 
   cookieStore.set("student_id", token, {
     secure: true,
