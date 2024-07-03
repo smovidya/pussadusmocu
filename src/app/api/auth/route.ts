@@ -89,10 +89,7 @@ export async function GET(req: NextRequest) {
   // Remove the student_cookie if it exists
   const studentCookie = cookieStore.get("student_cookie");
   if (studentCookie) {
-    cookieStore.delete("student_cookie", {
-      secure: true,
-      httpOnly: true,
-    });
+    cookieStore.delete("student_cookie");
   }
 
   const token: string = await encrypt(users as object);
