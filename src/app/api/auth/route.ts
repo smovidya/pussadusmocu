@@ -82,9 +82,14 @@ export async function GET(req: NextRequest) {
   }
 
   const data: UserData = validationResponse.message as UserData;
+
+  console.log("DEBUG P OAT data : ", data);
+
   const users = await api.auth.getUser({ student_id: data.ouid });
   const cookieStore = cookies();
   const oneDay = 24 * 60 * 60 * 1000;
+
+  console.log("DEBUG P OAT user : ", users);
 
   // Remove the student_cookie if it exists
   const studentCookie = cookieStore.get("student_cookie");
@@ -93,6 +98,7 @@ export async function GET(req: NextRequest) {
   }
 
   const token: string = await encrypt(users as object);
+  console.log("TOKEN P OAT : ",token);
 
   cookieStore.set("student_id", token, {
     secure: true,
