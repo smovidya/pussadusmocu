@@ -89,12 +89,10 @@ export async function GET(req: NextRequest) {
   const cookieStore = cookies();
   const oneDay = 24 * 60 * 60 * 1000;
 
-  console.log("DEBUG P OAT user : ", users);
-
   // Remove the student_cookie if it exists
   const studentCookie = cookieStore.get("student_cookie");
   if (studentCookie) {
-    cookieStore.delete("student_cookie");
+    cookieStore.delete("student_id");
   }
 
   const token: string = await encrypt(users as object);
