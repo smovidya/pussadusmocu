@@ -27,34 +27,165 @@ Pussadusmocu is a parcel borrowing project for the Faculty of Science at Chulalo
 ## Project Structure
 
 ```plaintext
-pussadusmocu/
-├── public/                  # Static files
-│   └── ...
-├── src/
-│   ├── components/          # React components
-│   │   └── ...
-│   ├── app/               # Next.js pages
-│   │   ├── api/             # API routes
-│   │   │   └── ...
-│   │   ├── page.tsx         # Custom App component
-│   │   ├── index.tsx        # Home page
-│   │   ├── admin/           # Admin pages
-│   │   │   └── ...
-│   │   └── user/            # User pages
-│   │       └── ...
-│   ├── server/              # tRPC server configuration
-│   │   └── ...
-│   ├── styles/              # Global and component-specific styles
-│   │   └── ...
-│   ├── utils/               # Utility functions and types
-│   │   └── ...
-│   └── ...
-├── .eslintrc.js             # ESLint configuration
-├── .gitignore               # Git ignore file
-├── next.config.js           # Next.js configuration
-├── package.json             # NPM package configuration
-├── tsconfig.json            # TypeScript configuration
-└── README.md                # Project README file
+pussadusmocu
+├── .dockerignore              # Specifies files and directories to be ignored by Docker
+├── .env                       # Environment variables for local development
+├── .env.example               # Example environment variables file for reference
+├── .eslintrc.cjs              # ESLint configuration file (CommonJS)
+├── .eslintrc.json             # ESLint configuration file (JSON)
+├── .gitignore                 # Specifies files and directories to be ignored by Git
+├── .husky                     # Directory for Husky Git hooks
+│   ├── _
+│   │   ├── .gitignore
+│   │   ├── applypatch-msg
+│   │   ├── commit-msg
+│   │   ├── h
+│   │   ├── husky.sh
+│   │   ├── post-applypatch
+│   │   ├── post-checkout
+│   │   ├── post-commit
+│   │   ├── post-merge
+│   │   ├── post-rewrite
+│   │   ├── pre-applypatch
+│   │   ├── pre-auto-gc
+│   │   ├── pre-commit
+│   │   ├── pre-push
+│   │   ├── pre-rebase
+│   │   └── prepare-commit-msg
+│   └── pre-commit
+├── Dockerfile                 # Dockerfile for building the Docker image
+├── LICENSE                    # License file
+├── README.md                  # Project documentation
+├── bun.sh                     # Bun runtime configuration script
+├── components.json            # Configuration for components
+├── db
+│   └── init.sql               # Initial SQL script for database setup
+├── docker-compose.yml         # Docker Compose configuration
+├── next-env.d.ts              # TypeScript environment configuration for Next.js
+├── next.config.js             # Next.js configuration file
+├── package.json               # NPM package configuration
+├── pnpm-lock.yaml             # Lock file for PNPM package manager
+├── postcss.config.cjs         # PostCSS configuration file (CommonJS)
+├── prettier.config.js         # Prettier configuration file
+├── prisma
+│   └── schema.prisma          # Prisma schema definition
+├── project_structure.text     # Description of the project structure
+├── public                     # Public assets directory
+│   ├── favicon.ico            # Favicon for the website
+│   └── picture
+│       ├── logoSmo.svg        # Logo image in SVG format
+│       └── yellowBox.svg      # Yellow box image in SVG format
+├── src                        # Source code directory
+│   ├── __tests__              # Directory for test files
+│   │   ├── function.test.ts
+│   │   └── login.test.tsx
+│   ├── app                    # Application-specific code
+│   │   ├── ReduxProvider.tsx  # Redux provider setup
+│   │   ├── _components        # Common components directory
+│   │   │   ├── ProjectsBlog.tsx
+│   │   │   ├── parcels
+│   │   │   │   ├── Parcel.admin.tsx
+│   │   │   │   ├── Parcel.user.tsx
+│   │   │   │   ├── Shipping.tsx
+│   │   │   │   └── create-parcel.tsx
+│   │   │   ├── popCard.tsx
+│   │   │   ├── shared
+│   │   │   │   ├── AgreementDialog.tsx
+│   │   │   │   ├── Datepicker.tsx
+│   │   │   │   ├── combobox
+│   │   │   │   │   ├── department.tsx
+│   │   │   │   │   ├── group.tsx
+│   │   │   │   │   ├── project.tsx
+│   │   │   │   │   └── type.tsx
+│   │   │   │   ├── dropdown
+│   │   │   │   │   ├── GroupDropdown.tsx
+│   │   │   │   │   ├── ProjectDropdown.tsx
+│   │   │   │   │   ├── StatusDropdown.tsx
+│   │   │   │   │   └── TypeDropdown.tsx
+│   │   │   │   ├── nav
+│   │   │   │   │   ├── NavbarAdmin.tsx
+│   │   │   │   │   └── NavbarUser.tsx
+│   │   │   │   └── statusbox.tsx
+│   │   ├── admin              # Admin-specific pages
+│   │   │   ├── home
+│   │   │   │   ├── page.tsx
+│   │   │   │   └── parcels.tsx
+│   │   │   ├── status
+│   │   │   │   ├── bokking_status.tsx
+│   │   │   │   └── page.tsx
+│   │   ├── api                # API routes
+│   │   │   ├── auth
+│   │   │   │   └── route.ts
+│   │   │   ├── logout
+│   │   │   │   └── route.ts
+│   │   │   └── trpc
+│   │   │       └── [trpc]
+│   │   │           └── route.ts
+│   │   ├── layout.tsx         # Main layout component
+│   │   ├── login
+│   │   │   └── page.tsx
+│   │   ├── page.tsx           # Main page component
+│   │   ├── users              # User-specific pages
+│   │   │   ├── cart
+│   │   │   │   └── page.tsx
+│   │   │   ├── home
+│   │   │   │   └── page.tsx
+│   │   │   ├── profile
+│   │   │   │   └── page.tsx
+│   │   │   └── shipping
+│   │   │       └── [id]
+│   │   │           └── page.tsx
+│   ├── components             # Reusable UI components
+│   │   └── ui
+│   │       ├── alert-dialog.tsx
+│   │       ├── button.tsx
+│   │       ├── calendar.tsx
+│   │       ├── card.tsx
+│   │       ├── command.tsx
+│   │       ├── dialog.tsx
+│   │       ├── form.tsx
+│   │       ├── input.tsx
+│   │       ├── label.tsx
+│   │       ├── popover.tsx
+│   │       ├── table.tsx
+│   │       ├── textarea.tsx
+│   │       ├── toast.tsx
+│   │       ├── toaster.tsx
+│   │       └── use-toast.ts
+│   ├── env.js                 # Environment variables handling
+│   ├── lib
+│   │   └── utils.ts           # Utility functions
+│   ├── middleware.ts          # Middleware setup
+│   ├── server
+│   │   ├── api
+│   │   │   ├── root.ts
+│   │   │   └── routers
+│   │   │       ├── auth.ts
+│   │   │       ├── parcel.ts
+│   │   │       ├── parcel_Project.ts
+│   │   │       └── project.ts
+│   │   ├── db.ts              # Database connection setup
+│   ├── stores                 # Redux store setup
+│   │   ├── slices
+│   │   │   ├── datepicker.ts
+│   │   │   ├── department.ts
+│   │   │   ├── group.ts
+│   │   │   ├── project.ts
+│   │   │   ├── search.ts
+│   │   │   └── type.ts
+│   │   └── store.ts
+│   ├── styles
+│   │   └── globals.css        # Global CSS styles
+│   ├── trpc
+│   │   ├── react.tsx
+│   │   └── server.ts
+│   └── utils
+│       ├── constant.ts        # Constant values
+│       └── function.ts        # Helper functions
+├── start-database.sh          # Script to start the database
+├── tailwind.config.ts         # Tailwind CSS configuration
+├── tsconfig.json              # TypeScript configuration
+└── vitest.config.ts           # Vitest configuration file
 ```
 
 ## Contributing
