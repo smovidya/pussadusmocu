@@ -7,7 +7,7 @@ import {
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogAction,
-} from "../../components/ui/alert-dialog";
+} from "../../../components/ui/alert-dialog";
 
 const AgreementDialog = () => {
   return (

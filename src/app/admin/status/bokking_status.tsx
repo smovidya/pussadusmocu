@@ -1,10 +1,10 @@
 "use client";
 
-import { Navbar } from "~/app/_components/Navbar";
+import { NavbarUser } from "~/app/_components/shared/nav/NavbarUser";
 import { Button } from "~/components/ui/button";
 import PopupCard from "~/app/_components/popCard";
-import Dropdown from "~/app/_components/dropdown";
-import StatusDropdown from "~/app/_components/StatusDropdown";
+import Dropdown from "~/app/_components/shared/dropdown/ProjectDropdown";
+import StatusDropdown from "~/app/_components/shared/dropdown/StatusDropdown";
 import React, { useState, useEffect } from "react";
 import { type ParcelProjectWithDetails } from "./page";
 import { api } from "~/trpc/react";
@@ -114,7 +114,7 @@ function Sta({
 
   return (
     <div className="flex h-full w-full flex-col items-center gap-2 font-noto-sans">
-      <Navbar />
+      <NavbarUser />
       <div className="flex-grid mx-5 flex w-full sm:w-5/6 lg:w-4/6">
         <Dropdown setSelectedProjectId={setSelectedProjectId} />
         <StatusDropdown setSelectedStatus={setSelectedStatus} />

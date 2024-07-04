@@ -17,9 +17,9 @@ import {
 } from "~/components/ui/dialog";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import { Textarea } from "~/components/ui/textarea";
-import { Types } from "./combobox/type";
-import { Group } from "./combobox/group";
-import { Departments } from "./combobox/department";
+import { Types } from "../shared/combobox/type";
+import { Group } from "../shared/combobox/group";
+import { Departments } from "../shared/combobox/department";
 import { api } from "~/trpc/react";
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";

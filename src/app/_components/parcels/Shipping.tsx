@@ -1,13 +1,13 @@
 "use client";
 
-import { NavbarUser } from "./NavbarUser";
+import { NavbarUser } from "../shared/nav/NavbarUser";
 import { type Parcel } from "@prisma/client";
 import ParcelUser from "./Parcel.user";
 import { useSelector } from "react-redux";
 import { parcelSelector } from "~/stores/slices/search";
 import { useState } from "react";
-import { GroupDropdown } from "./GroupDropdown";
-import { TypeDropdown } from "./TypeDropdown";
+import { GroupDropdown } from "../shared/dropdown/GroupDropdown";
+import { TypeDropdown } from "../shared/dropdown/TypeDropdown";
 
 interface ParcelProps {
   parcels: Parcel[];

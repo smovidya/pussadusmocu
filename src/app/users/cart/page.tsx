@@ -1,5 +1,5 @@
 import { getCookie } from "cookies-next";
-import { NavbarUser } from "~/app/_components/NavbarUser";
+import { NavbarUser } from "~/app/_components/shared/nav/NavbarUser";
 import { Statuesbox } from "~/app/_components/statusbox";
 import { api } from "~/trpc/server";
 import { cookies } from "next/headers";

@@ -22,10 +22,10 @@ import {
   types,
   type UploadResponse,
 } from "~/utils/constant";
-import { Types } from "./combobox/type";
-import { Group } from "./combobox/group";
+import { Types } from "../shared/combobox/type";
+import { Group } from "../shared/combobox/group";
 import { Textarea } from "~/components/ui/textarea";
-import { Departments } from "./combobox/department";
+import { Departments } from "../shared/combobox/department";
 import { Button } from "~/components/ui/button";
 import { api } from "~/trpc/react";
 import { useState } from "react";
