@@ -11,6 +11,7 @@ Pussadusmocu is a parcel borrowing project for the Faculty of Science at Chulalo
   - [Features](#features)
   - [Project Structure](#project-structure)
   - [Contributing](#contributing)
+  - [Todo](#todo)
   - [License](#license)
 
 ## Features
@@ -81,7 +82,7 @@ We welcome contributions! Please follow these steps:
 - [ ] เพิ่มการกดยกเลิกพัสดุได้ เพราะในกรณีที่ผู้ยืมกดยืมผิดหรืออยากมีการเปลี่ยนแปลงจำนวน จะได้สามารถเปลี่ยนแปลงได้
 - [x] ~~ขึ้นเวลาในการกรอกพัสดุ~~
 - [ ] แก้ไขวันสุดท้ายของการยืมพัสดุ
-- [ ] แก้ไขปุ่มกดได้รับพัสดุเรียบร้อยแล้ว
+- [ ] แก้ไขปุ่มกดได้รับพัสดุเรียบร้อยแล้ว **ให้แค่กดรับได้เฉพาะวันที่กำหนด**
 
 ## License
 
