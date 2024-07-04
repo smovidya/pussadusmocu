@@ -1,6 +1,6 @@
 "use client";
 
-import { NavbarUser } from "~/app/_components/shared/nav/NavbarUser";
+import { Navbar } from "~/app/_components/shared/nav/NavbarAdmin";
 import { Button } from "~/components/ui/button";
 import PopupCard from "~/app/_components/popCard";
 import Dropdown from "~/app/_components/shared/dropdown/ProjectDropdown";
@@ -114,7 +114,7 @@ function Sta({
 
   return (
     <div className="flex h-full w-full flex-col items-center gap-2 font-noto-sans">
-      <NavbarUser />
+      <Navbar />
       <div className="flex-grid mx-5 flex w-full sm:w-5/6 lg:w-4/6">
         <Dropdown setSelectedProjectId={setSelectedProjectId} />
         <StatusDropdown setSelectedStatus={setSelectedStatus} />
