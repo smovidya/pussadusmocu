@@ -9,6 +9,11 @@ const LoginPage = () => {
     }
     return "https://account.it.chula.ac.th/html/login.html?serviceName=PUSSADU-SUCU&service=https://pussadusmocu.vercel.app/api/auth";
   };
+
+  // Version and deployment date
+  const version = "1.0.3";
+  const deploymentDate = "July 8, 2024";
+
   return (
     <div className="grid h-screen w-screen md:grid-cols-5">
       <div className="col-span-3 hidden items-center justify-center md:flex md:bg-yellow01">
@@ -36,7 +41,7 @@ const LoginPage = () => {
             height={108}
             className="md:hidden "
           />
-          <div className="drop-shadow-3xl font-noto-sans text-H2 font-bold md:text-H1 ">
+          <div className="drop-shadow-3xl font-noto-sans text-H2 font-bold md:text-H1">
             ระบบพัสดุ
           </div>
           <div className="mb-28 font-noto-sans text-subHead2 font-bold md:text-subHead1">
@@ -55,6 +60,10 @@ const LoginPage = () => {
           </a>
           <AgreementDialog />
           <div className="h-36 md:h-16"></div>
+          {/* Version and deployment date */}
+          <div className="absolute bottom-5 right-5 text-sm text-gray-500">
+            Version: {version} | Deployed: {deploymentDate}
+          </div>
         </div>
       </div>
     </div>
