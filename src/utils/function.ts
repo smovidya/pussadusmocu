@@ -23,7 +23,7 @@ export const encrypt = async (data: object): Promise<string> => {
 /**
  * Decrypts a JWT token.
  * @param {string} token - The JWT token to be decrypted.
- * @returns {Promise<Student | { error: string }>} A promise that resolves to the decrypted data if the token is valid, 
+ * @returns {Promise<Student | { error: string }>} A promise that resolves to the decrypted data if the token is valid,
  * or an error object if the token is invalid.
  */
 export const decrypt = async (token: string) => {
