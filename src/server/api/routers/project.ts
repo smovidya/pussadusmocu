@@ -2,7 +2,16 @@ import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 
+/**
+ * TRPC Router for handling project-related operations.
+ */
 export const projectRouter = createTRPCRouter({
+  /**
+   * Get all projects that are in progress.
+   *
+   * @returns {Promise<Object[]>} List of in-progress projects.
+   * @throws {TRPCError} If there is an error fetching the projects.
+   */
   getProject: publicProcedure.query(async ({ ctx }) => {
     try {
       const parcels = await ctx.db.project.findMany({
@@ -19,6 +28,14 @@ export const projectRouter = createTRPCRouter({
       });
     }
   }),
+
+  /**
+   * Get projects by student ID.
+   *
+   * @param {Object} input - Input object.
+   * @param {string} input.student_id - The ID of the student to fetch projects for.
+   * @returns {Promise<Object[]>} List of in-progress projects for the student.
+   */
   getProjectByStudent: publicProcedure
     .input(
       z.object({
@@ -49,6 +66,15 @@ export const projectRouter = createTRPCRouter({
         },
       });
     }),
+
+  /**
+   * Register a student to a project.
+   *
+   * @param {Object} input - Input object.
+   * @param {string} input.student_id - The ID of the student to register.
+   * @param {string} input.project_id - The ID of the project to register the student for.
+   * @returns {Promise<Object>} The created project-student relationship.
+   */
   registerProject: publicProcedure
     .input(
       z.object({

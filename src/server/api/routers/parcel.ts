@@ -8,7 +8,15 @@ import {
 } from "~/utils/constant";
 import { BORROWING_STATUS } from "@prisma/client";
 
+/**
+ * TRPC Router for handling parcel-related operations.
+ */
 export const parcelRouter = createTRPCRouter({
+  /**
+   * Get all parcels.
+   *
+   * @returns {Promise<Object[]>} List of all parcels.
+   */
   getAll: publicProcedure.query(async ({ ctx }) => {
     try {
       const parcels = await ctx.db.parcel.findMany();
@@ -22,6 +30,11 @@ export const parcelRouter = createTRPCRouter({
     }
   }),
 
+  /**
+   * Get all remaining parcels that are available.
+   *
+   * @returns {Promise<Object[]>} List of available parcels.
+   */
   getRemain: publicProcedure.query(async ({ ctx }) => {
     return await ctx.db.parcel.findMany({
       where: {
@@ -32,6 +45,14 @@ export const parcelRouter = createTRPCRouter({
     });
   }),
 
+  /**
+   * Get parcel by ID.
+   *
+   * @param {Object} input - Input object.
+   * @param {string} input.parcel_id - The ID of the parcel to fetch.
+   * @returns {Promise<Object>} The parcel information.
+   * @throws {TRPCError} If the parcel is not found or an error occurs.
+   */
   getById: publicProcedure
     .input(
       z.object({
@@ -62,6 +83,20 @@ export const parcelRouter = createTRPCRouter({
       }
     }),
 
+  /**
+   * Book a parcel.
+   *
+   * @param {Object} input - Input object.
+   * @param {string} input.student_id - The student ID.
+   * @param {string} input.parcel_id - The parcel ID.
+   * @param {string} input.project_id - The project ID.
+   * @param {number} input.amount - The amount of parcel to book.
+   * @param {string} input.description - Description of the booking.
+   * @param {Date} [input.startDate] - The start date of the booking.
+   * @param {Date} [input.endDate] - The end date of the booking.
+   * @returns {Promise<void>}
+   * @throws {Error} If the requested amount exceeds the available amount.
+   */
   booking: publicProcedure
     .input(
       z.object({
@@ -109,6 +144,23 @@ export const parcelRouter = createTRPCRouter({
       });
     }),
 
+  /**
+   * Create a new parcel.
+   *
+   * @param {Object} input - Input object.
+   * @param {string} input.name - Name of the parcel.
+   * @param {string} input.description - Description of the parcel.
+   * @param {string} input.id - ID of the parcel.
+   * @param {string} input.image_url - URL of the parcel image.
+   * @param {string} input.unit - Unit of the parcel.
+   * @param {number} input.amount - Amount of the parcel.
+   * @param {ParcelDepartmentSchema} input.department - Department of the parcel.
+   * @param {ParcelGroupSchema} input.group - Group of the parcel.
+   * @param {ParcelTypeSchema} input.type - Type of the parcel.
+   * @param {boolean} input.available - Availability of the parcel.
+   * @returns {Promise<Object>} The created parcel.
+   * @throws {TRPCError} If there is an error creating the parcel.
+   */
   create: publicProcedure
     .input(
       z.object({
@@ -151,6 +203,23 @@ export const parcelRouter = createTRPCRouter({
       }
     }),
 
+  /**
+   * Edit an existing parcel.
+   *
+   * @param {Object} input - Input object.
+   * @param {string} input.name - Name of the parcel.
+   * @param {string} input.description - Description of the parcel.
+   * @param {string} input.id - ID of the parcel.
+   * @param {string} input.image_url - URL of the parcel image.
+   * @param {string} input.unit - Unit of the parcel.
+   * @param {number} input.amount - Amount of the parcel.
+   * @param {ParcelDepartmentSchema} input.department - Department of the parcel.
+   * @param {ParcelGroupSchema} input.group - Group of the parcel.
+   * @param {ParcelTypeSchema} input.type - Type of the parcel.
+   * @param {boolean} input.available - Availability of the parcel.
+   * @returns {Promise<Object>} The updated parcel.
+   * @throws {TRPCError} If the parcel is not found or there is an error updating the parcel.
+   */
   edit: publicProcedure
     .input(
       z.object({
@@ -201,6 +270,14 @@ export const parcelRouter = createTRPCRouter({
       }
     }),
 
+  /**
+   * Delete a parcel.
+   *
+   * @param {Object} input - Input object.
+   * @param {string} input.parcel_id - The ID of the parcel to delete.
+   * @returns {Promise<void>}
+   * @throws {TRPCError} If the parcel is not found or there is an error deleting the parcel.
+   */
   delete: publicProcedure
     .input(
       z.object({

@@ -3,7 +3,18 @@ import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { BORROWING_STATUS } from "@prisma/client";
 
+/**
+ * TRPC Router for handling parcel project operations.
+ */
 export const Parcel_projectRouter = createTRPCRouter({
+  /**
+   * Get all parcel projects, optionally filtered by student ID.
+   *
+   * @param {Object} input - Input object.
+   * @param {string} [input.student_id] - Optional student ID to filter the parcels.
+   * @returns {Promise<Array>} The list of parcel projects.
+   * @throws {TRPCError} When the fetch operation fails.
+   */
   getAll: publicProcedure
     .input(
       z.object({
@@ -31,6 +42,15 @@ export const Parcel_projectRouter = createTRPCRouter({
         });
       }
     }),
+
+  /**
+   * Update the status of a parcel project to 'INUSE'.
+   *
+   * @param {Object} input - Input object.
+   * @param {string} input.project_id - The ID of the project.
+   * @param {string} input.student_id - The ID of the student.
+   * @returns {Promise<void>} A promise that resolves when the update is complete.
+   */
   updatestatus: publicProcedure
     .input(
       z.object({
@@ -44,7 +64,7 @@ export const Parcel_projectRouter = createTRPCRouter({
         await tx.parcel_Project.updateMany({
           where: {
             student_id: input.student_id,
-            project_id: input.project_id, // Use project_id directly
+            project_id: input.project_id,
             status: BORROWING_STATUS.BORROWING,
           },
           data: {
@@ -53,6 +73,15 @@ export const Parcel_projectRouter = createTRPCRouter({
         });
       });
     }),
+
+  /**
+   * Update the status of a parcel project to 'BORROWING' with an admin description.
+   *
+   * @param {Object} input - Input object.
+   * @param {string} input.parcel_project_id - The ID of the parcel project.
+   * @param {string} input.description - The admin description to update.
+   * @returns {Promise<Object>} The updated parcel project.
+   */
   updateChecking: publicProcedure
     .input(
       z.object({
@@ -73,6 +102,14 @@ export const Parcel_projectRouter = createTRPCRouter({
       });
     }),
 
+  /**
+   * Reject a parcel project booking with a description.
+   *
+   * @param {Object} input - Input object.
+   * @param {string} input.parcel_project_id - The ID of the parcel project.
+   * @param {string} input.description - The admin description to update.
+   * @returns {Promise<void>} A promise that resolves when the rejection is complete.
+   */
   rejectBooking: publicProcedure
     .input(
       z.object({
@@ -93,7 +130,7 @@ export const Parcel_projectRouter = createTRPCRouter({
         });
         await tx.parcel_Project.updateMany({
           where: {
-            id: input.parcel_project_id, // Use project_id directly
+            id: input.parcel_project_id,
           },
           data: {
             status: BORROWING_STATUS.REJECT,
@@ -113,6 +150,15 @@ export const Parcel_projectRouter = createTRPCRouter({
         });
       });
     }),
+
+  /**
+   * Return a parcel project and update the stock amount.
+   *
+   * @param {Object} input - Input object.
+   * @param {string} input.parcel_project_id - The ID of the parcel project.
+   * @param {number} input.parcel_return - The amount of parcel to return.
+   * @returns {Promise<void>} A promise that resolves when the return is complete.
+   */
   returnParcel: publicProcedure
     .input(
       z.object({
