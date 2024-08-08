@@ -54,12 +54,12 @@ export const Statuesbox = ({ parcelslist, student_id }: Props) => {
 
       const table = (
         <Table
-          className="h-auto w-full bg-white font-noto-sans"
+          className="h-auto w-full item-center min-w-[200px] max-w-[85%] sm:w-[200px] md:w-[700px] lg:w-[1100px] sm:max-w-[1100px] bg-white font-noto-sans mx-auto"
           key={projectId}
         >
           <TableHeader>
             <TableRow>
-              <TableCell className="text-right">
+              <TableCell className="text-left">
                 {projectId} | {parcels[0]?.project.title}
               </TableCell>
             </TableRow>
@@ -73,14 +73,15 @@ export const Statuesbox = ({ parcelslist, student_id }: Props) => {
                     <div>
                       <Image
                         src={parcel.parcel.image_url}
-                        width={200}
-                        height={200}
+                        width={300}
+                        height={300}
                         alt={parcel.parcel.image_url}
+                        className="flex justify-center items-center"
                       />
                     </div>
                   </TableCell>
-                  <TableCell className="grid grid-cols-2">
-                    <div className="grid h-36 w-96 grid-rows-5">
+                  <TableCell className="grid grid-cols-1 gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
+                    <div className="grid h-30 grid-rows-4 text-left">
                       <div className="">
                         {parcel.parcel_id} | {parcel.parcel.title}
                       </div>
@@ -90,7 +91,7 @@ export const Statuesbox = ({ parcelslist, student_id }: Props) => {
                       <div className="row-start-5">x{parcel.amount}</div>
                     </div>
 
-                    <div className="grid h-36  grid-rows-5 text-right text-gray-500">
+                    <div className="grid h-30 grid-rows-4 text-right text-gray-500">
                       <div className="row-start-1">
                         <div className="flex justify-end">
                           <p className="pr-6">ระยะเวลายืม</p>
@@ -124,16 +125,16 @@ export const Statuesbox = ({ parcelslist, student_id }: Props) => {
           <TableFooter>
             <TableRow>
               <TableCell>
-                <div className="grid h-20 grid-rows-5">
-                  <p className="row-start-1 text-red-500">
+                <div className="grid grid-rows-3 h-21">
+                  <p className="row-start-1 text-red-500 text-sm">
                     วันสุดท้ายของการคืนพัสดุ <br />
                   </p>
-                  <p className="row-start-2 py-1 text-red-500">
+                  <p className="row-start-2 py-1 text-red-500 text-sm">
                     {" "}
                     {parcels[0]?.endDate.toISOString()} <br />
                     <br />
                   </p>
-                  <p className="row-start-5 text-gray-500">
+                  <p className="row-start-3 text-gray-500 text-sm">
                     กรุณาตรวจสอบเมื่อได้รับพัสดุแล้ว
                   </p>
                 </div>
@@ -156,7 +157,7 @@ export const Statuesbox = ({ parcelslist, student_id }: Props) => {
                       <br />
                     </a>
                   </div>
-                  <div className="row-start-4">
+                  <div className="row-start-3">
                     <Button
                       className="bg-yellow-400"
                       type="button"
