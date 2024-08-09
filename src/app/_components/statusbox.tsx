@@ -54,7 +54,7 @@ export const Statuesbox = ({ parcelslist, student_id }: Props) => {
 
       const table = (
         <Table
-          className="h-auto w-full item-center min-w-[200px] max-w-[85%] sm:w-[200px] md:w-[700px] lg:w-[1100px] sm:max-w-[1100px] bg-white font-noto-sans mx-auto"
+          className="item-center mx-auto h-auto w-full min-w-[200px] max-w-[85%] bg-white font-noto-sans sm:w-[200px] sm:max-w-[1100px] md:w-[700px] lg:w-[1100px]"
           key={projectId}
         >
           <TableHeader>
@@ -76,12 +76,12 @@ export const Statuesbox = ({ parcelslist, student_id }: Props) => {
                         width={300}
                         height={300}
                         alt={parcel.parcel.image_url}
-                        className="flex justify-center items-center"
+                        className="flex items-center justify-center"
                       />
                     </div>
                   </TableCell>
                   <TableCell className="grid grid-cols-1 gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
-                    <div className="grid h-30 grid-rows-4 text-left">
+                    <div className="h-30 grid grid-rows-4 text-left">
                       <div className="">
                         {parcel.parcel_id} | {parcel.parcel.title}
                       </div>
@@ -91,7 +91,7 @@ export const Statuesbox = ({ parcelslist, student_id }: Props) => {
                       <div className="row-start-5">x{parcel.amount}</div>
                     </div>
 
-                    <div className="grid h-30 grid-rows-4 text-right text-gray-500">
+                    <div className="h-30 grid grid-rows-4 text-right text-gray-500">
                       <div className="row-start-1">
                         <div className="flex justify-end">
                           <p className="pr-6">ระยะเวลายืม</p>
@@ -125,16 +125,16 @@ export const Statuesbox = ({ parcelslist, student_id }: Props) => {
           <TableFooter>
             <TableRow>
               <TableCell>
-                <div className="grid grid-rows-3 h-21">
-                  <p className="row-start-1 text-red-500 text-sm">
+                <div className="h-21 grid grid-rows-3">
+                  <p className="row-start-1 text-sm text-red-500">
                     วันสุดท้ายของการคืนพัสดุ <br />
                   </p>
-                  <p className="row-start-2 py-1 text-red-500 text-sm">
+                  <p className="row-start-2 py-1 text-sm text-red-500">
                     {" "}
                     {parcels[0]?.endDate.toISOString()} <br />
                     <br />
                   </p>
-                  <p className="row-start-3 text-gray-500 text-sm">
+                  <p className="row-start-3 text-sm text-gray-500">
                     กรุณาตรวจสอบเมื่อได้รับพัสดุแล้ว
                   </p>
                 </div>
