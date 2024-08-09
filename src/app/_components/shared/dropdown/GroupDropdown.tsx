@@ -13,7 +13,7 @@ export function GroupDropdown({ setSelectedType }: StatusDropdownProps) {
   };
 
   return (
-    <div className="w-2/6 px-2 py-2">
+    <div className="w-full px-2 py-2">
       <p>หมวด</p>
       <select
         className="w-full border border-yellow-200 px-1 py-2"

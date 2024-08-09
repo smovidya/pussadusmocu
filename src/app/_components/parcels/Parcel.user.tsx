@@ -88,7 +88,7 @@ const ParcelUser = ({ parcel, project_id, student_id }: BlogProps) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Card className="h-auto w-44 font-noto-sans hover:scale-105 hover:cursor-pointer">
+        <Card className="w-50 h-auto font-noto-sans hover:scale-105 hover:cursor-pointer">
           <CardHeader>
             <CardTitle>{parcel.title}</CardTitle>
             <CardDescription>{parcel.description}</CardDescription>
@@ -121,21 +121,23 @@ const ParcelUser = ({ parcel, project_id, student_id }: BlogProps) => {
           </CardContent>
         </Card>
       </DialogTrigger>
-      <DialogContent className="min-w-[700px] font-noto-sans sm:max-w-[425px]">
+      <DialogContent className="w-full min-w-[300px] max-w-[85%] font-noto-sans sm:w-[200px] sm:max-w-[700px] md:w-[500px] lg:w-[700px]">
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex w-full space-y-6"
         >
-          <div className="grid w-full grid-cols-2">
-            <Image
-              src={parcel.image_url}
-              width={300}
-              height={300}
-              alt={parcel.parcel_id}
-              loading="eager"
-            />
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
+            <div className="flex items-center justify-center">
+              <Image
+                src={parcel.image_url}
+                width={300}
+                height={300}
+                alt={parcel.parcel_id}
+                loading="eager"
+              />
+            </div>
             <div className="flex flex-col gap-2">
-              <div className="grid grid-cols-4 items-center gap-4">
+              <div className="grid grid-cols-4 gap-4">
                 <Label htmlFor="parcel_id" className="text-right">
                   เลขไอดี
                 </Label>
