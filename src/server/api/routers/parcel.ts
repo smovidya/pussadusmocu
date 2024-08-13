@@ -2,6 +2,7 @@ import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import {
+  LINE_TOKEN,
   ParcelDepartmentSchema,
   ParcelGroupSchema,
   ParcelTypeSchema,
@@ -35,15 +36,34 @@ export const parcelRouter = createTRPCRouter({
    *
    * @returns {Promise<Object[]>} List of available parcels.
    */
-  getRemain: publicProcedure.query(async ({ ctx }) => {
-    return await ctx.db.parcel.findMany({
-      where: {
-        NOT: {
-          available: false,
+  getRemain: publicProcedure
+    .input(
+      z.object({
+        student_id: z.string(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      const studentId = input.student_id; // Assuming you have the student's ID in the session.
+
+      // Check if the student is in the project with ID `0000000000`.
+      const isStudentInProject = await ctx.db.project_Student.findFirst({
+        where: {
+          project_id: "0000000000",
+          student_id: studentId,
         },
-      },
-    });
-  }),
+      });
+
+      return await ctx.db.parcel.findMany({
+        where: isStudentInProject
+          ? { available: true }
+          : {
+              available: true,
+              NOT: {
+                type: "KEY",
+              },
+            },
+      });
+    }),
 
   /**
    * Get parcel by ID.
@@ -139,6 +159,26 @@ export const parcelRouter = createTRPCRouter({
           },
           data: {
             amount: amount - input.amount,
+          },
+        });
+        const student_name = await tx.student.findFirst({
+          where: { student_id: input.student_id },
+        });
+        const text =
+          "\n🧑‍🤝‍🧑 ชื่อผู้ยืม: " +
+          student_name?.name +
+          "\n" +
+          "🤮 วันที่ยืม: " +
+          input.startDate?.toDateString();
+        const message = new FormData();
+        message.append("message", text);
+        message.append("stickerPackageId", "446");
+        message.append("stickerId", "2006");
+        await fetch("https://notify-api.line.me/api/notify", {
+          method: "post",
+          body: message,
+          headers: {
+            Authorization: "Bearer " + LINE_TOKEN,
           },
         });
       });

@@ -7,7 +7,6 @@ import { decrypt } from "~/utils/function";
 import { STUDENT_ID } from "~/utils/constant";
 
 const Home = async ({ params }: { params: { id: string } }) => {
-  const mockParcels: Parcel[] = await api.parcel.getRemain();
   const encryptedCookie = getCookie("student_id", { cookies });
   const student_id = await decrypt(encryptedCookie ?? "");
   const student =
@@ -16,6 +15,10 @@ const Home = async ({ params }: { params: { id: string } }) => {
           student_id: student_id as string,
         })
       : (student_id as Student);
+  const mockParcels: Parcel[] = await api.parcel.getRemain({
+    student_id: student?.student_id ?? STUDENT_ID,
+  });
+
   return (
     <Shipping
       id={params.id}
