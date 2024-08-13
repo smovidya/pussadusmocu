@@ -55,8 +55,6 @@ export const parcelRouter = createTRPCRouter({
         },
       });
 
-      console.log("LOG-DEBUGGER ", isStudentInProject);
-
       return await ctx.db.parcel.findMany({
         where:
           isStudentInProject && projectId === key_project
