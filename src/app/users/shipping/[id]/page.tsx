@@ -17,6 +17,7 @@ const Home = async ({ params }: { params: { id: string } }) => {
       : (student_id as Student);
   const mockParcels: Parcel[] = await api.parcel.getRemain({
     student_id: student?.student_id ?? STUDENT_ID,
+    project_id: params.id,
   });
 
   return (

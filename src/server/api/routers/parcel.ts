@@ -40,10 +40,11 @@ export const parcelRouter = createTRPCRouter({
     .input(
       z.object({
         student_id: z.string(),
+        project_id: z.string(),
       }),
     )
     .query(async ({ ctx, input }) => {
-      const studentId = input.student_id; // Assuming you have the student's ID in the session.
+      const { student_id: studentId, project_id: projectId } = input;
 
       // Check if the student is in the project with ID `0000000000`.
       const isStudentInProject = await ctx.db.project_Student.findFirst({
@@ -53,15 +54,26 @@ export const parcelRouter = createTRPCRouter({
         },
       });
 
+      // Check if the student is an admin.
+      const isAdmin = await ctx.db.student.findFirst({
+        where: {
+          student_id: studentId,
+          isAdmin: true,
+        },
+      });
+
       return await ctx.db.parcel.findMany({
-        where: isStudentInProject
-          ? { available: true, type: "KEY" }
-          : {
-              available: true,
-              NOT: {
-                type: "KEY",
-              },
-            },
+        where:
+          isStudentInProject ?? isAdmin
+            ? { available: true, type: "KEY" }
+            : projectId === "0000000000"
+              ? { available: true, type: "KEY" }
+              : {
+                  available: true,
+                  NOT: {
+                    type: "KEY",
+                  },
+                },
       });
     }),
 
