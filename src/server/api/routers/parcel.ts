@@ -7,7 +7,7 @@ import {
   ParcelGroupSchema,
   ParcelTypeSchema,
 } from "~/utils/constant";
-import { BORROWING_STATUS } from "@prisma/client";
+import { BORROWING_STATUS, PARCEL_TYPE } from "@prisma/client";
 
 /**
  * TRPC Router for handling parcel-related operations.
@@ -64,10 +64,10 @@ export const parcelRouter = createTRPCRouter({
 
       return await ctx.db.parcel.findMany({
         where:
-          isStudentInProject ?? isAdmin
-            ? { available: true, type: "KEY" }
+          (isStudentInProject ?? isAdmin)
+            ? { available: true, type: PARCEL_TYPE.KEY }
             : projectId === "0000000000"
-              ? { available: true, type: "KEY" }
+              ? { available: true, type: PARCEL_TYPE.KEY }
               : {
                   available: true,
                   NOT: {
