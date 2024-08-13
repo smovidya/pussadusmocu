@@ -45,11 +45,12 @@ export const parcelRouter = createTRPCRouter({
     )
     .query(async ({ ctx, input }) => {
       const { student_id: studentId, project_id: projectId } = input;
+      const key_project = "0000000000";
 
       // Check if the student is in the project with ID `0000000000`.
       const isStudentInProject = await ctx.db.project_Student.findFirst({
         where: {
-          project_id: "0000000000",
+          project_id: key_project,
           student_id: studentId,
         },
       });
@@ -57,15 +58,14 @@ export const parcelRouter = createTRPCRouter({
       console.log("LOG-DEBUGGER ", isStudentInProject);
 
       return await ctx.db.parcel.findMany({
-        where:
-          (isStudentInProject)
-            ? { available: true, type: PARCEL_TYPE.KEY }
-              : {
-                  available: true,
-                  NOT: {
-                    type: "KEY",
-                  },
-                },
+        where: isStudentInProject && projectId === key_project
+          ? { available: true, type: PARCEL_TYPE.KEY }
+          : {
+              available: true,
+              NOT: {
+                type: "KEY",
+              },
+            },
       });
     }),
 
