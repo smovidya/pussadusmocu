@@ -54,20 +54,12 @@ export const parcelRouter = createTRPCRouter({
         },
       });
 
-      // Check if the student is an admin.
-      const isAdmin = await ctx.db.student.findFirst({
-        where: {
-          student_id: studentId,
-          isAdmin: true,
-        },
-      });
+      console.log("LOG-DEBUGGER ", isStudentInProject);
 
       return await ctx.db.parcel.findMany({
         where:
-          (isStudentInProject ?? isAdmin)
+          (isStudentInProject)
             ? { available: true, type: PARCEL_TYPE.KEY }
-            : projectId === "0000000000"
-              ? { available: true, type: PARCEL_TYPE.KEY }
               : {
                   available: true,
                   NOT: {
