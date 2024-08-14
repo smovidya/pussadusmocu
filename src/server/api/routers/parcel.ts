@@ -7,7 +7,7 @@ import {
   ParcelTypeSchema,
 } from "~/utils/constant";
 import { BORROWING_STATUS, PARCEL_TYPE } from "@prisma/client";
-import { sendMessage } from "~/utils/function";
+import { sendLineNotificaion } from "~/utils/function";
 
 /**
  * TRPC Router for handling parcel-related operations.
@@ -176,7 +176,7 @@ export const parcelRouter = createTRPCRouter({
         const student = await tx.student.findFirst({
           where: { student_id: input.student_id },
         });
-        await sendMessage(
+        await sendLineNotificaion(
           student?.name ?? "",
           input.startDate?.toDateString() ?? "",
         );

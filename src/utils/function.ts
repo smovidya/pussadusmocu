@@ -55,7 +55,7 @@ export const decrypt = async (token: string) => {
  * @returns {Promise<void>} A promise that resolves to the decrypted data if the token is valid,
  * or an error object if the token is invalid.
  */
-export const sendMessage = async (
+export const sendLineNotificaion = async (
   student_name: string,
   start_date: string,
 ): Promise<void> => {
