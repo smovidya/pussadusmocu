@@ -36,7 +36,7 @@ import {
   types,
   type FormSchemaType,
   type UploadResponse,
-} from "~/utils/constant";
+} from "~/lib/constant";
 import { useToast } from "~/components/ui/use-toast";
 import { ToastAction } from "~/components/ui/toast";
 

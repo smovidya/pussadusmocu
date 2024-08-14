@@ -22,7 +22,7 @@ import { Label } from "~/components/ui/label";
 import {
   FormSchemaBooking,
   type FormSchemaBookingType,
-} from "~/utils/constant";
+} from "~/lib/constant";
 import { Textarea } from "~/components/ui/textarea";
 import { Button } from "~/components/ui/button";
 import { api } from "~/trpc/react";

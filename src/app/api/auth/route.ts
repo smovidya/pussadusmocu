@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { type NextRequest, NextResponse } from "next/server";
-import { DeeAppId, DeeAppSecret, type UserData } from "~/utils/constant";
-import { encrypt } from "../../../utils/function";
+import { DeeAppId, DeeAppSecret, type UserData } from "~/lib/constant";
+import { encrypt } from "../../../lib/function";
 import { api } from "~/trpc/server";
 
 type ServiceValidationResponse = {

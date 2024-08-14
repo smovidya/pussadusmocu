@@ -3,8 +3,8 @@ import { cookies } from "next/headers";
 import { getCookie } from "cookies-next";
 import { Shipping } from "~/app/_components/parcels/Shipping";
 import { api } from "~/trpc/server";
-import { decrypt } from "~/utils/function";
-import { STUDENT_ID } from "~/utils/constant";
+import { decrypt } from "~/lib/function";
+import { STUDENT_ID } from "~/lib/constant";
 
 const Home = async ({ params }: { params: { id: string } }) => {
   const encryptedCookie = getCookie("student_id", { cookies });

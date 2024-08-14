@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { encrypt } from "~/utils/function";
+import { encrypt } from "~/lib/function";
 
 test("encoding", async () => {
   expect(

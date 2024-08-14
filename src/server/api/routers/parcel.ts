@@ -5,9 +5,9 @@ import {
   ParcelDepartmentSchema,
   ParcelGroupSchema,
   ParcelTypeSchema,
-} from "~/utils/constant";
+} from "~/lib/constant";
 import { BORROWING_STATUS, PARCEL_TYPE } from "@prisma/client";
-import { sendLineNotificaion } from "~/utils/function";
+import { sendLineNotificaion } from "~/lib/function";
 
 /**
  * TRPC Router for handling parcel-related operations.

@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { types } from "~/utils/constant";
+import { types } from "~/lib/constant";
 
 type StatusDropdownProps = {
   setSelectedType: React.Dispatch<React.SetStateAction<string | null>>;

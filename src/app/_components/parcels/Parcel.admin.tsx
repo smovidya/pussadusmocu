@@ -21,7 +21,7 @@ import {
   groups,
   types,
   type UploadResponse,
-} from "~/utils/constant";
+} from "~/lib/constant";
 import { Types } from "../shared/combobox/type";
 import { Group } from "../shared/combobox/group";
 import { Textarea } from "~/components/ui/textarea";

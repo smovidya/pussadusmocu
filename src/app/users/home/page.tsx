@@ -4,7 +4,7 @@ import { NavbarUser } from "~/app/_components/shared/nav/NavbarUser";
 import { ProjectBlog } from "~/app/_components/ProjectsBlog";
 import { api } from "~/trpc/server";
 import { getCookie } from "cookies-next";
-import { decrypt } from "~/utils/function";
+import { decrypt } from "~/lib/function";
 import { redirect } from "next/navigation";
 
 const Profile = async () => {

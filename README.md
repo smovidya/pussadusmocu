@@ -155,6 +155,8 @@ pussadusmocu
 │   ├── env.js                 # Environment variables handling
 │   ├── lib
 │   │   └── utils.ts           # Utility functions
+│   |   ├── constant.ts        # Constant values
+│   |   └── function.ts        # Helper functions
 │   ├── middleware.ts          # Middleware setup
 │   ├── server
 │   │   ├── api
@@ -179,9 +181,6 @@ pussadusmocu
 │   ├── trpc
 │   │   ├── react.tsx
 │   │   └── server.ts
-│   └── utils
-│       ├── constant.ts        # Constant values
-│       └── function.ts        # Helper functions
 ├── start-database.sh          # Script to start the database
 ├── tailwind.config.ts         # Tailwind CSS configuration
 ├── tsconfig.json              # TypeScript configuration

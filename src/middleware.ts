@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { type NextRequest } from "next/server";
-import { decrypt } from "./utils/function";
+import { decrypt } from "./lib/function";
 import { type Student } from "@prisma/client";
 
 export async function middleware(request: NextRequest) {

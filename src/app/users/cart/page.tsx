@@ -7,8 +7,8 @@ import {
   type Projectinparcel,
   type Parcellist,
   STUDENT_ID,
-} from "~/utils/constant";
-import { decrypt } from "~/utils/function";
+} from "~/lib/constant";
+import { decrypt } from "~/lib/function";
 import { type Student } from "@prisma/client";
 
 const Profile = async () => {
