@@ -19,10 +19,7 @@ import {
 } from "~/components/ui/dialog";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
-import {
-  FormSchemaBooking,
-  type FormSchemaBookingType,
-} from "~/lib/constant";
+import { FormSchemaBooking, type FormSchemaBookingType } from "~/lib/constant";
 import { Textarea } from "~/components/ui/textarea";
 import { Button } from "~/components/ui/button";
 import { api } from "~/trpc/react";
