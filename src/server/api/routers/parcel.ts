@@ -2,12 +2,12 @@ import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import {
-  LINE_TOKEN,
   ParcelDepartmentSchema,
   ParcelGroupSchema,
   ParcelTypeSchema,
 } from "~/utils/constant";
 import { BORROWING_STATUS, PARCEL_TYPE } from "@prisma/client";
+import { sendMessage } from "~/utils/function";
 
 /**
  * TRPC Router for handling parcel-related operations.
@@ -44,27 +44,36 @@ export const parcelRouter = createTRPCRouter({
       }),
     )
     .query(async ({ ctx, input }) => {
-      const { student_id: studentId, project_id: projectId } = input;
       const key_project = "0000000000";
 
       // Check if the student is in the project with ID `0000000000`.
-      const isStudentInProject = await ctx.db.project_Student.findFirst({
+      const is_student_in_project = await ctx.db.project_Student.findFirst({
         where: {
           project_id: key_project,
-          student_id: studentId,
+          student_id: input.student_id,
+        },
+      });
+
+      // Check if the student is Admin
+      const is_student_admin = await ctx.db.student.findFirst({
+        where: {
+          student_id: input.student_id,
+          isAdmin: true,
         },
       });
 
       return await ctx.db.parcel.findMany({
         where:
-          isStudentInProject && projectId === key_project
+          is_student_in_project && input.project_id === key_project
             ? { available: true, type: PARCEL_TYPE.KEY }
-            : {
-                available: true,
-                NOT: {
-                  type: "KEY",
+            : is_student_admin && input.project_id === key_project
+              ? { available: true, type: PARCEL_TYPE.KEY }
+              : {
+                  available: true,
+                  NOT: {
+                    type: PARCEL_TYPE.KEY,
+                  },
                 },
-              },
       });
     }),
 
@@ -164,26 +173,13 @@ export const parcelRouter = createTRPCRouter({
             amount: amount - input.amount,
           },
         });
-        const student_name = await tx.student.findFirst({
+        const student = await tx.student.findFirst({
           where: { student_id: input.student_id },
         });
-        const text =
-          "\n🧑‍🤝‍🧑 ชื่อผู้ยืม: " +
-          student_name?.name +
-          "\n" +
-          "🤮 วันที่ยืม: " +
-          input.startDate?.toDateString();
-        const message = new FormData();
-        message.append("message", text);
-        message.append("stickerPackageId", "446");
-        message.append("stickerId", "2006");
-        await fetch("https://notify-api.line.me/api/notify", {
-          method: "post",
-          body: message,
-          headers: {
-            Authorization: "Bearer " + LINE_TOKEN,
-          },
-        });
+        await sendMessage(
+          student?.name ?? "",
+          input.startDate?.toDateString() ?? "",
+        );
       });
     }),
 
@@ -335,7 +331,7 @@ export const parcelRouter = createTRPCRouter({
             where: {
               parcel_id: input.parcel_id,
               NOT: {
-                status: "INUSE",
+                status: BORROWING_STATUS.INUSE,
               },
             },
           });

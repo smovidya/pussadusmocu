@@ -61,7 +61,6 @@ model Parcel_Project {
   project_id        String
   student_id        String
   description_admin String           @default("")
-  image_url         String           @default("")
   amount            Int              @default(0)
   description       String           @default("")
   status            BORROWING_STATUS @default(PENDING)

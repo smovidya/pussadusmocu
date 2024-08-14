@@ -1,5 +1,5 @@
 import { SignJWT, jwtVerify } from "jose";
-import { encryptionKey, STUDENT_ID } from "./constant";
+import { encryptionKey, LINE_TOKEN, STUDENT_ID } from "./constant";
 import { type Student } from "@prisma/client";
 
 /**
@@ -46,4 +46,30 @@ export const decrypt = async (token: string) => {
       return { error: errorMessage };
     }
   }
+};
+
+/**
+ * Sending message to line api
+ * @param {string} student_name - name of the student who borrow the key;
+ * @param {string} start_date - the date that user want to borrow;
+ * @returns {Promise<void>} A promise that resolves to the decrypted data if the token is valid,
+ * or an error object if the token is invalid.
+ */
+export const sendMessage = async (
+  student_name: string,
+  start_date: string,
+): Promise<void> => {
+  const text =
+    "\n🧑‍🤝‍🧑 ชื่อผู้ยืม: " + student_name + "\n" + "🤮 วันที่ยืม: " + start_date;
+  const message = new FormData();
+  message.append("message", text);
+  message.append("stickerPackageId", "446");
+  message.append("stickerId", "2006");
+  await fetch("https://notify-api.line.me/api/notify", {
+    method: "post",
+    body: message,
+    headers: {
+      Authorization: "Bearer " + LINE_TOKEN,
+    },
+  });
 };
