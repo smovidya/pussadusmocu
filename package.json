@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "next build",
-    "db:push": "prisma db push",
+    "db:push": "prisma db push --accept-data-loss",
     "db:studio": "prisma studio",
     "dev": "next dev",
     "postinstall": "prisma generate",
