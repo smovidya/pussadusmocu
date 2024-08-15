@@ -176,10 +176,12 @@ export const parcelRouter = createTRPCRouter({
         const student = await tx.student.findFirst({
           where: { student_id: input.student_id },
         });
-        await sendLineNotificaion(
-          student?.name ?? "",
-          input.startDate?.toDateString() ?? "",
-        );
+        if (input.project_id === "0000000000") {
+          await sendLineNotificaion(
+            student?.name ?? "",
+            input.startDate?.toDateString() ?? "",
+          );
+        }
       });
     }),
 
