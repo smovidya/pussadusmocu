@@ -183,6 +183,22 @@ export const parcelRouter = createTRPCRouter({
             input.startDate?.toDateString() ?? "",
           );
         }
+        //TODO: Code here
+        const event = {
+          'summary' : student?.name,
+          'description' : parcel?.title,
+          'start' : input.startDate,
+          'end' : input.endDate
+        }
+        await fetch("https://www.googleapis.com/calendar/v3/calendars", {
+          method: "POST",
+          headers: {
+            'Authorization' : 'Bearer' 
+          },
+          body: JSON.stringify(event)
+        }).then((data) => {
+          console.log(data);
+        });
       });
     }),
 
