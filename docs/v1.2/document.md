@@ -1,7 +1,7 @@
-
 title: Pussadusmocu
 created at: Thu Aug 15 2024 17:26:10 GMT+0000 (Coordinated Universal Time)
 updated at: Thu Aug 15 2024 17:26:41 GMT+0000 (Coordinated Universal Time)
+
 ---
 
 # Pussadusmocu
@@ -16,24 +16,24 @@ updated at: Thu Aug 15 2024 17:26:41 GMT+0000 (Coordinated Universal Time)
 
 ### Features
 
--   **User Authentication**: Secure login and registration using **ChulaSSO**.
--   **Parcel Management**: Intuitive interface for managing parcel borrowing and returns.
--   **Notifications**: Automated email and SMS reminders for upcoming due dates.
--   **Admin Dashboard**: Comprehensive dashboard for administrators to monitor and manage the system.
--   **Search Functionality**: Powerful search feature to quickly locate parcels and user records.
--   **Reporting**: Generate detailed reports on borrowing activities and system usage.
+- **User Authentication**: Secure login and registration using **ChulaSSO**.
+- **Parcel Management**: Intuitive interface for managing parcel borrowing and returns.
+- **Notifications**: Automated email and SMS reminders for upcoming due dates.
+- **Admin Dashboard**: Comprehensive dashboard for administrators to monitor and manage the system.
+- **Search Functionality**: Powerful search feature to quickly locate parcels and user records.
+- **Reporting**: Generate detailed reports on borrowing activities and system usage.
 
 ## Recent Updates
 
--   **New Functionality**:
-    -   Added a bulk upload feature for parcel records.
-    -   Enhanced notification system with customizable reminders.
--   **Bug Fixes**:
-    -   Fixed an issue with the login process that affected some users.
-    -   Resolved a bug causing delays in the notification system.
--   **Performance Improvements**:
-    -   Optimized database queries for faster search results.
-    -   Improved the overall responsiveness of the admin dashboard.
+- **New Functionality**:
+  - Added a bulk upload feature for parcel records.
+  - Enhanced notification system with customizable reminders.
+- **Bug Fixes**:
+  - Fixed an issue with the login process that affected some users.
+  - Resolved a bug causing delays in the notification system.
+- **Performance Improvements**:
+  - Optimized database queries for faster search results.
+  - Improved the overall responsiveness of the admin dashboard.
 
 ## **Requirements \*\***☝️\*\*
 
@@ -96,9 +96,7 @@ Include any additional information, forum or documentation that might be relevan
 
 If users need extra assistance or have any troubleshooting issues, provide contact information to your customer support or link them to online assistance or chat portals here.
 
-* * *
+---
 
 !! **Make it your own**
 !! Once edited to your liking, [save this template to your team’s templates list](http://help.slite.com/en/articles/2622390-document-templates) by clicking on the three dots on the right of the screen.
-
-          
