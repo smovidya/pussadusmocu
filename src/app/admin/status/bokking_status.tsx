@@ -202,7 +202,7 @@ function Sta({
                     onReturn={(quantity: number) =>
                       updateTostock(parcelsProject.id, quantity)
                     }
-                    onRejectBorrowing={(quantity: number)=>
+                    onRejectBorrowing={(quantity: number) =>
                       rejectBorrowing(parcelsProject.id, quantity)
                     }
                     parcelProject={currentParcelProject}
