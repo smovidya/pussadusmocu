@@ -64,6 +64,15 @@ function Sta({
     },
   });
 
+  const reject = api.parcel_Project.rejectBorrowing.useMutation({
+    onSuccess: () => {
+      router.refresh();
+    },
+    onError: (error) => {
+      console.error("Return error", error);
+    },
+  });
+
   const closePopup = () => {
     setIsOpen(false);
     setCurrentParcelProject(null);
@@ -87,6 +96,14 @@ function Sta({
 
   const updateTostock = async (id: string, quantity: number) => {
     returnParcel.mutate({
+      parcel_project_id: id,
+      parcel_return: quantity,
+    });
+    setIsOpen(false);
+  };
+
+  const rejectBorrowing = async (id: string, quantity: number) => {
+    reject.mutate({
       parcel_project_id: id,
       parcel_return: quantity,
     });
@@ -184,6 +201,9 @@ function Sta({
                     }
                     onReturn={(quantity: number) =>
                       updateTostock(parcelsProject.id, quantity)
+                    }
+                    onRejectBorrowing={(quantity: number)=>
+                      rejectBorrowing(parcelsProject.id, quantity)
                     }
                     parcelProject={currentParcelProject}
                   />
