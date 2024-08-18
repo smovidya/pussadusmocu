@@ -220,7 +220,7 @@ export const Parcel_projectRouter = createTRPCRouter({
             id: input.parcel_project_id,
           },
           data: {
-            status: BORROWING_STATUS.INUSE,
+            status: BORROWING_STATUS.REJECT,
           },
         });
         const currentAmount = parcel?.parcel.amount ?? 0;
