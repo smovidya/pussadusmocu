@@ -84,7 +84,8 @@ const ParcelUser = ({ parcel, project_id, student_id }: BlogProps) => {
     if (_date?.from !== undefined && _date?.to !== undefined) {
       const event = {
         summary: student_id,
-        description: parcel?.title + " " + data.description + " จำนวน " + data.amount ,
+        description:
+          parcel?.title + " " + data.description + " จำนวน " + data.amount,
         start: {
           date: _date?.from.toISOString().split("T")[0],
           timezone: "Asia/Bangkok",
