@@ -10,6 +10,7 @@ interface PopupCardProps {
   onAccept: (description: string) => void;
   onReject: (description: string) => void;
   onReturn: (quantity: number) => void;
+  onRejectBorrowing: (quantity: number) => void;
   parcelProject: ParcelProjectWithDetails;
 }
 
@@ -38,6 +39,7 @@ const PopupCard: React.FC<PopupCardProps> = ({
   onAccept,
   onReject,
   onReturn,
+  onRejectBorrowing,
   parcelProject,
 }) => {
   const [returnQuantity, setReturnQuantity] = useState<number>(0);
@@ -76,6 +78,12 @@ const PopupCard: React.FC<PopupCardProps> = ({
   const handleReturn = async () => {
     setIsLoading(true);
     onReturn(returnQuantity);
+    setIsLoading(false);
+  };
+
+  const handleRejectBorrowing = async () => {
+    setIsLoading(true);
+    onRejectBorrowing(parcelProject.amount);
     setIsLoading(false);
   };
 
@@ -121,6 +129,19 @@ const PopupCard: React.FC<PopupCardProps> = ({
               disabled={isLoading || returnQuantity > parcelProject.amount}
             >
               {isLoading ? "กำลังดำเนินการ..." : "Return"}
+            </Button>
+          </>
+        );
+      case "BORROWING":
+        return (
+          <>
+            <Button
+              type="button"
+              className="bg-red01 text-white hover:bg-red-100"
+              onClick={handleRejectBorrowing}
+              disabled={isLoading}
+            >
+              {isLoading ? "กำลังดำเนินการ..." : "Reject"}
             </Button>
           </>
         );
