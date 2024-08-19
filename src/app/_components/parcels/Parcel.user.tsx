@@ -80,7 +80,7 @@ const ParcelUser = ({ parcel, project_id, student_id }: BlogProps) => {
       endDate: _date?.to ?? new Date(),
       project_id: data.project_id,
     });
-    //TODO: Code here
+
     if (_date?.from !== undefined && _date?.to !== undefined) {
       const event = {
         summary: student_id,
@@ -95,12 +95,22 @@ const ParcelUser = ({ parcel, project_id, student_id }: BlogProps) => {
           timezone: "Asia/Bangkok",
         },
       };
-      await fetch("/api/calendar", {
-        method: "POST",
-        body: JSON.stringify(event),
-      }).then((data) => {
-        console.log("LOG DATA ", data.json());
-      })
+
+      try {
+        const response = await fetch("/api/calendar", {
+          method: "POST",
+          body: JSON.stringify(event),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        const result = await response.json();
+        console.log("LOG DATA", result);
+      } catch (error) {
+        console.error("Fetch error:", error);
+      }
     }
   }
 
