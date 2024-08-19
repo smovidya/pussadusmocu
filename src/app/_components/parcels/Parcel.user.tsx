@@ -98,7 +98,9 @@ const ParcelUser = ({ parcel, project_id, student_id }: BlogProps) => {
       await fetch("/api/calendar", {
         method: "POST",
         body: JSON.stringify(event),
-      });
+      }).then((data) => {
+        console.log("LOG DATA ", data.json());
+      })
     }
   }
 
