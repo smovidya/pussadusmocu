@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
       calendarId: "suppliesandpremises.sccu@gmail.com",
       requestBody: body,
     });
-    return NextResponse.json({ calendar: data, input: body });
+    return NextResponse.json({ calendar: (await data).data, input: body });
   } catch (error) {
     console.error("Error connecting to Google client: ", error);
     return NextResponse.error();
