@@ -267,3 +267,5 @@ export const DeeAppSecret = process.env.DEE_APP_SECRET ?? "";
 export const encryptionKey = process.env.ENCRYPTION_KEY ?? "";
 export const algorithm = process.env.ALGORITHM ?? "";
 export const LINE_TOKEN = process.env.LINE_TOKEN ?? "";
+export const GOOGLE_PRIVATE_KEY = process.env.GOOGLE_PRIVATE_KEY ?? "";
+export const GOOGLE_CLIENT_EMAIL = process.env.GOOGLE_CLIENT_EMAIL ?? "";

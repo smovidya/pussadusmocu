@@ -153,6 +153,7 @@ export const parcelRouter = createTRPCRouter({
         if (input.amount > amount) {
           throw new Error("Requested amount exceeds available amount");
         }
+        console.log("LOG", input);
         await tx.parcel_Project.create({
           data: {
             student_id: input.student_id,
@@ -182,6 +183,22 @@ export const parcelRouter = createTRPCRouter({
             input.startDate?.toDateString() ?? "",
           );
         }
+        //TODO: Code here
+        const event = {
+          summary: student?.name,
+          description: parcel?.title,
+          start: input.startDate,
+          end: input.endDate,
+        };
+        await fetch("https://www.googleapis.com/calendar/v3/calendars", {
+          method: "POST",
+          headers: {
+            Authorization: "Bearer",
+          },
+          body: JSON.stringify(event),
+        }).then((data) => {
+          console.log(data);
+        });
       });
     }),
 
