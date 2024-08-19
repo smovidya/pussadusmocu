@@ -197,4 +197,43 @@ export const Parcel_projectRouter = createTRPCRouter({
         });
       });
     }),
+
+  rejectBorrowing: publicProcedure
+    .input(
+      z.object({
+        parcel_project_id: z.string(),
+        parcel_return: z.number(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.db.$transaction(async (tx) => {
+        const parcel = await tx.parcel_Project.findFirst({
+          where: {
+            id: input.parcel_project_id,
+          },
+          include: {
+            parcel: true,
+          },
+        });
+        await tx.parcel_Project.updateMany({
+          where: {
+            id: input.parcel_project_id,
+          },
+          data: {
+            status: BORROWING_STATUS.REJECT,
+          },
+        });
+        const currentAmount = parcel?.parcel.amount ?? 0;
+        const returnAmount = input.parcel_return;
+        const toStock = currentAmount + returnAmount;
+        await tx.parcel.update({
+          where: {
+            parcel_id: parcel?.parcel_id,
+          },
+          data: {
+            amount: toStock,
+          },
+        });
+      });
+    }),
 });
