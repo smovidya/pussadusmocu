@@ -11,8 +11,8 @@ const LoginPage = () => {
   };
 
   // Version and deployment date
-  const version = "1.2.0";
-  const deploymentDate = "Aug 14, 2024";
+  const version = "1.2.1";
+  const deploymentDate = "Aug 19, 2024";
 
   return (
     <div className="grid h-screen w-screen md:grid-cols-5">
