@@ -34,13 +34,17 @@ export const Statuesbox = ({ parcelslist, student_id }: Props) => {
 
   // State to track expanded parcels
   const [expandedProjectIds, setExpandedProjectIds] = useState<string[]>([]);
+  const [buttonClicked, setButtonClicked] = useState<Record<string, boolean>>(
+    {},
+  );
 
-  async function Updatestatus(project_id: string) {
-    updateparcel.mutate({
-      student_id: student_id,
-      project_id: project_id,
-    });
-  }
+  const handleButtonClick = (projectId: string) => {
+    setButtonClicked((prev) => ({ ...prev, [projectId]: true }));
+    const parcelId = parcelslist[projectId]?.[0]?.project_id;
+    // if (parcelId) {
+    //   Updatestatus(parcelId);
+    // }
+  };
 
   const renderedCards = [];
 
@@ -159,14 +163,18 @@ export const Statuesbox = ({ parcelslist, student_id }: Props) => {
                   </div>
                   <div className="row-start-3">
                     <Button
-                      className="bg-yellow-400"
+                      className={`${
+                        buttonClicked[projectId]
+                          ? "bg-gray-400"
+                          : "bg-yellow-400"
+                      }`}
                       type="button"
-                      onClick={() =>
-                        parcels[0]?.project_id &&
-                        Updatestatus(parcels[0]?.project_id)
-                      }
+                      onClick={() => handleButtonClick(projectId)}
+                      disabled={buttonClicked[projectId]} // Disable button if clicked
                     >
-                      ได้รับพัสดุเรียบร้อยแล้ว
+                      {buttonClicked[projectId]
+                        ? "อัพเดตสถานะแล้ว"
+                        : "ได้รับพัสดุเรียบร้อยแล้ว"}
                     </Button>
                   </div>
                 </div>
