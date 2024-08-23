@@ -31,7 +31,7 @@ export const Statuesbox = ({ parcelslist, student_id }: Props) => {
       if (loadingProjectId) {
         setUpdatedProjectIds((prev) => [...prev, loadingProjectId]);
       }
-      setLoadingProjectId(null); 
+      setLoadingProjectId(null);
       router.refresh();
     },
     onError: (error) => {
@@ -51,8 +51,8 @@ export const Statuesbox = ({ parcelslist, student_id }: Props) => {
   }
 
   useEffect(() => {
-    const hasBorrowingStatus = Object.values(parcelslist).some(parcels =>
-      parcels.some(parcel => parcel.status === "BORROWING")
+    const hasBorrowingStatus = Object.values(parcelslist).some((parcels) =>
+      parcels.some((parcel) => parcel.status === "BORROWING"),
     );
 
     setShowUpdateStatus(hasBorrowingStatus); // Show update status only if there are borrowing items
@@ -189,8 +189,8 @@ export const Statuesbox = ({ parcelslist, student_id }: Props) => {
                       {!showUpdateStatus
                         ? "สถานะอัพเดตแล้ว"
                         : isLoading
-                        ? "Loading..."
-                        : "ได้รับพัสดุเรียบร้อยแล้ว"}
+                          ? "Loading..."
+                          : "ได้รับพัสดุเรียบร้อยแล้ว"}
                     </Button>
                   </div>
                 </div>
