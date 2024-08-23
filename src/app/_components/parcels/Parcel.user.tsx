@@ -80,6 +80,38 @@ const ParcelUser = ({ parcel, project_id, student_id }: BlogProps) => {
       endDate: _date?.to ?? new Date(),
       project_id: data.project_id,
     });
+
+    if (_date?.from !== undefined && _date?.to !== undefined) {
+      const event = {
+        summary: student_id,
+        description:
+          parcel?.title + " " + data.description + " จำนวน " + data.amount,
+        start: {
+          date: _date?.from.toISOString().split("T")[0],
+          timezone: "Asia/Bangkok",
+        },
+        end: {
+          date: _date?.to.toISOString().split("T")[0],
+          timezone: "Asia/Bangkok",
+        },
+      };
+
+      try {
+        const response = await fetch("/api/calendar", {
+          method: "POST",
+          body: JSON.stringify(event),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        const result = await response.json();
+        console.log("LOG DATA", result);
+      } catch (error) {
+        console.error("Fetch error:", error);
+      }
+    }
   }
 
   return (
