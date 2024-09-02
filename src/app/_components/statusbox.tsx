@@ -1,7 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { api } from "~/trpc/react";
-
 import {
   Table,
   TableBody,
@@ -14,7 +13,7 @@ import { type Parcellist } from "~/lib/constant";
 import Image from "next/image";
 import { Button } from "~/components/ui/button";
 import { format } from "date-fns";
-import { useState } from "react"; // Import useState hook
+import { useState, useEffect } from "react";
 
 interface Props {
   parcelslist: Parcellist;
@@ -23,24 +22,41 @@ interface Props {
 
 export const Statuesbox = ({ parcelslist, student_id }: Props) => {
   const router = useRouter();
+  const [loadingProjectId, setLoadingProjectId] = useState<string | null>(null);
+  const [updatedProjectIds, setUpdatedProjectIds] = useState<string[]>([]);
+  const [showUpdateStatus, setShowUpdateStatus] = useState<boolean>(true);
+
   const updateparcel = api.parcel_Project.updatestatus.useMutation({
     onSuccess: () => {
+      if (loadingProjectId) {
+        setUpdatedProjectIds((prev) => [...prev, loadingProjectId]);
+      }
+      setLoadingProjectId(null);
       router.refresh();
     },
     onError: (error) => {
       console.error("Booking error:", error);
+      setLoadingProjectId(null); // Reset loading state in case of error
     },
   });
 
-  // State to track expanded parcels
   const [expandedProjectIds, setExpandedProjectIds] = useState<string[]>([]);
 
   async function Updatestatus(project_id: string) {
+    setLoadingProjectId(project_id); // Set loading state when starting the update
     updateparcel.mutate({
       student_id: student_id,
       project_id: project_id,
     });
   }
+
+  useEffect(() => {
+    const hasBorrowingStatus = Object.values(parcelslist).some((parcels) =>
+      parcels.some((parcel) => parcel.status === "BORROWING"),
+    );
+
+    setShowUpdateStatus(hasBorrowingStatus); // Show update status only if there are borrowing items
+  }, [parcelslist]);
 
   const renderedCards = [];
 
@@ -49,6 +65,8 @@ export const Statuesbox = ({ parcelslist, student_id }: Props) => {
 
     if (parcels !== undefined) {
       const isExpanded = expandedProjectIds.includes(projectId);
+      const isLoading = loadingProjectId === projectId;
+      const isUpdated = updatedProjectIds.includes(projectId);
 
       const shownParcels = isExpanded ? parcels : parcels.slice(0, 3);
 
@@ -68,7 +86,7 @@ export const Statuesbox = ({ parcelslist, student_id }: Props) => {
           <TableBody>
             {Array.isArray(shownParcels) &&
               shownParcels.map((parcel) => (
-                <TableRow className="" key={parcel.project_id}>
+                <TableRow key={parcel.project_id}>
                   <TableCell>
                     <div>
                       <Image
@@ -82,7 +100,7 @@ export const Statuesbox = ({ parcelslist, student_id }: Props) => {
                   </TableCell>
                   <TableCell className="grid grid-cols-1 gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
                     <div className="h-30 grid grid-rows-4 text-left">
-                      <div className="">
+                      <div>
                         {parcel.parcel_id} | {parcel.parcel.title}
                       </div>
                       <div className="row-start-2 row-end-4 text-gray-500">
@@ -130,7 +148,6 @@ export const Statuesbox = ({ parcelslist, student_id }: Props) => {
                     วันสุดท้ายของการคืนพัสดุ <br />
                   </p>
                   <p className="row-start-2 py-1 text-sm text-red-500">
-                    {" "}
                     {parcels[0]?.endDate.toISOString()} <br />
                     <br />
                   </p>
@@ -159,14 +176,21 @@ export const Statuesbox = ({ parcelslist, student_id }: Props) => {
                   </div>
                   <div className="row-start-3">
                     <Button
-                      className="bg-yellow-400"
+                      className={`bg-yellow-400 ${
+                        !showUpdateStatus ? "bg-gray-400" : ""
+                      }`}
                       type="button"
+                      disabled={isLoading || !showUpdateStatus}
                       onClick={() =>
                         parcels[0]?.project_id &&
                         Updatestatus(parcels[0]?.project_id)
                       }
                     >
-                      ได้รับพัสดุเรียบร้อยแล้ว
+                      {!showUpdateStatus
+                        ? "สถานะอัพเดตแล้ว"
+                        : isLoading
+                          ? "Loading..."
+                          : "ได้รับพัสดุเรียบร้อยแล้ว"}
                     </Button>
                   </div>
                 </div>
