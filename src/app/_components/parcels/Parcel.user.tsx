@@ -41,6 +41,11 @@ const ParcelUser = ({ parcel, project_id, student_id }: BlogProps) => {
   const router = useRouter();
   const { toast } = useToast();
   const [close, setClose] = useState(false);
+  const createEvent = api.calendar.createEvent.useMutation({
+    onError: (error) => {
+      console.error("Booking error:", error);
+    },
+  });
   const bookedParcel = api.parcel.booking.useMutation({
     onSuccess: () => {
       setClose(true);
@@ -87,30 +92,17 @@ const ParcelUser = ({ parcel, project_id, student_id }: BlogProps) => {
         description:
           parcel?.title + " " + data.description + " จำนวน " + data.amount,
         start: {
-          date: _date?.from.toISOString().split("T")[0],
+          date:
+            _date?.from.toISOString().split("T")[0] ?? new Date().toISOString(),
           timezone: "Asia/Bangkok",
         },
         end: {
-          date: _date?.to.toISOString().split("T")[0],
+          date:
+            _date?.to.toISOString().split("T")[0] ?? new Date().toISOString(),
           timezone: "Asia/Bangkok",
         },
       };
-
-      try {
-        const response = await fetch("/api/calendar", {
-          method: "POST",
-          body: JSON.stringify(event),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        const result = await response.json();
-        console.log("LOG DATA", result);
-      } catch (error) {
-        console.error("Fetch error:", error);
-      }
+      createEvent.mutate(event);
     }
   }
 

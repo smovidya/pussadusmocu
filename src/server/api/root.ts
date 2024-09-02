@@ -3,6 +3,7 @@ import { authRouter } from "./routers/auth";
 import { parcelRouter } from "./routers/parcel";
 import { projectRouter } from "./routers/project";
 import { Parcel_projectRouter } from "./routers/parcel_Project";
+import { calendarRouter } from "./routers/calendar";
 
 /**
  * This is the primary router for your server.
@@ -14,6 +15,7 @@ export const appRouter = createTRPCRouter({
   parcel: parcelRouter,
   project: projectRouter,
   parcel_Project: Parcel_projectRouter,
+  calendar: calendarRouter,
 });
 
 // export type definition of API
