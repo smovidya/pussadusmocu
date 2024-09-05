@@ -6,7 +6,10 @@ import { type Ctx } from "../models/database.model";
  * @param {Ctx} ctx - The context containing the Prisma client instance.
  * @param {string | undefined} student_id - The ID of the student to filter by (optional).
  */
-export const getAllParcelProject = async (ctx: Ctx, student_id: string | undefined) => {
+export const getAllParcelProject = async (
+  ctx: Ctx,
+  student_id: string | undefined,
+) => {
   return await ctx.db.parcel_Project.findMany({
     where: student_id ? { student_id: student_id } : undefined,
     include: {
@@ -100,7 +103,7 @@ export const rejectBooking = async (
     const current_amount = parcel?.parcel.amount ?? 0;
     const amount_from_booking = parcel?.amount ?? 0;
     const remain_parcel = current_amount + amount_from_booking;
-    
+
     await tx.parcel.update({
       where: {
         parcel_id: parcel?.parcel_id,
@@ -146,7 +149,7 @@ export const returnParcelToStock = async (
     // Update the stock of parcels by adding the returned amount back to the stock.
     const current_amount = parcel?.parcel.amount ?? 0;
     const remain_parcel = current_amount + parcel_return;
-    
+
     await tx.parcel.update({
       where: {
         parcel_id: parcel?.parcel_id,
@@ -192,7 +195,7 @@ export const rejectBorrowing = async (
     // Update the stock of parcels by adding the returned amount back to the stock.
     const current_amount = parcel?.parcel.amount ?? 0;
     const remain_parcel = current_amount + parcel_return;
-    
+
     await tx.parcel.update({
       where: {
         parcel_id: parcel?.parcel_id,

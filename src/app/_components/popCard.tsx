@@ -57,7 +57,6 @@ const PopupCard: React.FC<PopupCardProps> = ({
     }
   };
 
-
   const handleAccept = async () => {
     setIsLoading(true);
     onAccept(description);
