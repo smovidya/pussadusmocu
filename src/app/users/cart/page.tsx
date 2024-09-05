@@ -13,13 +13,13 @@ import { type Student } from "@prisma/client";
 
 const Profile = async () => {
   const encryptedCookie = getCookie("student_id", { cookies });
-  const student_id = await decrypt(encryptedCookie ?? "");
+  const student_id_from_cookie = await decrypt(encryptedCookie ?? "");
   const student =
     process.env.NODE_ENV === "development"
       ? await api.auth.getUser({
-          student_id: student_id as string,
+          student_id: student_id_from_cookie as string,
         })
-      : (student_id as Student);
+      : (student_id_from_cookie as Student);
   const Parcel_Project: Projectinparcel[] = await api.parcel_Project.getAll({
     student_id: student?.student_id ?? STUDENT_ID,
   });

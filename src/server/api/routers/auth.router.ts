@@ -1,5 +1,6 @@
-import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import { StudentDtoSchema } from "../models/auth.model";
+import { getUser } from "../services/auth.service";
 
 /**
  * TRPC Router for handling authentication-related operations.
@@ -13,12 +14,8 @@ export const authRouter = createTRPCRouter({
    * @returns {Promise<Object|null>} The student information if found, otherwise null.
    */
   getUser: publicProcedure
-    .input(z.object({ student_id: z.string() }))
+    .input(StudentDtoSchema)
     .query(async ({ ctx, input }) => {
-      return await ctx.db.student.findFirst({
-        where: {
-          student_id: input.student_id,
-        },
-      });
+      return getUser(ctx, input);
     }),
 });

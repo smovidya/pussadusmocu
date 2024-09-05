@@ -81,8 +81,8 @@ const ParcelUser = ({ parcel, project_id, student_id }: BlogProps) => {
       amount: data.amount,
       parcel_id: parcel.parcel_id,
       description: data.description,
-      startDate: _date?.from ?? new Date(),
-      endDate: _date?.to ?? new Date(),
+      start_date: _date?.from ?? new Date(),
+      end_date: _date?.to ?? new Date(),
       project_id: data.project_id,
     });
 

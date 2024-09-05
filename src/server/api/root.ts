@@ -1,9 +1,9 @@
 import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
-import { authRouter } from "./routers/auth";
-import { parcelRouter } from "./routers/parcel";
-import { projectRouter } from "./routers/project";
-import { Parcel_projectRouter } from "./routers/parcel_Project";
-import { calendarRouter } from "./routers/calendar";
+import { authRouter } from "./routers/auth.router";
+import { parcelRouter } from "./routers/parcel.router";
+import { projectRouter } from "./routers/project.router";
+import { Parcel_projectRouter } from "./routers/parcel_Project.router";
+import { calendarRouter } from "./routers/calendar.router";
 
 /**
  * This is the primary router for your server.

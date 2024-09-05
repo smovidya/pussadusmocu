@@ -44,7 +44,7 @@ const PopupCard: React.FC<PopupCardProps> = ({
 }) => {
   const [returnQuantity, setReturnQuantity] = useState<number>(0);
   const [error, setError] = useState<string | null>(null);
-  const [description, setDescription] = useState<string>("");
+  const [description] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,11 +57,6 @@ const PopupCard: React.FC<PopupCardProps> = ({
     }
   };
 
-  const handleDescriptionChange = (
-    e: React.ChangeEvent<HTMLTextAreaElement>,
-  ) => {
-    setDescription(e.target.value);
-  };
 
   const handleAccept = async () => {
     setIsLoading(true);

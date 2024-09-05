@@ -23,7 +23,7 @@ interface Props {
 export const Statuesbox = ({ parcelslist, student_id }: Props) => {
   const router = useRouter();
   const [loadingProjectId, setLoadingProjectId] = useState<string | null>(null);
-  const [updatedProjectIds, setUpdatedProjectIds] = useState<string[]>([]);
+  const [, setUpdatedProjectIds] = useState<string[]>([]);
   const [showUpdateStatus, setShowUpdateStatus] = useState<boolean>(true);
 
   const updateparcel = api.parcel_Project.updatestatus.useMutation({
@@ -66,7 +66,6 @@ export const Statuesbox = ({ parcelslist, student_id }: Props) => {
     if (parcels !== undefined) {
       const isExpanded = expandedProjectIds.includes(projectId);
       const isLoading = loadingProjectId === projectId;
-      const isUpdated = updatedProjectIds.includes(projectId);
 
       const shownParcels = isExpanded ? parcels : parcels.slice(0, 3);
 
