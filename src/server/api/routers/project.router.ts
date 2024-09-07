@@ -1,6 +1,11 @@
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
+import {
+  getAllInProgressProject,
+  getProjectByStudentId,
+  registerProject,
+} from "../services/project.service";
 
 /**
  * TRPC Router for handling project-related operations.
@@ -14,12 +19,7 @@ export const projectRouter = createTRPCRouter({
    */
   getProject: publicProcedure.query(async ({ ctx }) => {
     try {
-      const parcels = await ctx.db.project.findMany({
-        where: {
-          status: "INPROGRESS",
-        },
-      });
-      return parcels;
+      return getAllInProgressProject(ctx);
     } catch (error) {
       throw new TRPCError({
         code: "INTERNAL_SERVER_ERROR",
@@ -43,28 +43,7 @@ export const projectRouter = createTRPCRouter({
       }),
     )
     .query(async ({ ctx, input }) => {
-      const student = await ctx.db.student.findFirst({
-        where: {
-          student_id: input.student_id,
-        },
-      });
-      if (student?.isAdmin) {
-        return await ctx.db.project.findMany({
-          where: {
-            status: "INPROGRESS",
-          },
-        });
-      }
-      return await ctx.db.project.findMany({
-        where: {
-          students: {
-            some: {
-              student_id: input.student_id,
-            },
-          },
-          status: "INPROGRESS",
-        },
-      });
+      return getProjectByStudentId(ctx, input.student_id);
     }),
 
   /**
@@ -83,12 +62,6 @@ export const projectRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      return await ctx.db.project_Student.create({
-        data: {
-          project_id: input.project_id,
-          student_id: input.student_id,
-        },
-      });
+      return registerProject(ctx, input.student_id, input.project_id);
     }),
 });
