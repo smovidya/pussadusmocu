@@ -16,7 +16,7 @@ const serviceValidation = async (
 ): Promise<ServiceValidationResponse> => {
   try {
     const url = "https://account.it.chula.ac.th/serviceValidation";
-
+    console.log("Ticket ",ticket);
     const response = await fetch(url, {
       method: "POST",
       headers: {
