@@ -21,7 +21,7 @@ async function main() {
           line_id: "admin_line",
           isAdmin: true,
           name: "John Admin",
-        }
+        },
       }),
       db.student.create({
         data: {
@@ -31,7 +31,7 @@ async function main() {
           line_id: "alice_smo",
           isAdmin: false,
           name: "Alice Smith",
-        }
+        },
       }),
       db.student.create({
         data: {
@@ -41,7 +41,7 @@ async function main() {
           line_id: "bob_chem",
           isAdmin: false,
           name: "Bob Johnson",
-        }
+        },
       }),
       db.student.create({
         data: {
@@ -51,7 +51,7 @@ async function main() {
           line_id: "charlie_physics",
           isAdmin: false,
           name: "Charlie Brown",
-        }
+        },
       }),
       db.student.create({
         data: {
@@ -61,7 +61,7 @@ async function main() {
           line_id: "diana_bio",
           isAdmin: false,
           name: "Diana Prince",
-        }
+        },
       }),
     ]);
 
@@ -73,7 +73,7 @@ async function main() {
           status: "INPROGRESS",
           owner: "ACADEMIC",
           published: true,
-        }
+        },
       }),
       db.project.create({
         data: {
@@ -81,7 +81,7 @@ async function main() {
           status: "NOTSTART",
           owner: "ACADEMIC",
           published: false,
-        }
+        },
       }),
       db.project.create({
         data: {
@@ -89,7 +89,7 @@ async function main() {
           status: "EVALUATE",
           owner: "SPORT",
           published: true,
-        }
+        },
       }),
       db.project.create({
         data: {
@@ -97,41 +97,34 @@ async function main() {
           status: "COMPLETE",
           owner: "SCIREN_CLUB",
           published: true,
-        }
+        },
       }),
     ]);
 
-    // Create Project-Student relationships
     await Promise.all([
-      db.project_Student.create({
-        data: {
-          student_id: students[0].student_id,
-          project_id: projects[0].project_id,
-        }
-      }),
       db.project_Student.create({
         data: {
           student_id: students[1].student_id,
           project_id: projects[0].project_id,
-        }
+        },
       }),
       db.project_Student.create({
         data: {
           student_id: students[2].student_id,
           project_id: projects[1].project_id,
-        }
+        },
       }),
       db.project_Student.create({
         data: {
           student_id: students[3].student_id,
           project_id: projects[2].project_id,
-        }
+        },
       }),
       db.project_Student.create({
         data: {
           student_id: students[4].student_id,
           project_id: projects[3].project_id,
-        }
+        },
       }),
     ]);
 
@@ -148,7 +141,7 @@ async function main() {
           type: "DURABLE",
           group: "COMPUTER",
           department: "MATHCOM",
-        }
+        },
       }),
       db.parcel.create({
         data: {
@@ -161,7 +154,7 @@ async function main() {
           type: "DURABLE",
           group: "MEDICAL_SCI",
           department: "BIO",
-        }
+        },
       }),
       db.parcel.create({
         data: {
@@ -173,7 +166,7 @@ async function main() {
           image_url: "/images/chair.jpg",
           type: "NORMAL",
           group: "OFFICE",
-        }
+        },
       }),
       db.parcel.create({
         data: {
@@ -186,7 +179,7 @@ async function main() {
           type: "KEY",
           group: "BUILDING",
           department: "CHEM",
-        }
+        },
       }),
       db.parcel.create({
         data: {
@@ -198,7 +191,7 @@ async function main() {
           image_url: "/images/sound_system.jpg",
           type: "DURABLE",
           group: "MUSICAL",
-        }
+        },
       }),
       db.parcel.create({
         data: {
@@ -210,7 +203,7 @@ async function main() {
           image_url: "/images/paper.jpg",
           type: "NORMAL",
           group: "OFFICE",
-        }
+        },
       }),
       db.parcel.create({
         data: {
@@ -222,7 +215,7 @@ async function main() {
           image_url: "/images/camera.jpg",
           type: "DURABLE",
           group: "ELECTRONIC",
-        }
+        },
       }),
       db.parcel.create({
         data: {
@@ -235,7 +228,7 @@ async function main() {
           type: "NORMAL",
           group: "CLOTHING",
           department: "CHEM",
-        }
+        },
       }),
     ]);
 
@@ -252,7 +245,7 @@ async function main() {
           status: "BORROWING",
           startDate: new Date("2025-06-15"),
           endDate: new Date("2025-06-25"),
-        }
+        },
       }),
       db.parcel_Project.create({
         data: {
@@ -265,7 +258,7 @@ async function main() {
           status: "PENDING",
           startDate: new Date("2025-06-20"),
           endDate: new Date("2025-07-20"),
-        }
+        },
       }),
       db.parcel_Project.create({
         data: {
@@ -278,21 +271,9 @@ async function main() {
           status: "INUSE",
           startDate: new Date("2025-06-10"),
           endDate: new Date("2025-06-30"),
-        }
+        },
       }),
-      db.parcel_Project.create({
-        data: {
-          parcel_id: parcels[4].parcel_id,
-          project_id: projects[0].project_id,
-          student_id: students[0].student_id,
-          description_admin: "Equipment conflict with another event",
-          amount: 1,
-          description: "Sound system for science fair announcements",
-          status: "REJECT",
-          startDate: new Date("2025-06-15"),
-          endDate: new Date("2025-06-25"),
-        }
-      }),
+
       db.parcel_Project.create({
         data: {
           parcel_id: parcels[6].parcel_id,
@@ -304,7 +285,7 @@ async function main() {
           status: "RETURN",
           startDate: new Date("2025-05-01"),
           endDate: new Date("2025-06-01"),
-        }
+        },
       }),
       db.parcel_Project.create({
         data: {
@@ -317,7 +298,7 @@ async function main() {
           status: "PENDING",
           startDate: new Date("2025-06-20"),
           endDate: new Date("2025-07-20"),
-        }
+        },
       }),
     ]);
 

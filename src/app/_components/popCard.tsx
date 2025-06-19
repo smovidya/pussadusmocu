@@ -11,6 +11,7 @@ interface PopupCardProps {
   onReject: (description: string) => void;
   onReturn: (quantity: number) => void;
   onRejectBorrowing: (quantity: number) => void;
+  onDelivered: () => void;
   parcelProject: ParcelProjectWithDetails;
 }
 
@@ -40,6 +41,7 @@ const PopupCard: React.FC<PopupCardProps> = ({
   onReject,
   onReturn,
   onRejectBorrowing,
+  onDelivered,
   parcelProject,
 }) => {
   const [returnQuantity, setReturnQuantity] = useState<number>(0);
@@ -78,6 +80,12 @@ const PopupCard: React.FC<PopupCardProps> = ({
   const handleRejectBorrowing = async () => {
     setIsLoading(true);
     onRejectBorrowing(parcelProject.amount);
+    setIsLoading(false);
+  };
+
+  const handleDelivered = async () => {
+    setIsLoading(true);
+    onDelivered();
     setIsLoading(false);
   };
 
@@ -129,14 +137,24 @@ const PopupCard: React.FC<PopupCardProps> = ({
       case "BORROWING":
         return (
           <>
-            <Button
-              type="button"
-              className="bg-red01 text-white hover:bg-red-100"
-              onClick={handleRejectBorrowing}
-              disabled={isLoading}
-            >
-              {isLoading ? "กำลังดำเนินการ..." : "Reject"}
-            </Button>
+            <div className="grid grid-cols-2 gap-2">
+              <Button
+                type="button"
+                className="bg-green-500 text-white hover:bg-green-100"
+                onClick={handleDelivered}
+                disabled={isLoading}
+              >
+                {isLoading ? "กำลังดำเนินการ..." : "ส่งมอบแล้ว"}
+              </Button>
+              <Button
+                type="button"
+                className="bg-red01 text-white hover:bg-red-100"
+                onClick={handleRejectBorrowing}
+                disabled={isLoading}
+              >
+                {isLoading ? "กำลังดำเนินการ..." : "Reject"}
+              </Button>
+            </div>
           </>
         );
     }

@@ -45,6 +45,22 @@ export const updateStatusBorrowingToInUse = async (
   });
 };
 
+
+export const markBorrowingAsDelivered = async (
+  ctx: Ctx,
+  parcel_project_id: string,
+) => {
+  return await ctx.db.parcel_Project.updateMany({
+    where: {
+      id: parcel_project_id,
+      status: BORROWING_STATUS.BORROWING,
+    },
+    data: {
+      status: BORROWING_STATUS.INUSE,
+    },
+  });
+};
+
 /**
  * Updates the status of a parcel project from "Pending" to "Borrowing" with an admin description.
  * @param {Ctx} ctx - The context containing the Prisma client instance.

@@ -3,6 +3,7 @@ import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import {
   getAllParcelProject,
+  markBorrowingAsDelivered,
   rejectBooking,
   rejectBorrowing,
   returnParcelToStock,
@@ -190,4 +191,27 @@ export const Parcel_projectRouter = createTRPCRouter({
         });
       }
     }),
+
+
+  markAsDelivered: publicProcedure
+    .input(
+      z.object({
+        parcel_project_id: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      try {
+        await markBorrowingAsDelivered(
+          ctx,
+          input.parcel_project_id,
+        );
+      } catch (error) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Failed to reject borrowing",
+          cause: error,
+        });
+      }
+
+    })
 });
