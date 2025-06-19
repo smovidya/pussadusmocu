@@ -163,7 +163,7 @@ export function CreateParcel() {
       <DialogTrigger asChild>
         <Button variant="outline">สร้างพัสดุใหม่</Button>
       </DialogTrigger>
-      <DialogContent className="min-w-[700px] font-noto-sans sm:max-w-[425px]">
+      <DialogContent className="font-noto-sans min-w-[700px] sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>กรอกข้อมูลพัสดุใหม่</DialogTitle>
           <DialogDescription>กรุณาใส่ข้อมูลให้ครบถ้วน.</DialogDescription>
@@ -285,14 +285,14 @@ export function CreateParcel() {
                   disabled={disabled}
                   type="checkbox"
                   {...form.register("available")}
-                  className=" w-6"
+                  className="w-6"
                 />
               </div>
             </div>
             {!close && (
               <Button
                 type="submit"
-                className="bg-black text-white hover:bg-grey01"
+                className="hover:bg-grey01 bg-black text-white"
                 disabled={disabled}
               >
                 {" "}

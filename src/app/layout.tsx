@@ -24,7 +24,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`bg-slate-100 font-noto-sans ${inter.variable}`}>
+      <body className={`font-noto-sans bg-slate-100 ${inter.variable}`}>
         <TRPCReactProvider>
           <ReduxProvider>{children}</ReduxProvider>
           <Toaster />

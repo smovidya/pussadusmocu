@@ -20,7 +20,7 @@ export const NavbarUser = () => {
     );
   };
   return (
-    <div className="inline-flex h-24 w-full items-center justify-start gap-[38px] bg-yellow01 px-5 py-1.5">
+    <div className="bg-yellow01 inline-flex h-24 w-full items-center justify-start gap-[38px] px-5 py-1.5">
       <div className="flex items-center">
         <button
           className="lg:hidden"
@@ -77,7 +77,7 @@ export const NavbarUser = () => {
 
       {/* TODO: move this to bottom menu */}
       {menuOpen && (
-        <div className="absolute left-0 top-24 z-50 w-full bg-yellow01 p-5 lg:hidden">
+        <div className="bg-yellow01 absolute top-24 left-0 z-50 w-full p-5 lg:hidden">
           <div className="flex flex-col items-center gap-4">
             {/* <Input
               className="w-full rounded-full"
@@ -89,7 +89,7 @@ export const NavbarUser = () => {
               title="หน้าหลัก"
               className="flex items-center gap-2 text-sm"
             >
-              <Home className="w-15 h-8 hover:cursor-pointer" />
+              <Home className="h-8 w-15 hover:cursor-pointer" />
               <span>หน้าหลัก</span>
             </a>
             <a
@@ -97,7 +97,7 @@ export const NavbarUser = () => {
               title="พัสดุที่จองไป"
               className="flex items-center gap-2 text-sm"
             >
-              <ShoppingCart className="w-15 h-8 hover:cursor-pointer" />
+              <ShoppingCart className="h-8 w-15 hover:cursor-pointer" />
               <span>พัสดุที่จองไป</span>
             </a>
             <a
@@ -105,7 +105,7 @@ export const NavbarUser = () => {
               title="Admin only"
               className="flex items-center gap-2 text-sm"
             >
-              <Lock className="w-15 h-8 hover:cursor-pointer" />
+              <Lock className="h-8 w-15 hover:cursor-pointer" />
               <span>Admin</span>
             </a>
             <a
@@ -113,7 +113,7 @@ export const NavbarUser = () => {
               title="ออกจากระบบ"
               className="flex items-center gap-2 text-sm"
             >
-              <LogOut className="w-15 h-8 hover:cursor-pointer" />
+              <LogOut className="h-8 w-15 hover:cursor-pointer" />
               <span>ออกจากระบบ</span>
             </a>
           </div>

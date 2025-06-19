@@ -26,7 +26,7 @@ export function Parcels({ parcels }: ParcelProps) {
     .filter((pp) => (name !== "" ? pp.title.includes(name) : true));
 
   return (
-    <div className="flex h-full w-full flex-col gap-2 font-noto-sans">
+    <div className="font-noto-sans flex h-full w-full flex-col gap-2">
       <Navbar />
       <div className="flex flex-col items-center gap-6 p-4">
         <div className="flex w-full flex-col items-center gap-2 sm:flex-row sm:justify-center sm:gap-4">

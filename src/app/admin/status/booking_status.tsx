@@ -146,7 +146,7 @@ function Sta({
   }
 
   return (
-    <div className="flex h-full w-full flex-col items-center gap-2 font-noto-sans">
+    <div className="font-noto-sans flex h-full w-full flex-col items-center gap-2">
       <Navbar />
       <div className="flex-grid mx-5 flex w-full sm:w-5/6 lg:w-4/6">
         <Dropdown setSelectedProjectId={setSelectedProjectId} />
@@ -161,10 +161,7 @@ function Sta({
             {parcelsProject.project.project_id} | {parcelsProject.project.title}
           </h1>
 
-          <div
-            className="text-md grid grid-cols-2 items-center justify-center gap-3 
-          border-black sm:grid-cols-5"
-          >
+          <div className="text-md grid grid-cols-2 items-center justify-center gap-3 border-black sm:grid-cols-5">
             <div className="sm:col-span-1">
               <Image
                 src={parcelsProject.parcel.image_url}
@@ -176,7 +173,7 @@ function Sta({
               />
             </div>
 
-            <div className="flex flex-col justify-items-center sm:col-span-4 sm:grid sm:grid-cols-4 ">
+            <div className="flex flex-col justify-items-center sm:col-span-4 sm:grid sm:grid-cols-4">
               <div>
                 <p>
                   {parcelsProject.parcel.parcel_id} |{" "}

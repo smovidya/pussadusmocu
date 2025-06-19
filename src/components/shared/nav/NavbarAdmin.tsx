@@ -17,7 +17,7 @@ export const Navbar: React.FC = () => {
   };
 
   return (
-    <div className="inline-flex h-24 w-full items-center justify-start gap-[38px] bg-yellow01 px-5 py-1.5">
+    <div className="bg-yellow01 inline-flex h-24 w-full items-center justify-start gap-[38px] px-5 py-1.5">
       <div className="flex h-[88px] w-[88px]">
         <a
           href="/users/home"
@@ -31,7 +31,7 @@ export const Navbar: React.FC = () => {
           />
         </a>
       </div>
-      <div className="flex w-full font-noto-sans">
+      <div className="font-noto-sans flex w-full">
         <Input
           className="rounded-full"
           placeholder="ค้นหาพัสดุ"

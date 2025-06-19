@@ -109,7 +109,7 @@ const ParcelUser = ({ parcel, project_id, student_id }: BlogProps) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Card className="w-50 h-auto font-noto-sans hover:scale-105 hover:cursor-pointer">
+        <Card className="font-noto-sans h-auto w-50 hover:scale-105 hover:cursor-pointer">
           <CardHeader>
             <CardTitle>{parcel.title}</CardTitle>
             <CardDescription>{parcel.description}</CardDescription>
@@ -142,7 +142,7 @@ const ParcelUser = ({ parcel, project_id, student_id }: BlogProps) => {
           </CardContent>
         </Card>
       </DialogTrigger>
-      <DialogContent className="w-full min-w-[300px] max-w-[85%] font-noto-sans sm:w-[200px] sm:max-w-[700px] md:w-[500px] lg:w-[700px]">
+      <DialogContent className="font-noto-sans w-full max-w-[85%] min-w-[300px] sm:w-[200px] sm:max-w-[700px] md:w-[500px] lg:w-[700px]">
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex w-full space-y-6"

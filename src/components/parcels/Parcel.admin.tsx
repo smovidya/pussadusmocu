@@ -178,7 +178,7 @@ const ParcelAdmin = ({ parcel }: BlogProps) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Card className="h-auto w-44 bg-slate-100 font-noto-sans shadow-md hover:scale-105 hover:cursor-pointer">
+        <Card className="font-noto-sans h-auto w-44 bg-slate-100 shadow-md hover:scale-105 hover:cursor-pointer">
           <CardHeader>
             <CardTitle>{parcel.title}</CardTitle>
             <CardDescription>{parcel.description}</CardDescription>
@@ -208,7 +208,7 @@ const ParcelAdmin = ({ parcel }: BlogProps) => {
           </p>
         </Card>
       </DialogTrigger>
-      <DialogContent className="min-w-[700px] font-noto-sans sm:max-w-[425px]">
+      <DialogContent className="font-noto-sans min-w-[700px] sm:max-w-[425px]">
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex w-full space-y-6"
@@ -326,14 +326,14 @@ const ParcelAdmin = ({ parcel }: BlogProps) => {
                   disabled={disabled}
                   type="checkbox"
                   {...form.register("available")}
-                  className=" w-6"
+                  className="w-6"
                 />
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <Button
                 type="submit"
-                className="bg-black text-white hover:bg-grey01"
+                className="hover:bg-grey01 bg-black text-white"
                 disabled={disabled}
               >
                 {" "}

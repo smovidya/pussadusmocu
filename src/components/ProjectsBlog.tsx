@@ -13,7 +13,7 @@ interface Props {
 
 export const ProjectBlog = ({ project }: Props) => {
   return (
-    <Card className="flex h-full w-full flex-col bg-white01 p-4 shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl">
+    <Card className="bg-white01 flex h-full w-full flex-col p-4 shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl">
       <CardHeader className="pb-2">
         <CardTitle className="text-xl font-bold text-gray-800">
           {project.title}

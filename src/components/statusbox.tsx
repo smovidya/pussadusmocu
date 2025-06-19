@@ -33,7 +33,7 @@ export const Statuesbox = ({ parcelslist, student_id }: Props) => {
 
       const table = (
         <Table
-          className="item-center mx-auto h-auto w-full min-w-[200px] max-w-[85%] bg-white font-noto-sans sm:w-[200px] sm:max-w-[1100px] md:w-[700px] lg:w-[1100px]"
+          className="item-center font-noto-sans mx-auto h-auto w-full max-w-[85%] min-w-[200px] bg-white sm:w-[200px] sm:max-w-[1100px] md:w-[700px] lg:w-[1100px]"
           key={projectId}
         >
           <TableHeader>
@@ -60,7 +60,7 @@ export const Statuesbox = ({ parcelslist, student_id }: Props) => {
                     </div>
                   </TableCell>
                   <TableCell className="grid grid-cols-1 gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
-                    <div className="h-30 grid grid-rows-4 text-left">
+                    <div className="grid h-30 grid-rows-4 text-left">
                       <div>
                         {parcel.parcel_id} | {parcel.parcel.title}
                       </div>
@@ -70,7 +70,7 @@ export const Statuesbox = ({ parcelslist, student_id }: Props) => {
                       <div className="row-start-5">x{parcel.amount}</div>
                     </div>
 
-                    <div className="h-30 grid grid-rows-4 text-right text-gray-500">
+                    <div className="grid h-30 grid-rows-4 text-right text-gray-500">
                       <div className="row-start-1">
                         <div className="flex justify-end">
                           <p className="pr-6">ระยะเวลายืม</p>
@@ -104,7 +104,7 @@ export const Statuesbox = ({ parcelslist, student_id }: Props) => {
           <TableFooter>
             <TableRow>
               <TableCell>
-                <div className="h-21 grid grid-rows-3">
+                <div className="grid h-21 grid-rows-3">
                   <p className="row-start-1 text-sm text-red-500">
                     วันสุดท้ายของการคืนพัสดุ <br />
                   </p>

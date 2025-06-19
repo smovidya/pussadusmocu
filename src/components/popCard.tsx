@@ -161,7 +161,7 @@ const PopupCard: React.FC<PopupCardProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+    <div className="bg-opacity-50 fixed inset-0 flex items-center justify-center bg-black">
       <div className="h-auto w-full max-w-xl rounded-lg bg-white p-1 shadow-lg">
         <div className="flex items-end justify-end">
           <button onClick={onClose}>
