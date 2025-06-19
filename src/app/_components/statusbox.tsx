@@ -1,6 +1,7 @@
 "use client";
-import { useRouter } from "next/navigation";
-import { api } from "~/trpc/react";
+import { format } from "date-fns";
+import Image from "next/image";
+import { useState } from "react";
 import {
   Table,
   TableBody,
@@ -10,10 +11,6 @@ import {
   TableRow,
 } from "~/components/ui/table";
 import { type Parcellist } from "~/lib/constant";
-import Image from "next/image";
-import { Button } from "~/components/ui/button";
-import { format } from "date-fns";
-import { useState, useEffect } from "react";
 
 interface Props {
   parcelslist: Parcellist;
@@ -86,15 +83,14 @@ export const Statuesbox = ({ parcelslist, student_id }: Props) => {
                       </div>
                     </div>
                     <div
-                      className={`text-base font-bold ${
-                        parcel.status === "BORROWING"
+                      className={`text-base font-bold ${parcel.status === "BORROWING"
                           ? "text-blue-700"
                           : parcel.status === "REJECT"
                             ? "text-red-700"
                             : parcel.status === "PENDING"
                               ? "text-yellow02"
                               : "text-green-700"
-                      }`}
+                        }`}
                     >
                       {parcel.status}
                     </div>

@@ -10,6 +10,7 @@ import {
   updateStatusBorrowingToInUse,
   updateStatusPendingToBorrowing,
 } from "../services/parcel-project.service";
+import { adminOnlyProcedure } from "../middleware";
 
 /**
  * TRPC Router for handling parcel project operations.
@@ -41,7 +42,6 @@ export const Parcel_projectRouter = createTRPCRouter({
       }
     }),
 
-
   /**
    * Update the status of a parcel project to 'BORROWING' with an admin description.
    *
@@ -50,7 +50,7 @@ export const Parcel_projectRouter = createTRPCRouter({
    * @param {string} input.description - The admin description to update.
    * @returns {Promise<Object>} The updated parcel project.
    */
-  updateChecking: publicProcedure
+  updateChecking: adminOnlyProcedure
     .input(
       z.object({
         parcel_project_id: z.string(),
@@ -81,7 +81,7 @@ export const Parcel_projectRouter = createTRPCRouter({
    * @param {string} input.description - The admin description to update.
    * @returns {Promise<void>} A promise that resolves when the rejection is complete.
    */
-  rejectBooking: publicProcedure
+  rejectBooking: adminOnlyProcedure
     .input(
       z.object({
         parcel_project_id: z.string(),
@@ -108,7 +108,7 @@ export const Parcel_projectRouter = createTRPCRouter({
    * @param {number} input.parcel_return - The amount of parcel to return.
    * @returns {Promise<void>} A promise that resolves when the return is complete.
    */
-  returnParcel: publicProcedure
+  returnParcel: adminOnlyProcedure
     .input(
       z.object({
         parcel_project_id: z.string(),
@@ -139,7 +139,7 @@ export const Parcel_projectRouter = createTRPCRouter({
    * @param {number} input.parcel_return - The amount of parcel to return.
    * @returns {Promise<void>} A promise that resolves when the rejection is complete.
    */
-  rejectBorrowing: publicProcedure
+  rejectBorrowing: adminOnlyProcedure
     .input(
       z.object({
         parcel_project_id: z.string(),
@@ -162,7 +162,7 @@ export const Parcel_projectRouter = createTRPCRouter({
       }
     }),
 
-  markAsDelivered: publicProcedure
+  markAsDelivered: adminOnlyProcedure
     .input(
       z.object({
         parcel_project_id: z.string(),

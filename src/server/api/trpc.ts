@@ -6,11 +6,16 @@
  * TL;DR - This is where all the tRPC server stuff is created and plugged in. The pieces you will
  * need to use are documented accordingly near the end.
  */
-import { initTRPC } from "@trpc/server";
+import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
 
 import { db } from "~/server/db";
+import { Ctx } from "./models/database.model";
+import { decrypt } from "~/lib/function";
+import { api } from "~/trpc/server";
+import { Student } from "@prisma/client";
+import { Projectinparcel } from "~/lib/constant";
 
 /**
  * 1. CONTEXT
@@ -24,7 +29,7 @@ import { db } from "~/server/db";
  *
  * @see https://trpc.io/docs/server/context
  */
-export const createTRPCContext = async (opts: { headers: Headers }) => {
+export const createTRPCContext = async (opts: Omit<Ctx, "db">) => {
   return {
     db,
     ...opts,

@@ -123,6 +123,7 @@ function Sta({
     markAsDelivered.mutate({
       parcel_project_id,
     });
+    setIsOpen(false);
   };
 
   const formatDate = (dateString: string) => {
@@ -193,15 +194,14 @@ function Sta({
                 <Button
                   type="button"
                   onClick={() => openPopup(parcelsProject)}
-                  className={`text-base font-bold text-white ${
-                    parcelsProject.status === "BORROWING"
+                  className={`text-base font-bold text-white ${parcelsProject.status === "BORROWING"
                       ? "text-blue-700"
                       : parcelsProject.status === "REJECT"
                         ? "text-red-700"
                         : parcelsProject.status === "PENDING"
                           ? "text-yellow02"
                           : "text-green-700"
-                  }`}
+                    }`}
                 >
                   {parcelsProject.status}
                 </Button>
