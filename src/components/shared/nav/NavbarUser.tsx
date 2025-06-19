@@ -6,6 +6,8 @@ import { Input } from "~/components/ui/input";
 import { selectedOption } from "~/stores/slices/search";
 import { useAppDispatch } from "~/stores/store";
 import { useState } from "react";
+import { Button } from "~/components/ui/button";
+import Link from "next/link";
 
 export const NavbarUser = () => {
   const dispatch = useAppDispatch();
@@ -41,37 +43,36 @@ export const NavbarUser = () => {
         </a>
       </div>
 
-      <div className="hidden w-full font-noto-sans lg:flex">
-        <Input
-          className="rounded-full"
-          placeholder="ค้นหาพัสดุ"
-          onChange={handleInputChange}
-        />
-      </div>
-
-      <div className="hidden items-center justify-start gap-4 lg:flex">
-        <a href="/users/home" title="หน้าหลัก">
-          <Home className="h-8 w-8 hover:cursor-pointer" />
+      <div className="hidden items-center justify-start gap-8 lg:flex">
+        <Button asChild variant="ghost" className="hover:bg-black/5 rounded-lg">
+          <Link href="/users/home" className="gap-3">
+            <Home />
+            หน้าหลัก
+          </Link>
+        </Button>
+        <a href="/users/cart" className="flex items-center gap-3" title="พัสดุที่จองไป">
+          <ShoppingCart />
+          พัสดุที่จองไป
         </a>
-        <a href="/users/cart" title="พัสดุที่จองไป">
-          <ShoppingCart className="h-8 w-8 hover:cursor-pointer" />
+        <a href="/admin/home" className="flex items-center gap-3" title="Admin only">
+          <Lock />
+          แอดมิน
         </a>
-        <a href="/admin/home" title="Admin only">
-          <Lock className="h-8 w-8 hover:cursor-pointer" />
-        </a>
-        <a href="/api/logout" title="ออกจากระบบ">
-          <LogOut className="h-8 w-8 hover:cursor-pointer" />
+        <a href="/api/logout" className="flex items-center gap-3" title="ออกจากระบบ">
+          <LogOut />
+          ออกจากระบบ
         </a>
       </div>
 
+      {/* TODO: move this to bottom menu */}
       {menuOpen && (
         <div className="absolute left-0 top-24 z-50 w-full bg-yellow01 p-5 lg:hidden">
           <div className="flex flex-col items-center gap-4">
-            <Input
+            {/* <Input
               className="w-full rounded-full"
               placeholder="ค้นหาพัสดุ"
               onChange={handleInputChange}
-            />
+            /> */}
             <a
               href="/users/home"
               title="หน้าหลัก"

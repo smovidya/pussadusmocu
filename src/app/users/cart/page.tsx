@@ -31,10 +31,7 @@ const Profile = async () => {
   ));
 
   return (
-    <div className="flex flex-col gap-2 bg-stone-100">
-      <NavbarUser />
-      <div>{rows}</div>
-    </div>
+    <div>{rows}</div>
   );
 };
 
