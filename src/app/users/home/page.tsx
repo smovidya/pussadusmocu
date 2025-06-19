@@ -7,7 +7,7 @@ import { getCookie } from "cookies-next";
 import { decrypt } from "~/lib/function";
 import { redirect } from "next/navigation";
 
-const Profile = async () => {
+const Home = async () => {
   const encryptedCookie = getCookie("student_id", { cookies });
   const student_id = await decrypt(encryptedCookie ?? "");
   const student =
@@ -56,4 +56,4 @@ const Profile = async () => {
   }
 };
 
-export default Profile;
+export default Home;
