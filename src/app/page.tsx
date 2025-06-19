@@ -1,10 +1,9 @@
-import { getCookie } from "cookies-next";
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { getCurrentUser } from "~/lib/getCurrentUser";
 
 export default async function Home() {
-  const encryptedCookie = getCookie("student_id", { cookies });
-  if (encryptedCookie) {
+  const student = await getCurrentUser();
+  if (student) {
     redirect("/users/home");
   }
 

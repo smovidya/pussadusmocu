@@ -1,25 +1,16 @@
-import { getCookie } from "cookies-next";
 import { NavbarUser } from "~/components/shared/nav/NavbarUser";
 import { Statuesbox } from "~/components/statusbox";
 import { api } from "~/trpc/server";
-import { cookies } from "next/headers";
 import {
   type Projectinparcel,
   type Parcellist,
   STUDENT_ID,
 } from "~/lib/constant";
-import { decrypt } from "~/lib/function";
-import { type Student } from "@prisma/client";
+import { getCurrentUser } from "~/lib/getCurrentUser";
 
 const Profile = async () => {
-  const encryptedCookie = getCookie("student_id", { cookies });
-  const student_id_from_cookie = await decrypt(encryptedCookie ?? "");
-  const student =
-    process.env.NODE_ENV === "development"
-      ? await api.auth.getUser({
-          student_id: student_id_from_cookie as string,
-        })
-      : (student_id_from_cookie as Student);
+  const student = await getCurrentUser();
+
   const Parcel_Project: Projectinparcel[] = await api.parcel_Project.getAll({
     student_id: student?.student_id ?? STUDENT_ID,
   });

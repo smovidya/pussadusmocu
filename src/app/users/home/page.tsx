@@ -1,30 +1,21 @@
-import { type Student, type Project } from "@prisma/client";
-import { cookies } from "next/headers";
+import { type Project } from "@prisma/client";
 import { NavbarUser } from "~/components/shared/nav/NavbarUser";
 import { ProjectBlog } from "~/components/ProjectsBlog";
 import { api } from "~/trpc/server";
-import { getCookie } from "cookies-next";
-import { decrypt } from "~/lib/function";
+import { getCurrentUser } from "~/lib/getCurrentUser";
 import { redirect } from "next/navigation";
 
 const Home = async () => {
-  const encryptedCookie = getCookie("student_id", { cookies });
-  const student_id = await decrypt(encryptedCookie ?? "");
-  const student =
-    process.env.NODE_ENV === "development"
-      ? await api.auth.getUser({
-          student_id: student_id as string,
-        })
-      : (student_id as Student);
+  const student = await getCurrentUser();
+
+  if (!student) {
+    return redirect("/login");
+  }
 
   try {
     const projects: Project[] = await api.project.getProjectByStudent({
-      student_id: student?.student_id ?? "default",
+      student_id: student.student_id,
     });
-
-    if (!student) {
-      return redirect("/login");
-    }
 
     return (
       <div className="flex min-h-full w-full flex-col gap-2 bg-slate-100 text-gray-900">
