@@ -8,22 +8,14 @@ import { decrypt } from "~/lib/function";
 import { redirect } from "next/navigation";
 
 const Profile = async () => {
-  // const encryptedCookie = getCookie("student_id", { cookies });
-  // const student_id = await decrypt(encryptedCookie ?? "");
-  // const student =
-  //   process.env.NODE_ENV === "development"
-  //     ? await api.auth.getUser({
-  //         student_id: student_id as string,
-  //       })
-  //     : (student_id as Student);
-  const student: Student = {
-    department: "BBTECH",
-    email: "asdfswf@ongsa.lt",
-    isAdmin: true,
-    line_id: "",
-    name: "ongsalt",
-    student_id: "6734468123",
-  };
+  const encryptedCookie = getCookie("student_id", { cookies });
+  const student_id = await decrypt(encryptedCookie ?? "");
+  const student =
+    process.env.NODE_ENV === "development"
+      ? await api.auth.getUser({
+          student_id: student_id as string,
+        })
+      : (student_id as Student);
 
   try {
     const projects: Project[] = await api.project.getProjectByStudent({
