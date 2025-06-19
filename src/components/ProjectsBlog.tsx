@@ -22,7 +22,7 @@ export const ProjectBlog = ({ project }: Props) => {
           {project.project_id}
         </CardDescription>
       </CardHeader>
-      <CardContent className="flex-grow pt-2">
+      <CardContent className="grow pt-2">
         <p className="text-base text-gray-700">
           เจ้าของโครง: <span className="font-medium">{project.owner}</span>
         </p>

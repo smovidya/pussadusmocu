@@ -155,7 +155,7 @@ function Sta({
       {filteredParcelsProjects?.map((parcelsProject) => (
         <div
           key={parcelsProject.id}
-          className="mx-20 flex w-full flex-grow flex-col rounded-lg border-gray-300 px-6 py-4 shadow-md lg:w-4/6"
+          className="mx-20 flex w-full grow flex-col rounded-lg border-gray-300 px-6 py-4 shadow-md lg:w-4/6"
         >
           <h1 className="mb-3 border-b border-gray-300 pb-2">
             {parcelsProject.project.project_id} | {parcelsProject.project.title}
