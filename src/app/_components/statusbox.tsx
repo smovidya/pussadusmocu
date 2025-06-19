@@ -21,42 +21,7 @@ interface Props {
 }
 
 export const Statuesbox = ({ parcelslist, student_id }: Props) => {
-  const router = useRouter();
-  const [loadingProjectId, setLoadingProjectId] = useState<string | null>(null);
-  const [, setUpdatedProjectIds] = useState<string[]>([]);
-  const [showUpdateStatus, setShowUpdateStatus] = useState<boolean>(true);
-
-  const updateparcel = api.parcel_Project.updatestatus.useMutation({
-    onSuccess: () => {
-      if (loadingProjectId) {
-        setUpdatedProjectIds((prev) => [...prev, loadingProjectId]);
-      }
-      setLoadingProjectId(null);
-      router.refresh();
-    },
-    onError: (error) => {
-      console.error("Booking error:", error);
-      setLoadingProjectId(null); // Reset loading state in case of error
-    },
-  });
-
   const [expandedProjectIds, setExpandedProjectIds] = useState<string[]>([]);
-
-  async function Updatestatus(project_id: string) {
-    setLoadingProjectId(project_id); // Set loading state when starting the update
-    updateparcel.mutate({
-      student_id: student_id,
-      project_id: project_id,
-    });
-  }
-
-  useEffect(() => {
-    const hasBorrowingStatus = Object.values(parcelslist).some((parcels) =>
-      parcels.some((parcel) => parcel.status === "BORROWING"),
-    );
-
-    setShowUpdateStatus(hasBorrowingStatus); // Show update status only if there are borrowing items
-  }, [parcelslist]);
 
   const renderedCards = [];
 
@@ -65,7 +30,6 @@ export const Statuesbox = ({ parcelslist, student_id }: Props) => {
 
     if (parcels !== undefined) {
       const isExpanded = expandedProjectIds.includes(projectId);
-      const isLoading = loadingProjectId === projectId;
 
       const shownParcels = isExpanded ? parcels : parcels.slice(0, 3);
 
@@ -173,8 +137,7 @@ export const Statuesbox = ({ parcelslist, student_id }: Props) => {
                       <br />
                     </a>
                   </div>
-                  <div className="row-start-3">
-                  </div>
+                  <div className="row-start-3"></div>
                 </div>
               </TableCell>
             </TableRow>

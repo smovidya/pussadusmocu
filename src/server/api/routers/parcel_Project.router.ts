@@ -41,36 +41,6 @@ export const Parcel_projectRouter = createTRPCRouter({
       }
     }),
 
-  /**
-   * Update the status of a parcel project to 'INUSE'.
-   *
-   * @param {Object} input - Input object.
-   * @param {string} input.project_id - The ID of the project.
-   * @param {string} input.student_id - The ID of the student.
-   * @returns {Promise<void>} A promise that resolves when the update is complete.
-   */
-  updatestatus: publicProcedure
-    .input(
-      z.object({
-        project_id: z.string(),
-        student_id: z.string(),
-      }),
-    )
-    .mutation(async ({ ctx, input }) => {
-      try {
-        await updateStatusBorrowingToInUse(
-          ctx,
-          input.student_id,
-          input.project_id,
-        );
-      } catch (error) {
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message: "Failed to update status to INUSE",
-          cause: error,
-        });
-      }
-    }),
 
   /**
    * Update the status of a parcel project to 'BORROWING' with an admin description.
