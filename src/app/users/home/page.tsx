@@ -20,7 +20,7 @@ const Home = async () => {
     // projects = [...projects, ...projects, ...projects, ...projects];
 
     return (
-      <div className="w-full max-w-screen-xl px-6 mx-auto">
+      <div className="mx-auto w-full max-w-screen-xl px-6">
         <div className="font-noto-sans text-lg font-medium md:text-2xl">
           สวัสดี <span className="font-bold">{student.name}</span>{" "}
           สามารถเลือกโครงและยืมของได้เลย สู้ ๆ นะครับทุกคน 😙

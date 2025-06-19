@@ -1,13 +1,12 @@
 "use client";
 
-import { Home, Lock, LogOut, ShoppingCart, Menu } from "lucide-react";
+import { Home, Lock, LogOut, Menu, ShoppingCart } from "lucide-react";
 import Image from "next/image";
-import { Input } from "~/components/ui/input";
-import { selectedOption } from "~/stores/slices/search";
-import { useAppDispatch } from "~/stores/store";
+import Link from "next/link";
 import { useState } from "react";
 import { Button } from "~/components/ui/button";
-import Link from "next/link";
+import { selectedOption } from "~/stores/slices/search";
+import { useAppDispatch } from "~/stores/store";
 
 export const NavbarUser = () => {
   const dispatch = useAppDispatch();
@@ -44,21 +43,33 @@ export const NavbarUser = () => {
       </div>
 
       <div className="hidden items-center justify-start gap-8 lg:flex">
-        <Button asChild variant="ghost" className="hover:bg-black/5 rounded-lg">
+        <Button asChild variant="ghost" className="rounded-lg hover:bg-black/5">
           <Link href="/users/home" className="gap-3">
             <Home />
             หน้าหลัก
           </Link>
         </Button>
-        <a href="/users/cart" className="flex items-center gap-3" title="พัสดุที่จองไป">
+        <a
+          href="/users/cart"
+          className="flex items-center gap-3"
+          title="พัสดุที่จองไป"
+        >
           <ShoppingCart />
           พัสดุที่จองไป
         </a>
-        <a href="/admin/home" className="flex items-center gap-3" title="Admin only">
+        <a
+          href="/admin/home"
+          className="flex items-center gap-3"
+          title="Admin only"
+        >
           <Lock />
           แอดมิน
         </a>
-        <a href="/api/logout" className="flex items-center gap-3" title="ออกจากระบบ">
+        <a
+          href="/api/logout"
+          className="flex items-center gap-3"
+          title="ออกจากระบบ"
+        >
           <LogOut />
           ออกจากระบบ
         </a>

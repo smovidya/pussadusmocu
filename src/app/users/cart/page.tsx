@@ -30,9 +30,7 @@ const Profile = async () => {
     </div>
   ));
 
-  return (
-    <div>{rows}</div>
-  );
+  return <div>{rows}</div>;
 };
 
 export default Profile;
