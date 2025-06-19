@@ -1,4 +1,4 @@
-import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import { createTRPCRouter, publicProcedure, adminOnlyProcedure } from "~/server/api/trpc";
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import {
@@ -10,7 +10,6 @@ import {
   updateStatusBorrowingToInUse,
   updateStatusPendingToBorrowing,
 } from "../services/parcel-project.service";
-import { adminOnlyProcedure } from "../middleware";
 
 /**
  * TRPC Router for handling parcel project operations.
