@@ -75,7 +75,6 @@ export const sendLineNotificaion = async (
   });
 };
 
-
 export function getStatusText(status: BORROWING_STATUS) {
   switch (status) {
     case "PENDING":

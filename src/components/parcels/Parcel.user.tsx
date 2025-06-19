@@ -24,7 +24,7 @@ import { Textarea } from "~/components/ui/textarea";
 import { Button } from "~/components/ui/button";
 import { api } from "~/trpc/react";
 import { useRouter } from "next/navigation";
-import { DatePickerWithRange } from "../../app/_components/shared/Datepicker";
+import { DatePickerWithRange } from "~/components/shared/Datepicker";
 import { useSelector } from "react-redux";
 import { datepickerSelector } from "~/stores/slices/datepicker";
 import { useState } from "react";

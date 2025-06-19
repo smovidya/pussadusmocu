@@ -81,7 +81,6 @@ pussadusmocu
 │   │   └── login.test.tsx
 │   ├── app                    # Application-specific code
 │   │   ├── ReduxProvider.tsx  # Redux provider setup
-│   │   ├── _components        # Common components directory
 │   │   │   ├── ProjectsBlog.tsx
 │   │   │   ├── parcels
 │   │   │   │   ├── Parcel.admin.tsx
