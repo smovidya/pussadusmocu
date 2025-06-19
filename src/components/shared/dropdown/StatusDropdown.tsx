@@ -16,10 +16,10 @@ function StatusDropdown({ setSelectedStatus }: StatusDropdownProps) {
     <div className="w-2/6 px-2 py-2">
       <p>สถานะ</p>
       <select
-        className="w-full border border-yellow-200 px-1 py-2"
+        className="w-full bg-background border border-yellow-200 px-1 py-2"
         onChange={handleStatusChange}
       >
-        <option value="">Select a status</option>
+        <option value="">ทั้งหมด</option>
         {Object.keys(BORROWING_STATUS).map((status) => (
           <option key={status} value={status}>
             {status}

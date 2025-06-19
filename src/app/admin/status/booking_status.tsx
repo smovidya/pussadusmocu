@@ -10,6 +10,7 @@ import { type ParcelProjectWithDetails } from "./page";
 import { api } from "~/trpc/react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { getStatusText } from "~/lib/function";
 
 function Sta({
   parcelsProjects,
@@ -152,10 +153,11 @@ function Sta({
         <Dropdown setSelectedProjectId={setSelectedProjectId} />
         <StatusDropdown setSelectedStatus={setSelectedStatus} />
       </div>
+      
       {filteredParcelsProjects?.map((parcelsProject) => (
         <div
           key={parcelsProject.id}
-          className="mx-20 flex w-full grow flex-col rounded-lg border-gray-300 px-6 py-4 shadow-md lg:w-4/6"
+          className="mx-20 flex w-full grow flex-col rounded-lg bg-background border-gray-300 px-6 py-4 shadow-md lg:w-4/6"
         >
           <h1 className="mb-3 border-b border-gray-300 pb-2">
             {parcelsProject.project.project_id} | {parcelsProject.project.title}
@@ -190,18 +192,19 @@ function Sta({
               <div>
                 <Button
                   type="button"
+                  variant="ghost"
                   onClick={() => openPopup(parcelsProject)}
-                  className={`text-base font-bold text-white ${
-                    parcelsProject.status === "BORROWING"
-                      ? "text-blue-700"
-                      : parcelsProject.status === "REJECT"
-                        ? "text-red-700"
-                        : parcelsProject.status === "PENDING"
-                          ? "text-yellow02"
-                          : "text-green-700"
-                  }`}
+                  className={`text-base h-fit cursor-pointer font-bold text-white ${parcelsProject.status === "BORROWING"
+                    ? "text-blue-700 hover:text-blue-700"
+                    : parcelsProject.status === "REJECT"
+                      ? "text-red-700 hover:text-red-700"
+                      : parcelsProject.status === "PENDING"
+                        ? "text-yellow02 hover:text-yellow02"
+                        : "text-green-700 hover:text-green-700"
+                    }`}
                 >
-                  {parcelsProject.status}
+                  {getStatusText(parcelsProject.status)}  <br />
+                  ({parcelsProject.status})
                 </Button>
                 {isOpen && currentParcelProject?.id === parcelsProject.id && (
                   <PopupCard

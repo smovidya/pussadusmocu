@@ -109,7 +109,7 @@ const ParcelUser = ({ parcel, project_id, student_id }: BlogProps) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Card className="font-noto-sans h-auto w-50 hover:scale-105 hover:cursor-pointer">
+        <Card className="font-noto-sans h-auto transition-transform hover:scale-105 hover:cursor-pointer">
           <CardHeader>
             <CardTitle>{parcel.title}</CardTitle>
             <CardDescription>{parcel.description}</CardDescription>
@@ -126,13 +126,12 @@ const ParcelUser = ({ parcel, project_id, student_id }: BlogProps) => {
             )}
             <div className="mt-3 flex items-center gap-2">
               <div
-                className={`h-4 w-4 rounded-full ${
-                  parcel.amount > 10
-                    ? "bg-green-500"
-                    : parcel.amount > 2
-                      ? "bg-yellow-500"
-                      : "bg-red-500"
-                }`}
+                className={`h-4 w-4 rounded-full ${parcel.amount > 10
+                  ? "bg-green-500"
+                  : parcel.amount > 2
+                    ? "bg-yellow-500"
+                    : "bg-red-500"
+                  }`}
               ></div>
               <p className="text-base">
                 {parcel.amount} {parcel.unit}
@@ -142,12 +141,12 @@ const ParcelUser = ({ parcel, project_id, student_id }: BlogProps) => {
           </CardContent>
         </Card>
       </DialogTrigger>
-      <DialogContent className="font-noto-sans w-full max-w-[85%] min-w-[300px] sm:w-[200px] sm:max-w-[700px] md:w-[500px] lg:w-[700px]">
+      <DialogContent className="font-noto-sans max-w-[calc(100vw_-_2rem)] md:max-w-3xl">
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex w-full space-y-6"
         >
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div className="flex items-center justify-center">
               <Image
                 src={parcel.image_url}

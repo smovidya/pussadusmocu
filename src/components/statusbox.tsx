@@ -33,7 +33,7 @@ export const Statuesbox = ({ parcelslist, student_id }: Props) => {
 
       const table = (
         <Table
-          className="item-center font-noto-sans mx-auto h-auto w-full max-w-[85%] min-w-[200px] bg-white sm:w-[200px] sm:max-w-[1100px] md:w-[700px] lg:w-[1100px]"
+          className="item-center font-noto-sans mx-auto h-auto w-full bg-white"
           key={projectId}
         >
           <TableHeader>
@@ -148,10 +148,10 @@ export const Statuesbox = ({ parcelslist, student_id }: Props) => {
   }
 
   return renderedCards.length > 0 ? (
-    <>
+    <div className="px-8">
       {renderedCards.map((table) => (
         <div key={table.key}>{table}</div>
       ))}
-    </>
+    </div>
   ) : null;
 };

@@ -1,9 +1,11 @@
 import React from "react";
 import { Input } from "~/components/ui/input";
 import Image from "next/image";
-import { Home, ShoppingCart } from "lucide-react";
+import { Home, Lock, ShoppingCart } from "lucide-react";
 import { selectedOption } from "~/stores/slices/search";
 import { useAppDispatch } from "~/stores/store";
+import { Button } from "~/components/ui/button";
+import Link from "next/link";
 
 export const Navbar: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -17,20 +19,18 @@ export const Navbar: React.FC = () => {
   };
 
   return (
-    <div className="bg-yellow01 inline-flex h-24 w-full items-center justify-start gap-[38px] px-5 py-1.5">
-      <div className="flex h-[88px] w-[88px]">
-        <a
-          href="/users/home"
-          className="items-center justify-center hover:cursor-pointer"
-        >
-          <Image
-            src={"/picture/yellowBox.svg"}
-            alt="iconBox"
-            width={108}
-            height={108}
-          />
-        </a>
-      </div>
+    <div className="bg-yellow01 inline-flex h-24 w-full items-center justify-start gap-4 px-5 py-1.5">
+      <Link
+        href="/users/home"
+        className="flex h-16 items-center justify-center hover:cursor-pointer"
+      >
+        <Image
+          src={"/picture/yellowBox.svg"}
+          alt="iconBox"
+          width={108}
+          height={108}
+        />
+      </Link>
       <div className="font-noto-sans flex w-full">
         <Input
           className="rounded-full"
@@ -38,13 +38,21 @@ export const Navbar: React.FC = () => {
           onChange={handleInputChange}
         />
       </div>
-      <div className="flex items-center justify-start gap-4">
-        <a href="/admin/home">
-          <Home className="h-8 w-8 hover:cursor-pointer" />
-        </a>
-        <a href="/admin/status">
-          <ShoppingCart className="h-8 w-8 hover:cursor-pointer" />
-        </a>
+
+      <div className="flex items-center justify-start gap-1">
+        <Button asChild variant="ghost" className="rounded-lg py-7 text-lg hover:bg-black/5 gap-4 items-center">
+          <Link href="/admin/home">
+            <Lock className="mb-0.5" />
+            แอดมิน
+          </Link>
+        </Button>
+
+        <Button asChild variant="ghost" className="rounded-lg py-7 text-lg hover:bg-black/5 gap-4 items-center">
+          <Link href="/admin/status">
+            <ShoppingCart className="mb-0.5" />
+            การยืม
+          </Link>
+        </Button>
       </div>
     </div>
   );

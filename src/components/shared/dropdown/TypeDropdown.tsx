@@ -16,10 +16,10 @@ export function TypeDropdown({ setSelectedType }: StatusDropdownProps) {
     <div className="w-full px-2 py-2">
       <p>ประเภท</p>
       <select
-        className="w-full border border-yellow-200 px-1 py-2"
+        className="w-full bg-background border border-yellow-200 px-1 py-2"
         onChange={handleStatusChange}
       >
-        <option value="">Select a type</option>
+        <option value="">ทั้งหมด</option>
         {types.map((type) => (
           <option key={type.value} value={type.value}>
             {type.label}

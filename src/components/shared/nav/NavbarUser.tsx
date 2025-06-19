@@ -3,8 +3,10 @@
 import { Home, Lock, LogOut, Menu, ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button } from "~/components/ui/button";
+import { Input } from "~/components/ui/input";
 import { selectedOption } from "~/stores/slices/search";
 import { useAppDispatch } from "~/stores/store";
 
@@ -20,105 +22,104 @@ export const NavbarUser = () => {
     );
   };
   return (
-    <div className="bg-yellow01 inline-flex h-24 w-full items-center justify-start gap-[38px] px-5 py-1.5">
-      <div className="flex items-center">
-        <button
-          className="lg:hidden"
+    <div className="bg-yellow01 inline-flex h-24 w-full items-center justify-start gap-4 px-5 py-1.5">
+      <div className="flex items-center h-full">
+        <Button
+          className="lg:hidden hover:bg-black/5 p-3 size-fit"
+          size="icon"
+          variant="ghost"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Toggle Menu"
         >
-          <Menu className="h-8 w-8" />
-        </button>
-        <a
+          <Menu className="size-8" />
+        </Button>
+        <Link
           href="/users/home"
-          className="items-center justify-center p-4 hover:cursor-pointer"
+          className="flex size-16 items-center justify-center hover:cursor-pointer"
         >
           <Image
             src={"/picture/yellowBox.svg"}
             alt="iconBox"
-            width={60}
-            height={60}
+            width={108}
+            height={108}
           />
-        </a>
+        </Link>
       </div>
 
-      <div className="hidden items-center justify-start gap-8 lg:flex">
-        <Button asChild variant="ghost" className="rounded-lg hover:bg-black/5">
-          <Link href="/users/home" className="gap-3">
-            <Home />
+      <div className="font-noto-sans flex w-full">
+        <Input
+          className="rounded-full"
+          placeholder="ค้นหาพัสดุ"
+          onChange={handleInputChange}
+        />
+      </div>
+
+      <div className="hidden items-center justify-start gap-1 lg:flex">
+        <Button asChild variant="ghost" className="rounded-lg py-7 hover:bg-black/5 gap-4 items-center">
+          <Link href="/users/home">
+            <Home className="mb-0.5" />
             หน้าหลัก
           </Link>
         </Button>
-        <a
-          href="/users/cart"
-          className="flex items-center gap-3"
-          title="พัสดุที่จองไป"
-        >
-          <ShoppingCart />
-          พัสดุที่จองไป
-        </a>
-        <a
-          href="/admin/home"
-          className="flex items-center gap-3"
-          title="Admin only"
-        >
-          <Lock />
-          แอดมิน
-        </a>
-        <a
-          href="/api/logout"
-          className="flex items-center gap-3"
-          title="ออกจากระบบ"
-        >
-          <LogOut />
-          ออกจากระบบ
-        </a>
+
+        <Button asChild variant="ghost" className="rounded-lg py-7 hover:bg-black/5 gap-4 items-center">
+          <Link href="/users/cart">
+            <ShoppingCart className="mb-0.5" />
+            พัสดุที่จองไป
+          </Link>
+        </Button>
+
+        <Button asChild variant="ghost" className="rounded-lg py-7 hover:bg-black/5 gap-4 items-center">
+          <Link href="/admin/home">
+            <Lock className="mb-0.5" />
+            แอดมิน
+          </Link>
+        </Button>
+
+        <Button asChild variant="ghost" className="rounded-lg py-7 hover:bg-black/5 gap-4 items-center">
+          <Link href="/api/logout">
+            <LogOut className="mb-0.5" />
+            ออกจากระบบ
+          </Link>
+        </Button>
       </div>
 
       {/* TODO: move this to bottom menu */}
-      {menuOpen && (
-        <div className="bg-yellow01 absolute top-24 left-0 z-50 w-full p-5 lg:hidden">
-          <div className="flex flex-col items-center gap-4">
-            {/* <Input
-              className="w-full rounded-full"
-              placeholder="ค้นหาพัสดุ"
-              onChange={handleInputChange}
-            /> */}
-            <a
-              href="/users/home"
-              title="หน้าหลัก"
-              className="flex items-center gap-2 text-sm"
-            >
-              <Home className="h-8 w-15 hover:cursor-pointer" />
-              <span>หน้าหลัก</span>
-            </a>
-            <a
-              href="/users/cart"
-              title="พัสดุที่จองไป"
-              className="flex items-center gap-2 text-sm"
-            >
-              <ShoppingCart className="h-8 w-15 hover:cursor-pointer" />
-              <span>พัสดุที่จองไป</span>
-            </a>
-            <a
-              href="/admin/home"
-              title="Admin only"
-              className="flex items-center gap-2 text-sm"
-            >
-              <Lock className="h-8 w-15 hover:cursor-pointer" />
-              <span>Admin</span>
-            </a>
-            <a
-              href="/api/logout"
-              title="ออกจากระบบ"
-              className="flex items-center gap-2 text-sm"
-            >
-              <LogOut className="h-8 w-15 hover:cursor-pointer" />
-              <span>ออกจากระบบ</span>
-            </a>
+      {
+        menuOpen && (
+          <div className="absolute left-0 top-24 z-50 w-full bg-yellow01 p-4 lg:hidden">
+            <div className="grid">
+              <Button asChild variant="ghost" className="rounded-lg py-7 hover:bg-black/5 gap-4 items-center">
+                <Link onClick={() => setMenuOpen(false)} href="/users/home">
+                  <Home className="mb-0.5" />
+                  หน้าหลัก
+                </Link>
+              </Button>
+
+              <Button asChild variant="ghost" className="rounded-lg py-7 hover:bg-black/5 gap-4 items-center">
+                <Link onClick={() => setMenuOpen(false)} href="/users/cart">
+                  <ShoppingCart className="mb-0.5" />
+                  พัสดุที่จองไป
+                </Link>
+              </Button>
+
+              <Button asChild variant="ghost" className="rounded-lg py-7 hover:bg-black/5 gap-4 items-center">
+                <Link onClick={() => setMenuOpen(false)} href="/admin/home">
+                  <Lock className="mb-0.5" />
+                  แอดมิน
+                </Link>
+              </Button>
+
+              <Button asChild variant="ghost" className="rounded-lg py-7 hover:bg-black/5 gap-4 items-center">
+                <Link onClick={() => setMenuOpen(false)} href="/api/logout">
+                  <LogOut className="mb-0.5" />
+                  ออกจากระบบ
+                </Link>
+              </Button>
+            </div>
           </div>
-        </div>
-      )}
-    </div>
+        )
+      }
+    </div >
   );
 };

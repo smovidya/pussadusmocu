@@ -97,7 +97,7 @@ const PopupCard: React.FC<PopupCardProps> = ({
             <div className="grid grid-cols-2 gap-2">
               <Button
                 type="button"
-                className="bg-green01 text-white hover:bg-green-100"
+                className="bg-green01 text-white hover:bg-green01/90"
                 onClick={handleAccept}
                 disabled={isLoading}
               >
@@ -105,7 +105,7 @@ const PopupCard: React.FC<PopupCardProps> = ({
               </Button>
               <Button
                 type="button"
-                className="bg-red01 text-white hover:bg-red-100"
+                className="bg-red01 text-white hover:bg-red01/90"
                 onClick={handleReject}
                 disabled={isLoading}
               >
@@ -126,7 +126,7 @@ const PopupCard: React.FC<PopupCardProps> = ({
             {error && <p className="text-red-500">{error}</p>}
             <Button
               type="button"
-              className="bg-green01 text-white hover:bg-green-100"
+              className="bg-green01 text-white hover:bg-green01/90"
               onClick={handleReturn}
               disabled={isLoading || returnQuantity > parcelProject.amount}
             >
@@ -140,7 +140,7 @@ const PopupCard: React.FC<PopupCardProps> = ({
             <div className="grid grid-cols-2 gap-2">
               <Button
                 type="button"
-                className="bg-green-500 text-white hover:bg-green-100"
+                className="bg-green-500 text-white hover:bg-green-500/90"
                 onClick={handleDelivered}
                 disabled={isLoading}
               >
@@ -148,7 +148,7 @@ const PopupCard: React.FC<PopupCardProps> = ({
               </Button>
               <Button
                 type="button"
-                className="bg-red01 text-white hover:bg-red-100"
+                className="bg-red01 text-white hover:bg-red01/90"
                 onClick={handleRejectBorrowing}
                 disabled={isLoading}
               >
@@ -160,8 +160,10 @@ const PopupCard: React.FC<PopupCardProps> = ({
     }
   };
 
+
+  // TODO: use radix dialog
   return (
-    <div className="bg-opacity-50 fixed inset-0 flex items-center justify-center bg-black">
+    <div className="bg-opacity-50 fixed inset-0 flex items-center justify-center bg-black/80">
       <div className="h-auto w-full max-w-xl rounded-lg bg-white p-1 shadow-lg">
         <div className="flex items-end justify-end">
           <button onClick={onClose}>

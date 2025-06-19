@@ -16,10 +16,10 @@ export function GroupDropdown({ setSelectedType }: StatusDropdownProps) {
     <div className="w-full px-2 py-2">
       <p>หมวด</p>
       <select
-        className="w-full border border-yellow-200 px-1 py-2"
+        className="w-full border bg-background border-yellow-200 px-1 py-2"
         onChange={handleStatusChange}
       >
-        <option value="">Select a group</option>
+        <option value="">ทั้งหมด</option>
         {groups.map((group) => (
           <option key={group.value} value={group.value}>
             {group.label}

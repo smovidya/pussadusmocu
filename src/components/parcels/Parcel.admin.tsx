@@ -178,7 +178,7 @@ const ParcelAdmin = ({ parcel }: BlogProps) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Card className="font-noto-sans h-auto w-44 bg-slate-100 shadow-md hover:scale-105 hover:cursor-pointer">
+        <Card className="font-noto-sans h-auto shadow-md hover:scale-105 hover:cursor-pointer">
           <CardHeader>
             <CardTitle>{parcel.title}</CardTitle>
             <CardDescription>{parcel.description}</CardDescription>
