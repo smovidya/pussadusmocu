@@ -22,8 +22,8 @@ const Profile = async () => {
     isAdmin: true,
     line_id: "",
     name: "ongsalt",
-    student_id: "6734468123"
-  }
+    student_id: "6734468123",
+  };
 
   try {
     const projects: Project[] = await api.project.getProjectByStudent({

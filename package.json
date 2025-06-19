@@ -50,8 +50,6 @@
     "react-hook-form": "^7.53.0",
     "react-redux": "^9.1.2",
     "server-only": "^0.0.1",
-    "smovidyaparcel": ".",
-    "smovidyaparcel": ".",
     "superjson": "^2.2.1",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
@@ -85,5 +83,8 @@
   },
   "ct3aMetadata": {
     "initVersion": "7.32.1"
+  },
+  "prisma": {
+    "seed": "bun prisma/seed.ts"
   }
 }
