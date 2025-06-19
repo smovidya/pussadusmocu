@@ -45,7 +45,6 @@ export const updateStatusBorrowingToInUse = async (
   });
 };
 
-
 export const markBorrowingAsDelivered = async (
   ctx: Ctx,
   parcel_project_id: string,

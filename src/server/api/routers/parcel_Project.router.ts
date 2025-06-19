@@ -192,19 +192,15 @@ export const Parcel_projectRouter = createTRPCRouter({
       }
     }),
 
-
   markAsDelivered: publicProcedure
     .input(
       z.object({
         parcel_project_id: z.string(),
-      })
+      }),
     )
     .mutation(async ({ ctx, input }) => {
       try {
-        await markBorrowingAsDelivered(
-          ctx,
-          input.parcel_project_id,
-        );
+        await markBorrowingAsDelivered(ctx, input.parcel_project_id);
       } catch (error) {
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
@@ -212,6 +208,5 @@ export const Parcel_projectRouter = createTRPCRouter({
           cause: error,
         });
       }
-
-    })
+    }),
 });

@@ -174,23 +174,6 @@ export const Statuesbox = ({ parcelslist, student_id }: Props) => {
                     </a>
                   </div>
                   <div className="row-start-3">
-                    <Button
-                      className={`bg-yellow-400 ${
-                        !showUpdateStatus ? "bg-gray-400" : ""
-                      }`}
-                      type="button"
-                      disabled={isLoading || !showUpdateStatus}
-                      onClick={() =>
-                        parcels[0]?.project_id &&
-                        Updatestatus(parcels[0]?.project_id)
-                      }
-                    >
-                      {!showUpdateStatus
-                        ? "สถานะอัพเดตแล้ว"
-                        : isLoading
-                          ? "Loading..."
-                          : "ได้รับพัสดุเรียบร้อยแล้ว"}
-                    </Button>
                   </div>
                 </div>
               </TableCell>
