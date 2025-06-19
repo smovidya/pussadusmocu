@@ -126,12 +126,13 @@ const ParcelUser = ({ parcel, project_id, student_id }: BlogProps) => {
             )}
             <div className="mt-3 flex items-center gap-2">
               <div
-                className={`h-4 w-4 rounded-full ${parcel.amount > 10
-                  ? "bg-green-500"
-                  : parcel.amount > 2
-                    ? "bg-yellow-500"
-                    : "bg-red-500"
-                  }`}
+                className={`h-4 w-4 rounded-full ${
+                  parcel.amount > 10
+                    ? "bg-green-500"
+                    : parcel.amount > 2
+                      ? "bg-yellow-500"
+                      : "bg-red-500"
+                }`}
               ></div>
               <p className="text-base">
                 {parcel.amount} {parcel.unit}

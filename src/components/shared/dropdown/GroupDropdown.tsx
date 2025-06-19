@@ -16,7 +16,7 @@ export function GroupDropdown({ setSelectedType }: StatusDropdownProps) {
     <div className="w-full px-2 py-2">
       <p>หมวด</p>
       <select
-        className="w-full border bg-background border-yellow-200 px-1 py-2"
+        className="bg-background w-full border border-yellow-200 px-1 py-2"
         onChange={handleStatusChange}
       >
         <option value="">ทั้งหมด</option>

@@ -42,15 +42,15 @@
 
   --font-noto-sans: var(--font-sans);
 
-  --color-yellow01: #F7CF47;
-  --color-yellow02: #DAB021;
-  --color-yellow03: #C39800;
-  --color-white01: #FFFFFF;
+  --color-yellow01: #f7cf47;
+  --color-yellow02: #dab021;
+  --color-yellow03: #c39800;
+  --color-white01: #ffffff;
   --color-green01: #219847;
-  --color-red01: #C30016;
-  --color-grey01: #6B6B6B;
+  --color-red01: #c30016;
+  --color-grey01: #6b6b6b;
   --color-black01: #000000;
-  --color-grey02: #F2F2F2;
+  --color-grey02: #f2f2f2;
 
   --text-H1: 64px;
   --text-H2: 58px;

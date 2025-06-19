@@ -40,14 +40,22 @@ export const Navbar: React.FC = () => {
       </div>
 
       <div className="flex items-center justify-start gap-1">
-        <Button asChild variant="ghost" className="rounded-lg py-7 text-lg hover:bg-black/5 gap-4 items-center">
+        <Button
+          asChild
+          variant="ghost"
+          className="items-center gap-4 rounded-lg py-7 text-lg hover:bg-black/5"
+        >
           <Link href="/admin/home">
             <Lock className="mb-0.5" />
             แอดมิน
           </Link>
         </Button>
 
-        <Button asChild variant="ghost" className="rounded-lg py-7 text-lg hover:bg-black/5 gap-4 items-center">
+        <Button
+          asChild
+          variant="ghost"
+          className="items-center gap-4 rounded-lg py-7 text-lg hover:bg-black/5"
+        >
           <Link href="/admin/status">
             <ShoppingCart className="mb-0.5" />
             การยืม

@@ -24,7 +24,7 @@ function Dropdown({ setSelectedProjectId }: DropdownProps) {
     <div className="w-4/6 px-2 py-2">
       <p>โครงการ</p>
       <select
-        className="w-full bg-background border border-yellow-200 px-1 py-2"
+        className="bg-background w-full border border-yellow-200 px-1 py-2"
         onChange={handleProjectChange}
       >
         <option value="">ทั้งหมด</option>

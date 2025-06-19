@@ -153,11 +153,11 @@ function Sta({
         <Dropdown setSelectedProjectId={setSelectedProjectId} />
         <StatusDropdown setSelectedStatus={setSelectedStatus} />
       </div>
-      
+
       {filteredParcelsProjects?.map((parcelsProject) => (
         <div
           key={parcelsProject.id}
-          className="mx-20 flex w-full grow flex-col rounded-lg bg-background border-gray-300 px-6 py-4 shadow-md lg:w-4/6"
+          className="bg-background mx-20 flex w-full grow flex-col rounded-lg border-gray-300 px-6 py-4 shadow-md lg:w-4/6"
         >
           <h1 className="mb-3 border-b border-gray-300 pb-2">
             {parcelsProject.project.project_id} | {parcelsProject.project.title}
@@ -194,17 +194,18 @@ function Sta({
                   type="button"
                   variant="ghost"
                   onClick={() => openPopup(parcelsProject)}
-                  className={`text-base h-fit cursor-pointer font-bold text-white ${parcelsProject.status === "BORROWING"
-                    ? "text-blue-700 hover:text-blue-700"
-                    : parcelsProject.status === "REJECT"
-                      ? "text-red-700 hover:text-red-700"
-                      : parcelsProject.status === "PENDING"
-                        ? "text-yellow02 hover:text-yellow02"
-                        : "text-green-700 hover:text-green-700"
-                    }`}
+                  className={`h-fit cursor-pointer text-base font-bold text-white ${
+                    parcelsProject.status === "BORROWING"
+                      ? "text-blue-700 hover:text-blue-700"
+                      : parcelsProject.status === "REJECT"
+                        ? "text-red-700 hover:text-red-700"
+                        : parcelsProject.status === "PENDING"
+                          ? "text-yellow02 hover:text-yellow02"
+                          : "text-green-700 hover:text-green-700"
+                  }`}
                 >
-                  {getStatusText(parcelsProject.status)}  <br />
-                  ({parcelsProject.status})
+                  {getStatusText(parcelsProject.status)} <br />(
+                  {parcelsProject.status})
                 </Button>
                 {isOpen && currentParcelProject?.id === parcelsProject.id && (
                   <PopupCard

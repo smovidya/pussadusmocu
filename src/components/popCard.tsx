@@ -97,7 +97,7 @@ const PopupCard: React.FC<PopupCardProps> = ({
             <div className="grid grid-cols-2 gap-2">
               <Button
                 type="button"
-                className="bg-green01 text-white hover:bg-green01/90"
+                className="bg-green01 hover:bg-green01/90 text-white"
                 onClick={handleAccept}
                 disabled={isLoading}
               >
@@ -105,7 +105,7 @@ const PopupCard: React.FC<PopupCardProps> = ({
               </Button>
               <Button
                 type="button"
-                className="bg-red01 text-white hover:bg-red01/90"
+                className="bg-red01 hover:bg-red01/90 text-white"
                 onClick={handleReject}
                 disabled={isLoading}
               >
@@ -126,7 +126,7 @@ const PopupCard: React.FC<PopupCardProps> = ({
             {error && <p className="text-red-500">{error}</p>}
             <Button
               type="button"
-              className="bg-green01 text-white hover:bg-green01/90"
+              className="bg-green01 hover:bg-green01/90 text-white"
               onClick={handleReturn}
               disabled={isLoading || returnQuantity > parcelProject.amount}
             >
@@ -148,7 +148,7 @@ const PopupCard: React.FC<PopupCardProps> = ({
               </Button>
               <Button
                 type="button"
-                className="bg-red01 text-white hover:bg-red01/90"
+                className="bg-red01 hover:bg-red01/90 text-white"
                 onClick={handleRejectBorrowing}
                 disabled={isLoading}
               >
@@ -159,7 +159,6 @@ const PopupCard: React.FC<PopupCardProps> = ({
         );
     }
   };
-
 
   // TODO: use radix dialog
   return (

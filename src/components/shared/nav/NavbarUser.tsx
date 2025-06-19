@@ -23,9 +23,9 @@ export const NavbarUser = () => {
   };
   return (
     <div className="bg-yellow01 inline-flex h-24 w-full items-center justify-start gap-4 px-5 py-1.5">
-      <div className="flex items-center h-full">
+      <div className="flex h-full items-center">
         <Button
-          className="lg:hidden hover:bg-black/5 p-3 size-fit"
+          className="size-fit p-3 hover:bg-black/5 lg:hidden"
           size="icon"
           variant="ghost"
           onClick={() => setMenuOpen(!menuOpen)}
@@ -55,28 +55,44 @@ export const NavbarUser = () => {
       </div>
 
       <div className="hidden items-center justify-start gap-1 lg:flex">
-        <Button asChild variant="ghost" className="rounded-lg py-7 hover:bg-black/5 gap-4 items-center">
+        <Button
+          asChild
+          variant="ghost"
+          className="items-center gap-4 rounded-lg py-7 hover:bg-black/5"
+        >
           <Link href="/users/home">
             <Home className="mb-0.5" />
             หน้าหลัก
           </Link>
         </Button>
 
-        <Button asChild variant="ghost" className="rounded-lg py-7 hover:bg-black/5 gap-4 items-center">
+        <Button
+          asChild
+          variant="ghost"
+          className="items-center gap-4 rounded-lg py-7 hover:bg-black/5"
+        >
           <Link href="/users/cart">
             <ShoppingCart className="mb-0.5" />
             พัสดุที่จองไป
           </Link>
         </Button>
 
-        <Button asChild variant="ghost" className="rounded-lg py-7 hover:bg-black/5 gap-4 items-center">
+        <Button
+          asChild
+          variant="ghost"
+          className="items-center gap-4 rounded-lg py-7 hover:bg-black/5"
+        >
           <Link href="/admin/home">
             <Lock className="mb-0.5" />
             แอดมิน
           </Link>
         </Button>
 
-        <Button asChild variant="ghost" className="rounded-lg py-7 hover:bg-black/5 gap-4 items-center">
+        <Button
+          asChild
+          variant="ghost"
+          className="items-center gap-4 rounded-lg py-7 hover:bg-black/5"
+        >
           <Link href="/api/logout">
             <LogOut className="mb-0.5" />
             ออกจากระบบ
@@ -85,41 +101,55 @@ export const NavbarUser = () => {
       </div>
 
       {/* TODO: move this to bottom menu */}
-      {
-        menuOpen && (
-          <div className="absolute left-0 top-24 z-50 w-full bg-yellow01 p-4 lg:hidden">
-            <div className="grid">
-              <Button asChild variant="ghost" className="rounded-lg py-7 hover:bg-black/5 gap-4 items-center">
-                <Link onClick={() => setMenuOpen(false)} href="/users/home">
-                  <Home className="mb-0.5" />
-                  หน้าหลัก
-                </Link>
-              </Button>
+      {menuOpen && (
+        <div className="bg-yellow01 absolute top-24 left-0 z-50 w-full p-4 lg:hidden">
+          <div className="grid">
+            <Button
+              asChild
+              variant="ghost"
+              className="items-center gap-4 rounded-lg py-7 hover:bg-black/5"
+            >
+              <Link onClick={() => setMenuOpen(false)} href="/users/home">
+                <Home className="mb-0.5" />
+                หน้าหลัก
+              </Link>
+            </Button>
 
-              <Button asChild variant="ghost" className="rounded-lg py-7 hover:bg-black/5 gap-4 items-center">
-                <Link onClick={() => setMenuOpen(false)} href="/users/cart">
-                  <ShoppingCart className="mb-0.5" />
-                  พัสดุที่จองไป
-                </Link>
-              </Button>
+            <Button
+              asChild
+              variant="ghost"
+              className="items-center gap-4 rounded-lg py-7 hover:bg-black/5"
+            >
+              <Link onClick={() => setMenuOpen(false)} href="/users/cart">
+                <ShoppingCart className="mb-0.5" />
+                พัสดุที่จองไป
+              </Link>
+            </Button>
 
-              <Button asChild variant="ghost" className="rounded-lg py-7 hover:bg-black/5 gap-4 items-center">
-                <Link onClick={() => setMenuOpen(false)} href="/admin/home">
-                  <Lock className="mb-0.5" />
-                  แอดมิน
-                </Link>
-              </Button>
+            <Button
+              asChild
+              variant="ghost"
+              className="items-center gap-4 rounded-lg py-7 hover:bg-black/5"
+            >
+              <Link onClick={() => setMenuOpen(false)} href="/admin/home">
+                <Lock className="mb-0.5" />
+                แอดมิน
+              </Link>
+            </Button>
 
-              <Button asChild variant="ghost" className="rounded-lg py-7 hover:bg-black/5 gap-4 items-center">
-                <Link onClick={() => setMenuOpen(false)} href="/api/logout">
-                  <LogOut className="mb-0.5" />
-                  ออกจากระบบ
-                </Link>
-              </Button>
-            </div>
+            <Button
+              asChild
+              variant="ghost"
+              className="items-center gap-4 rounded-lg py-7 hover:bg-black/5"
+            >
+              <Link onClick={() => setMenuOpen(false)} href="/api/logout">
+                <LogOut className="mb-0.5" />
+                ออกจากระบบ
+              </Link>
+            </Button>
           </div>
-        )
-      }
-    </div >
+        </div>
+      )}
+    </div>
   );
 };
