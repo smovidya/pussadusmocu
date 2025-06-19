@@ -11,6 +11,7 @@ import {
   TableRow,
 } from "~/components/ui/table";
 import { type Parcellist } from "~/lib/constant";
+import { getStatusText } from "~/lib/function";
 
 interface Props {
   parcelslist: Parcellist;
@@ -83,16 +84,17 @@ export const Statuesbox = ({ parcelslist, student_id }: Props) => {
                       </div>
                     </div>
                     <div
-                      className={`text-base font-bold ${parcel.status === "BORROWING"
+                      className={`text-base font-bold ${
+                        parcel.status === "BORROWING"
                           ? "text-blue-700"
                           : parcel.status === "REJECT"
                             ? "text-red-700"
                             : parcel.status === "PENDING"
                               ? "text-yellow02"
                               : "text-green-700"
-                        }`}
+                      }`}
                     >
-                      {parcel.status}
+                      {getStatusText(parcel.status)} ({parcel.status})
                     </div>
                   </TableCell>
                 </TableRow>

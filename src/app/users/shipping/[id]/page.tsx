@@ -1,7 +1,7 @@
 import { type Student, type Parcel } from "@prisma/client";
 import { cookies } from "next/headers";
 import { getCookie } from "cookies-next";
-import { Shipping } from "~/app/_components/parcels/Shipping";
+import { Shipping } from "~/components/parcels/Shipping";
 import { api } from "~/trpc/server";
 import { decrypt } from "~/lib/function";
 import { STUDENT_ID } from "~/lib/constant";

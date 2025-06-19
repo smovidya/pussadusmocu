@@ -1,5 +1,5 @@
 import Image from "next/image";
-import AgreementDialog from "../_components/shared/AgreementDialog";
+import AgreementDialog from "../../components/shared/AgreementDialog";
 
 const LoginPage = () => {
   const getURLByEnv = () => {

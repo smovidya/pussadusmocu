@@ -1,6 +1,6 @@
 import { SignJWT, jwtVerify } from "jose";
 import { encryptionKey, LINE_TOKEN, STUDENT_ID } from "./constant";
-import { type Student } from "@prisma/client";
+import { BORROWING_STATUS, Status, type Student } from "@prisma/client";
 // import { google } from 'googleapis';
 
 /**
@@ -74,3 +74,19 @@ export const sendLineNotificaion = async (
     },
   });
 };
+
+
+export function getStatusText(status: BORROWING_STATUS) {
+  switch (status) {
+    case "PENDING":
+      return "รออนุมัติ";
+    case "BORROWING":
+      return "อนุมัติแล้ว";
+    case "INUSE":
+      return "กำลังยืม";
+    case "RETURN":
+      return "ส่งคืนแล้ว";
+    case "REJECT":
+      return "ถูกปฏิเสธ";
+  }
+}

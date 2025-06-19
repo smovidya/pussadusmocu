@@ -1,7 +1,7 @@
 import { type Student, type Project } from "@prisma/client";
 import { cookies } from "next/headers";
-import { NavbarUser } from "~/app/_components/shared/nav/NavbarUser";
-import { ProjectBlog } from "~/app/_components/ProjectsBlog";
+import { NavbarUser } from "~/components/shared/nav/NavbarUser";
+import { ProjectBlog } from "~/components/ProjectsBlog";
 import { api } from "~/trpc/server";
 import { getCookie } from "cookies-next";
 import { decrypt } from "~/lib/function";

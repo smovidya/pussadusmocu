@@ -4,7 +4,7 @@ import {
   type Parcel,
   type Student,
 } from "@prisma/client";
-import Sta from "./bokking_status";
+import Sta from "./booking_status";
 import { api } from "~/trpc/server";
 
 export type ParcelProjectWithDetails = Parcel_Project & {

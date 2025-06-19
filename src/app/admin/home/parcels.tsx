@@ -2,11 +2,11 @@
 
 import { type Parcel } from "@prisma/client";
 import { useState } from "react";
-import { TypeDropdown } from "~/app/_components/shared/dropdown/TypeDropdown";
-import { CreateParcel } from "~/app/_components/parcels/create-parcel";
-import { Navbar } from "~/app/_components/shared/nav/NavbarAdmin";
-import ParcelAdmin from "~/app/_components/parcels/Parcel.admin";
-import { GroupDropdown } from "~/app/_components/shared/dropdown/GroupDropdown";
+import { TypeDropdown } from "~/components/shared/dropdown/TypeDropdown";
+import { CreateParcel } from "~/components/parcels/create-parcel";
+import { Navbar } from "~/components/shared/nav/NavbarAdmin";
+import ParcelAdmin from "~/components/parcels/Parcel.admin";
+import { GroupDropdown } from "~/components/shared/dropdown/GroupDropdown";
 import { useSelector } from "react-redux";
 import { parcelSelector } from "~/stores/slices/search";
 

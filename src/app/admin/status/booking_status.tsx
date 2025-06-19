@@ -1,10 +1,10 @@
 "use client";
 
-import { Navbar } from "~/app/_components/shared/nav/NavbarAdmin";
+import { Navbar } from "~/components/shared/nav/NavbarAdmin";
 import { Button } from "~/components/ui/button";
-import PopupCard from "~/app/_components/popCard";
-import Dropdown from "~/app/_components/shared/dropdown/ProjectDropdown";
-import StatusDropdown from "~/app/_components/shared/dropdown/StatusDropdown";
+import PopupCard from "~/components/popCard";
+import Dropdown from "~/components/shared/dropdown/ProjectDropdown";
+import StatusDropdown from "~/components/shared/dropdown/StatusDropdown";
 import React, { useState, useEffect } from "react";
 import { type ParcelProjectWithDetails } from "./page";
 import { api } from "~/trpc/react";
@@ -194,14 +194,15 @@ function Sta({
                 <Button
                   type="button"
                   onClick={() => openPopup(parcelsProject)}
-                  className={`text-base font-bold text-white ${parcelsProject.status === "BORROWING"
+                  className={`text-base font-bold text-white ${
+                    parcelsProject.status === "BORROWING"
                       ? "text-blue-700"
                       : parcelsProject.status === "REJECT"
                         ? "text-red-700"
                         : parcelsProject.status === "PENDING"
                           ? "text-yellow02"
                           : "text-green-700"
-                    }`}
+                  }`}
                 >
                   {parcelsProject.status}
                 </Button>
