@@ -216,7 +216,7 @@ const ParcelUser = ({ parcel, project_id, student_id }: BlogProps) => {
               {!close && (
                 <Button
                   type="submit"
-                  className="bg-black text-white"
+                  className="text-white"
                   disabled={bookedParcel.isPending}
                 >
                   {bookedParcel.isPending ? "กำลังยืม..." : "ยืมเลย!!!"}

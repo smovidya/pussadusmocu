@@ -37,6 +37,32 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+
+  --font-noto-sans: var(--font-sans);
+
+  --color-yellow01: #F7CF47;
+  --color-yellow02: #DAB021;
+  --color-yellow03: #C39800;
+  --color-white01: #FFFFFF;
+  --color-green01: #219847;
+  --color-red01: #C30016;
+  --color-grey01: #6B6B6B;
+  --color-black01: #000000;
+  --color-grey02: #F2F2F2;
+
+  --text-H1: 64px;
+  --text-H2: 58px;
+  --text-H3: 24px;
+  --text-subHead1: 32px;
+  --text-subHead2: 28px;
+  --text-body1: 18px;
+  --text-body2: 16px;
+  --text-body3: 12px;
+  --text-body4: 10px;
+  --text-subHeadEng1: 20px;
+  --text-bodyEngBold1: 16px;
+  --text-bodyEng2: 16px;
+  --text-bodyEng3: 12px;
 }
 
 @layer utilities {

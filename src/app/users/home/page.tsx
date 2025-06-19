@@ -25,7 +25,7 @@ const Home = async () => {
           สวัสดี <span className="font-bold">{student.name}</span>{" "}
           สามารถเลือกโครงและยืมของได้เลย สู้ ๆ นะครับทุกคน 😙
         </div>
-        <div className="mt-4 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-4 grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-4">
           {projects.map((project) => (
             <a
               key={project.project_id}
