@@ -10,10 +10,8 @@ import { api } from "~/trpc/server";
  */
 export async function getCurrentUser(): Promise<Student | null> {
   try {
-    const encryptedCookie = getCookie("student_id", { cookies });
-    if (!encryptedCookie) {
-      return null;
-    }
+    
+    const encryptedCookie = getCookie("student_id", { cookies }) ?? "";
 
     const student_id = await decrypt(encryptedCookie);
     if (!student_id) {
