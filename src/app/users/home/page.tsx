@@ -1,9 +1,8 @@
 import { type Project } from "@prisma/client";
-import { NavbarUser } from "~/components/shared/nav/NavbarUser";
-import { ProjectBlog } from "~/components/ProjectsBlog";
-import { api } from "~/trpc/server";
-import { getCurrentUser } from "~/lib/getCurrentUser";
 import { redirect } from "next/navigation";
+import { ProjectBlog } from "~/components/ProjectsBlog";
+import { getCurrentUser } from "~/lib/getCurrentUser";
+import { api } from "~/trpc/server";
 
 const Home = async () => {
   const student = await getCurrentUser();

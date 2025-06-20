@@ -13,6 +13,10 @@ export async function getCurrentUser(): Promise<Student | null> {
     const encryptedCookie = getCookie("student_id", { cookies }) ?? "";
 
     const student_id = await decrypt(encryptedCookie);
+    console.log({
+      student_id,
+      encryptedCookie
+    })
     if (!student_id) {
       return null;
     }

@@ -58,7 +58,7 @@ export const NavbarUser = () => {
         <Button
           asChild
           variant="ghost"
-          className="items-center text-lg gap-4 rounded-lg py-7 hover:bg-black/5"
+          className="items-center gap-4 rounded-lg py-7 text-lg hover:bg-black/5"
         >
           <Link href="/users/home">
             <Home className="mb-0.5" />
@@ -69,7 +69,7 @@ export const NavbarUser = () => {
         <Button
           asChild
           variant="ghost"
-          className="items-center text-lg gap-4 rounded-lg py-7 hover:bg-black/5"
+          className="items-center gap-4 rounded-lg py-7 text-lg hover:bg-black/5"
         >
           <Link href="/users/cart">
             <ShoppingCart className="mb-0.5" />
@@ -80,7 +80,7 @@ export const NavbarUser = () => {
         <Button
           asChild
           variant="ghost"
-          className="items-center text-lg gap-4 rounded-lg py-7 hover:bg-black/5"
+          className="items-center gap-4 rounded-lg py-7 text-lg hover:bg-black/5"
         >
           <Link href="/admin/home">
             <Lock className="mb-0.5" />
@@ -91,9 +91,9 @@ export const NavbarUser = () => {
         <Button
           asChild
           variant="ghost"
-          className="items-center text-lg gap-4 rounded-lg py-7 hover:bg-black/5"
+          className="items-center gap-4 rounded-lg py-7 text-lg hover:bg-black/5"
         >
-          <Link href="/api/logout">
+          <Link href="/api/logout" prefetch={false}>
             <LogOut className="mb-0.5" />
             ออกจากระบบ
           </Link>
@@ -107,7 +107,7 @@ export const NavbarUser = () => {
             <Button
               asChild
               variant="ghost"
-              className="items-center text-lg gap-4 rounded-lg py-7 hover:bg-black/5"
+              className="items-center gap-4 rounded-lg py-7 text-lg hover:bg-black/5"
             >
               <Link onClick={() => setMenuOpen(false)} href="/users/home">
                 <Home className="mb-0.5" />
@@ -118,7 +118,7 @@ export const NavbarUser = () => {
             <Button
               asChild
               variant="ghost"
-              className="items-center text-lg gap-4 rounded-lg py-7 hover:bg-black/5"
+              className="items-center gap-4 rounded-lg py-7 text-lg hover:bg-black/5"
             >
               <Link onClick={() => setMenuOpen(false)} href="/users/cart">
                 <ShoppingCart className="mb-0.5" />
@@ -129,7 +129,7 @@ export const NavbarUser = () => {
             <Button
               asChild
               variant="ghost"
-              className="items-center text-lg gap-4 rounded-lg py-7 hover:bg-black/5"
+              className="items-center gap-4 rounded-lg py-7 text-lg hover:bg-black/5"
             >
               <Link onClick={() => setMenuOpen(false)} href="/admin/home">
                 <Lock className="mb-0.5" />
@@ -140,9 +140,9 @@ export const NavbarUser = () => {
             <Button
               asChild
               variant="ghost"
-              className="items-center text-lg gap-4 rounded-lg py-7 hover:bg-black/5"
+              className="items-center gap-4 rounded-lg py-7 text-lg hover:bg-black/5"
             >
-              <Link onClick={() => setMenuOpen(false)} href="/api/logout">
+              <Link onClick={() => setMenuOpen(false)} href="/api/logout" prefetch={false}>
                 <LogOut className="mb-0.5" />
                 ออกจากระบบ
               </Link>
