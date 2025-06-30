@@ -3,6 +3,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import { DeeAppId, DeeAppSecret, type UserData } from "~/lib/constant";
 import { encrypt } from "../../../lib/function";
 import { api } from "~/trpc/server";
+import { db } from '~/server/db';
 
 type ServiceValidationResponse = {
   status: number;
@@ -85,7 +86,22 @@ export async function GET(req: NextRequest) {
 
   console.log("DEBUG P OAT data : ", data);
 
-  const users = await api.auth.getUser({ student_id: data.ouid });
+  let users = await api.auth.getUser({ student_id: data.ouid });
+  if (!users) {
+    await db.student.create({
+      data: {
+        student_id: data.ouid,
+        name: data.firtnameth + " " + data.lastnameth,
+        email: data.email,
+        department: "SMO", // placeholder, idk what to put here
+        isAdmin: false,
+        line_id: data.email,
+      }
+    })
+
+    users = await api.auth.getUser({ student_id: data.ouid });
+  }
+
   const cookieStore = cookies();
   const oneDay = 24 * 60 * 60 * 1000;
 
