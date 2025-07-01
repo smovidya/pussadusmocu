@@ -1,6 +1,13 @@
 "use client";
 
 import React from "react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "~/components/ui/select";
 import { groups } from "~/lib/constant";
 
 type StatusDropdownProps = {
@@ -8,24 +15,22 @@ type StatusDropdownProps = {
 };
 
 export function GroupDropdown({ setSelectedType }: StatusDropdownProps) {
-  const handleStatusChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedType(event.target.value);
-  };
-
   return (
     <div className="w-full px-2 py-2">
-      <p>หมวด</p>
-      <select
-        className="bg-background w-full border border-yellow-200 px-1 py-2"
-        onChange={handleStatusChange}
-      >
-        <option value="">ทั้งหมด</option>
-        {groups.map((group) => (
-          <option key={group.value} value={group.value}>
-            {group.label}
-          </option>
-        ))}
-      </select>
+      <label>หมวด</label>
+      <Select onValueChange={setSelectedType}>
+        <SelectTrigger className="bg-background w-full border border-yellow-200">
+          <SelectValue placeholder="ทั้งหมด" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="all">ทั้งหมด</SelectItem>
+          {groups.map((group) => (
+            <SelectItem key={group.value} value={group.value}>
+              {group.label}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
     </div>
   );
 }

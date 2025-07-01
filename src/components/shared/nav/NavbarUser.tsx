@@ -3,7 +3,6 @@
 import { Home, Lock, LogOut, Menu, ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
@@ -142,7 +141,11 @@ export const NavbarUser = () => {
               variant="ghost"
               className="items-center gap-4 rounded-lg py-7 text-lg hover:bg-black/5"
             >
-              <Link onClick={() => setMenuOpen(false)} href="/api/logout" prefetch={false}>
+              <Link
+                onClick={() => setMenuOpen(false)}
+                href="/api/logout"
+                prefetch={false}
+              >
                 <LogOut className="mb-0.5" />
                 ออกจากระบบ
               </Link>

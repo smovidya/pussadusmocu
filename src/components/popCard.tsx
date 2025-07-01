@@ -97,19 +97,19 @@ const PopupCard: React.FC<PopupCardProps> = ({
             <div className="grid grid-cols-2 gap-2">
               <Button
                 type="button"
-                className="bg-green01 hover:bg-green01/90 text-white"
+                className="bg-green-600 text-white hover:bg-green-700/90"
                 onClick={handleAccept}
                 disabled={isLoading}
               >
-                {isLoading ? "กำลังดำเนินการ..." : "Accept"}
+                {isLoading ? "กำลังดำเนินการ..." : "ยอมรับ โอเค"}
               </Button>
               <Button
                 type="button"
-                className="bg-red01 hover:bg-red01/90 text-white"
+                variant={"destructive"}
                 onClick={handleReject}
                 disabled={isLoading}
               >
-                {isLoading ? "กำลังดำเนินการ..." : "Reject"}
+                {isLoading ? "กำลังดำเนินการ..." : "ไม่อนุญาต"}
               </Button>
             </div>
           </>
@@ -130,7 +130,7 @@ const PopupCard: React.FC<PopupCardProps> = ({
               onClick={handleReturn}
               disabled={isLoading || returnQuantity > parcelProject.amount}
             >
-              {isLoading ? "กำลังดำเนินการ..." : "Return"}
+              {isLoading ? "กำลังดำเนินการ..." : "ได้รับของคืนแล้ว"}
             </Button>
           </>
         );
@@ -152,7 +152,7 @@ const PopupCard: React.FC<PopupCardProps> = ({
                 onClick={handleRejectBorrowing}
                 disabled={isLoading}
               >
-                {isLoading ? "กำลังดำเนินการ..." : "Reject"}
+                {isLoading ? "กำลังดำเนินการ..." : "ปฏิเสธการยืม"}
               </Button>
             </div>
           </>
@@ -169,7 +169,7 @@ const PopupCard: React.FC<PopupCardProps> = ({
             <X />
           </button>
         </div>
-        <div className="grid grid-cols-2 items-center justify-center gap-2 p-2">
+        <div className="flex flex-col items-center justify-center gap-2 p-2 sm:grid sm:grid-cols-2">
           <div className="p-3">
             <Image
               src={parcelProject.parcel.image_url}
@@ -177,16 +177,18 @@ const PopupCard: React.FC<PopupCardProps> = ({
               width={300}
               height={300}
               loading="eager"
+              className="bg-muted text-muted-foreground/40 h-full w-full rounded-sm object-contain p-3"
             />
           </div>
-          <div className="flex flex-col gap-4 p-2">
+          <div className="flex w-full flex-col gap-4 p-2 text-sm">
             <div>
-              <h2>{parcelProject.project.title}</h2>
+              <span>{parcelProject.project.title}</span>
             </div>
-            <div>
-              <h3>
-                {parcelProject.parcel.parcel_id} | {parcelProject.parcel.title}
-              </h3>
+            <div className="flex flex-col items-start gap-1">
+              <span>{parcelProject.parcel.title}</span>
+              <span className="text-muted-foreground text-xs">
+                {parcelProject.parcel.parcel_id}
+              </span>
             </div>
             <div>
               <h3>

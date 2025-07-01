@@ -1,7 +1,7 @@
 import React from "react";
 import { Input } from "~/components/ui/input";
 import Image from "next/image";
-import { Home, Lock, ShoppingCart } from "lucide-react";
+import { Archive, ShoppingCart } from "lucide-react";
 import { selectedOption } from "~/stores/slices/search";
 import { useAppDispatch } from "~/stores/store";
 import { Button } from "~/components/ui/button";
@@ -46,8 +46,8 @@ export const Navbar: React.FC = () => {
           className="items-center gap-4 rounded-lg py-7 text-lg hover:bg-black/5"
         >
           <Link href="/admin/home">
-            <Lock className="mb-0.5" />
-            แอดมิน
+            <Archive className="mb-0.5" />
+            คลัง
           </Link>
         </Button>
 

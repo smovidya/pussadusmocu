@@ -142,10 +142,10 @@ const ParcelUser = ({ parcel, project_id, student_id }: BlogProps) => {
           </CardContent>
         </Card>
       </DialogTrigger>
-      <DialogContent className="font-noto-sans max-w-[calc(100vw_-_2rem)] md:max-w-3xl">
+      <DialogContent className="max-w-[calc(100vw_-_2rem)] overflow-y-auto md:max-w-3xl">
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="flex w-full space-y-6"
+          className="flex w-full flex-col space-y-6"
         >
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div className="flex items-center justify-center">
@@ -155,10 +155,11 @@ const ParcelUser = ({ parcel, project_id, student_id }: BlogProps) => {
                 height={300}
                 alt={parcel.parcel_id}
                 loading="eager"
+                className="rounded-lg shadow-md"
               />
             </div>
             <div className="flex flex-col gap-2">
-              <div className="grid grid-cols-4 gap-4">
+              <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="parcel_id" className="text-right">
                   เลขไอดี
                 </Label>
@@ -176,7 +177,7 @@ const ParcelUser = ({ parcel, project_id, student_id }: BlogProps) => {
                 <Input disabled value={parcel.title} className="col-span-3" />
               </div>
               <div className="grid grid-cols-4 items-start gap-4">
-                <Label htmlFor="description" className="text-right">
+                <Label htmlFor="description" className="py-2 text-right">
                   รายละเอียด
                 </Label>
                 <Textarea
@@ -198,7 +199,7 @@ const ParcelUser = ({ parcel, project_id, student_id }: BlogProps) => {
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="amount" className="text-right">
-                  project id
+                  Project ID
                 </Label>
                 <Input
                   type="text"
@@ -214,11 +215,7 @@ const ParcelUser = ({ parcel, project_id, student_id }: BlogProps) => {
                 <DatePickerWithRange />
               </div>
               {!close && (
-                <Button
-                  type="submit"
-                  className="text-white"
-                  disabled={bookedParcel.isPending}
-                >
+                <Button type="submit" disabled={bookedParcel.isPending}>
                   {bookedParcel.isPending ? "กำลังยืม..." : "ยืมเลย!!!"}
                 </Button>
               )}
@@ -229,7 +226,7 @@ const ParcelUser = ({ parcel, project_id, student_id }: BlogProps) => {
           <DialogClose asChild>
             <Button
               type="button"
-              className="bg-red-500 text-white hover:bg-red-600"
+              variant={"destructive"}
               onClick={() => setClose(false)}
             >
               ปิด

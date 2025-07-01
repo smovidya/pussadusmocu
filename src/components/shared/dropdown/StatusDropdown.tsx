@@ -2,30 +2,35 @@
 
 import React from "react";
 import { BORROWING_STATUS } from "@prisma/client";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "~/components/ui/select";
 
 type StatusDropdownProps = {
   setSelectedStatus: React.Dispatch<React.SetStateAction<string | null>>;
 };
 
 function StatusDropdown({ setSelectedStatus }: StatusDropdownProps) {
-  const handleStatusChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedStatus(event.target.value);
-  };
-
   return (
-    <div className="w-2/6 px-2 py-2">
-      <p>สถานะ</p>
-      <select
-        className="bg-background w-full border border-yellow-200 px-1 py-2"
-        onChange={handleStatusChange}
-      >
-        <option value="">ทั้งหมด</option>
-        {Object.keys(BORROWING_STATUS).map((status) => (
-          <option key={status} value={status}>
-            {status}
-          </option>
-        ))}
-      </select>
+    <div className="w-full px-2 py-2">
+      <label htmlFor="status-select">สถานะ</label>
+      <Select onValueChange={setSelectedStatus}>
+        <SelectTrigger id="status-select" className="w-full">
+          <SelectValue placeholder="ทั้งหมด" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="all">ทั้งหมด</SelectItem>
+          {Object.keys(BORROWING_STATUS).map((status) => (
+            <SelectItem key={status} value={status}>
+              {BORROWING_STATUS[status]}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
     </div>
   );
 }

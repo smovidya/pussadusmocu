@@ -1,5 +1,6 @@
 import Image from "next/image";
 import AgreementDialog from "../../components/shared/AgreementDialog";
+import { Button } from "~/components/ui/button";
 
 const LoginPage = () => {
   const getURLByEnv = () => {
@@ -16,7 +17,7 @@ const LoginPage = () => {
 
   return (
     <div className="grid h-screen w-screen md:grid-cols-5">
-      <div className="md:bg-yellow01 col-span-3 hidden items-center justify-center md:flex">
+      <div className="bg-yellow01 col-span-3 hidden items-center justify-center md:flex dark:bg-neutral-900">
         <Image
           src={"/picture/yellowBox.svg"}
           alt="iconBox"
@@ -24,7 +25,7 @@ const LoginPage = () => {
           height={200}
         />
       </div>
-      <div className="bg-yellow01 md:bg-grey02 flex justify-center p-5 md:col-span-2 md:shadow-inner">
+      <div className="bg-yellow01 md:bg-background flex justify-center p-5 md:col-span-2 md:shadow-inner dark:md:bg-neutral-800">
         <div className="fixed top-5 right-5">
           <Image
             src={"/picture/logoSmo.svg"}
@@ -44,24 +45,17 @@ const LoginPage = () => {
           <div className="drop-shadow-3xl font-noto-sans text-H2 md:text-H1 font-bold">
             ระบบพัสดุ
           </div>
-          <div className="font-noto-sans text-subHead2 md:text-subHead1 mb-28 font-bold">
+          <div className="font-noto-sans text-subHead2 md:text-subHead1 mb-20 text-center font-bold">
             สโมสรนิสิตคณะวิทยาศาสตร์
           </div>
-          <a href={getURLByEnv()}>
-            <button
-              name="log-in-button"
-              type="button"
-              data-modal-target="default-model"
-              data-modal-toggle="default-modal"
-              className="font-noto-sans text-bodyEngBold1 block w-72 rounded-lg bg-black px-6 py-2 font-bold text-white shadow-sm shadow-black"
-            >
-              LOGIN CHULA SSO
-            </button>
+          <a href={getURLByEnv()} className="cursor-pointer">
+            <Button className="bg-accent text-accent-foreground hover:bg-accent/90 w-72 font-bold shadow-sm transition-colors">
+              เข้าสู่ระบบด้วย Chula SSO
+            </Button>
           </a>
           <AgreementDialog />
-          <div className="h-36 md:h-16"></div>
           {/* Version and deployment date */}
-          <div className="absolute right-5 bottom-5 text-sm text-gray-500">
+          <div className="text-muted-foreground absolute right-5 bottom-5 text-sm">
             Version: {version} | Deployed: {deploymentDate}
           </div>
         </div>

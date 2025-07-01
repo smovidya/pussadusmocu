@@ -1,6 +1,13 @@
 "use client";
 
 import React from "react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "~/components/ui/select";
 import { types } from "~/lib/constant";
 
 type StatusDropdownProps = {
@@ -8,24 +15,22 @@ type StatusDropdownProps = {
 };
 
 export function TypeDropdown({ setSelectedType }: StatusDropdownProps) {
-  const handleStatusChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedType(event.target.value);
-  };
-
   return (
     <div className="w-full px-2 py-2">
-      <p>ประเภท</p>
-      <select
-        className="bg-background w-full border border-yellow-200 px-1 py-2"
-        onChange={handleStatusChange}
-      >
-        <option value="">ทั้งหมด</option>
-        {types.map((type) => (
-          <option key={type.value} value={type.value}>
-            {type.label}
-          </option>
-        ))}
-      </select>
+      <label htmlFor="parcel-type">ประเภท</label>
+      <Select onValueChange={setSelectedType}>
+        <SelectTrigger className="bg-background w-full border border-yellow-200">
+          <SelectValue placeholder="ทั้งหมด" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="all">ทั้งหมด</SelectItem>
+          {types.map((type) => (
+            <SelectItem key={type.value} value={type.value}>
+              {type.label}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
     </div>
   );
 }

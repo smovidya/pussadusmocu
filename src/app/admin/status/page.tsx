@@ -4,7 +4,7 @@ import {
   type Parcel,
   type Student,
 } from "@prisma/client";
-import Sta from "./booking_status";
+import BookingStatus from "./booking_status";
 import { api } from "~/trpc/server";
 
 export type ParcelProjectWithDetails = Parcel_Project & {
@@ -17,5 +17,5 @@ export default async function Page() {
   const parcelsProjects = await api.parcel_Project.getAll({
     student_id: undefined,
   });
-  return <Sta parcelsProjects={parcelsProjects} />;
+  return <BookingStatus parcelsProjects={parcelsProjects} />;
 }

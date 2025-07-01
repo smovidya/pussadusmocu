@@ -21,8 +21,14 @@ export function Parcels({ parcels }: ParcelProps) {
   const name = parcelReducer.name;
 
   const filteredParcelsProjects = parcels
-    .filter((pp) => (selectedType ? pp.type === selectedType : true))
-    .filter((pp) => (selectedGroup ? pp.group === selectedGroup : true))
+    .filter((pp) =>
+      selectedType && selectedType !== "all" ? pp.type === selectedType : true,
+    )
+    .filter((pp) =>
+      selectedGroup && selectedGroup !== "all"
+        ? pp.group === selectedGroup
+        : true,
+    )
     .filter((pp) => (name !== "" ? pp.title.includes(name) : true));
 
   return (
@@ -34,7 +40,7 @@ export function Parcels({ parcels }: ParcelProps) {
           <GroupDropdown setSelectedType={setSelectedGroup} />
           <CreateParcel />
         </div>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+        <div className="flex flex-col gap-4 sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
           {filteredParcelsProjects.map((parcel) => (
             <ParcelAdmin key={parcel.parcel_id} parcel={parcel} />
           ))}

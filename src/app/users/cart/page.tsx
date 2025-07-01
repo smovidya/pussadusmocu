@@ -1,4 +1,3 @@
-import { NavbarUser } from "~/components/shared/nav/NavbarUser";
 import { Statuesbox } from "~/components/statusbox";
 import { api } from "~/trpc/server";
 import {

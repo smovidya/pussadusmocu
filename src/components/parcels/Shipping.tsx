@@ -1,6 +1,5 @@
 "use client";
 
-import { NavbarUser } from "~/components/shared/nav/NavbarUser";
 import { type Parcel } from "@prisma/client";
 import ParcelUser from "./Parcel.user";
 import { useSelector } from "react-redux";
@@ -21,9 +20,17 @@ export const Shipping = ({ id, parcels, student_id }: ParcelProps) => {
   const parcelReducer = useSelector(parcelSelector);
   const name = parcelReducer.name;
   const filteredParcelsProjects = parcels
-    .filter((pp) => (name !== "" ? pp.title.includes(name) : true))
-    .filter((pp) => (selectedType ? pp.type === selectedType : true))
-    .filter((pp) => (selectedGroup ? pp.group === selectedGroup : true));
+    .filter((pp) =>
+      name !== "" ? pp.title.toLowerCase().includes(name.toLowerCase()) : true,
+    )
+    .filter((pp) =>
+      selectedType && selectedType !== "all" ? pp.type === selectedType : true,
+    )
+    .filter((pp) =>
+      selectedGroup && selectedGroup !== "all"
+        ? pp.group === selectedGroup
+        : true,
+    );
 
   return (
     <div className="flex flex-col items-center gap-6 p-4">

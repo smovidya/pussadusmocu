@@ -1,6 +1,6 @@
 import { SignJWT, jwtVerify } from "jose";
 import { encryptionKey, LINE_TOKEN, STUDENT_ID } from "./constant";
-import { BORROWING_STATUS, Status, type Student } from "@prisma/client";
+import { type BORROWING_STATUS, type Student } from "@prisma/client";
 // import { google } from 'googleapis';
 
 /**

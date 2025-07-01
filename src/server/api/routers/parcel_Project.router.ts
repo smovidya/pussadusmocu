@@ -11,7 +11,6 @@ import {
   rejectBooking,
   rejectBorrowing,
   returnParcelToStock,
-  updateStatusBorrowingToInUse,
   updateStatusPendingToBorrowing,
 } from "../services/parcel-project.service";
 

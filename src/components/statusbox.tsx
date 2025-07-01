@@ -18,7 +18,7 @@ interface Props {
   student_id: string;
 }
 
-export const Statuesbox = ({ parcelslist, student_id }: Props) => {
+export const Statuesbox = ({ parcelslist }: Props) => {
   const [expandedProjectIds, setExpandedProjectIds] = useState<string[]>([]);
 
   const renderedCards = [];

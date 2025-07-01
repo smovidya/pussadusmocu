@@ -11,11 +11,9 @@ import superjson from "superjson";
 import { ZodError } from "zod";
 
 import { db } from "~/server/db";
-import { Ctx } from "./models/database.model";
+import { type Ctx } from "./models/database.model";
 import { decrypt } from "~/lib/function";
-import { api } from "~/trpc/server";
 import { Student } from "@prisma/client";
-import { Projectinparcel } from "~/lib/constant";
 import { getUser } from "./services/auth.service";
 
 /**

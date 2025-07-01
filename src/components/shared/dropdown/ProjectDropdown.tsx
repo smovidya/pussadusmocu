@@ -1,6 +1,13 @@
 "use client";
 import { api } from "~/trpc/react";
 import React from "react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "~/components/ui/select";
 
 type DropdownProps = {
   setSelectedProjectId: React.Dispatch<React.SetStateAction<string | null>>;
@@ -16,24 +23,22 @@ function Dropdown({ setSelectedProjectId }: DropdownProps) {
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
 
-  const handleProjectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedProjectId(event.target.value);
-  };
-
   return (
-    <div className="w-4/6 px-2 py-2">
-      <p>โครงการ</p>
-      <select
-        className="bg-background w-full border border-yellow-200 px-1 py-2"
-        onChange={handleProjectChange}
-      >
-        <option value="">ทั้งหมด</option>
-        {projects?.map((project) => (
-          <option key={project.project_id} value={project.project_id}>
-            {project.title}
-          </option>
-        ))}
-      </select>
+    <div className="w-full px-2 py-2">
+      <label htmlFor="project-select">โครงการ</label>
+      <Select onValueChange={setSelectedProjectId}>
+        <SelectTrigger id="project-select" className="w-full">
+          <SelectValue placeholder="ทั้งหมด" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="all">ทั้งหมด</SelectItem>
+          {projects?.map((project) => (
+            <SelectItem key={project.project_id} value={project.project_id}>
+              {project.title}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
     </div>
   );
 }
