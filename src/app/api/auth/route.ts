@@ -3,7 +3,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import { DeeAppId, DeeAppSecret, type UserData } from "~/lib/constant";
 import { encrypt } from "../../../lib/function";
 import { api } from "~/trpc/server";
-import { db } from "~/server/db";
+import { db } from '~/server/db';
 
 type ServiceValidationResponse = {
   status: number;
@@ -96,8 +96,8 @@ export async function GET(req: NextRequest) {
         department: "SMO", // placeholder, idk what to put here
         isAdmin: false,
         line_id: data.email,
-      },
-    });
+      }
+    })
 
     users = await api.auth.getUser({ student_id: data.ouid });
   }
