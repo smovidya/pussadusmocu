@@ -18,7 +18,15 @@ export function Parcels({ parcels }: ParcelProps) {
   const [selectedType, setSelectedType] = useState<string | null>(null);
   const [selectedGroup, setSelectedGroup] = useState<string | null>(null);
   const parcelReducer = useSelector(parcelSelector);
-  const name = parcelReducer.name.toLowerCase();
+  const name = parcelReducer.name;
+  const searchKeywords = useMemo(
+    () =>
+      parcelReducer.name
+        .toLowerCase()
+        .split(" ")
+        .map((it) => it.trim()),
+    [name],
+  );
 
   const filteredParcelsProjects = useMemo(
     () =>
@@ -33,10 +41,16 @@ export function Parcels({ parcels }: ParcelProps) {
             ? pp.group === selectedGroup
             : true,
         )
-        .filter((pp) =>
-          name !== "" ? pp.title.toLowerCase().includes(name) : true,
+        .filter(
+          (pp) =>
+            searchKeywords.length === 0 ||
+            searchKeywords.every(
+              (keyword) =>
+                pp.title.toLowerCase().includes(keyword) ||
+                (pp.description?.toLowerCase().includes(keyword) ?? false),
+            ),
         ),
-    [selectedType, selectedGroup, parcels, name],
+    [selectedType, selectedGroup, parcels, searchKeywords],
   );
 
   return (

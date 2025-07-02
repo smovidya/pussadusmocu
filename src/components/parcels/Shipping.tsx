@@ -4,7 +4,7 @@ import { type Parcel } from "@prisma/client";
 import ParcelUser from "./Parcel.user";
 import { useSelector } from "react-redux";
 import { parcelSelector } from "~/stores/slices/search";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { GroupDropdown } from "~/components/shared/dropdown/GroupDropdown";
 import { TypeDropdown } from "~/components/shared/dropdown/TypeDropdown";
 
@@ -19,18 +19,39 @@ export const Shipping = ({ id, parcels, student_id }: ParcelProps) => {
   const [selectedGroup, setSelectedGroup] = useState<string | null>(null);
   const parcelReducer = useSelector(parcelSelector);
   const name = parcelReducer.name;
-  const filteredParcelsProjects = parcels
-    .filter((pp) =>
-      name !== "" ? pp.title.toLowerCase().includes(name.toLowerCase()) : true,
-    )
-    .filter((pp) =>
-      selectedType && selectedType !== "all" ? pp.type === selectedType : true,
-    )
-    .filter((pp) =>
-      selectedGroup && selectedGroup !== "all"
-        ? pp.group === selectedGroup
-        : true,
-    );
+  const searchKeywords = useMemo(
+    () =>
+      parcelReducer.name
+        .toLowerCase()
+        .split(" ")
+        .map((it) => it.trim()),
+    [name],
+  );
+
+  const filteredParcelsProjects = useMemo(
+    () =>
+      parcels
+        .filter((pp) =>
+          selectedType && selectedType !== "all"
+            ? pp.type === selectedType
+            : true,
+        )
+        .filter((pp) =>
+          selectedGroup && selectedGroup !== "all"
+            ? pp.group === selectedGroup
+            : true,
+        )
+        .filter(
+          (pp) =>
+            searchKeywords.length === 0 ||
+            searchKeywords.every(
+              (keyword) =>
+                pp.title.toLowerCase().includes(keyword) ||
+                (pp.description?.toLowerCase().includes(keyword) ?? false),
+            ),
+        ),
+    [selectedType, selectedGroup, parcels, searchKeywords],
+  );
 
   return (
     <div className="flex flex-col items-center gap-6 p-4">

@@ -16,8 +16,6 @@ const Home = async () => {
       student_id: student.student_id,
     });
 
-    // projects = [...projects, ...projects, ...projects, ...projects];
-
     return (
       <div className="mx-auto w-full max-w-(--breakpoint-xl) px-6">
         <div className="font-noto-sans text-lg font-medium md:text-2xl">

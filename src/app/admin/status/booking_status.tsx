@@ -1,18 +1,27 @@
 "use client";
 
-import { Navbar } from "~/components/shared/nav/NavbarAdmin";
-import { Button } from "~/components/ui/button";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useEffect, useMemo, useState } from "react";
+import { useSelector } from "react-redux";
 import PopupCard from "~/components/popCard";
 import Dropdown from "~/components/shared/dropdown/ProjectDropdown";
 import StatusDropdown from "~/components/shared/dropdown/StatusDropdown";
-import React, { useState, useEffect, useMemo } from "react";
-import { type ParcelProjectWithDetails } from "./page";
-import { api } from "~/trpc/react";
-import { useRouter } from "next/navigation";
-import Image from "next/image";
+import { Navbar } from "~/components/shared/nav/NavbarAdmin";
+import { Button } from "~/components/ui/button";
 import { getStatusText } from "~/lib/function";
 import { parcelSelector } from "~/stores/slices/search";
-import { useSelector } from "react-redux";
+import { api } from "~/trpc/react";
+import { type ParcelProjectWithDetails } from "./page";
+
+function match(pp: ParcelProjectWithDetails, keyword: string) {
+  return (
+    pp.parcel.title.toLowerCase().includes(keyword) ||
+    pp.project.title.toLowerCase().includes(keyword) ||
+    (pp.parcel.description?.toLowerCase().includes(keyword) ?? false) ||
+    pp.description_admin.toLowerCase().includes(keyword)
+  );
+}
 
 function Sta({
   parcelsProjects,
@@ -21,7 +30,15 @@ function Sta({
 }) {
   const router = useRouter();
   const parcelReducer = useSelector(parcelSelector);
-  const searchTerm = parcelReducer.name.toLowerCase();
+  const name = parcelReducer.name;
+  const searchKeywords = useMemo(
+    () =>
+      parcelReducer.name
+        .toLowerCase()
+        .split(" ")
+        .map((it) => it.trim()),
+    [name],
+  );
 
   const [isOpen, setIsOpen] = useState(false);
   const [currentParcelProject, setCurrentParcelProject] =
@@ -155,14 +172,10 @@ function Sta({
         )
         .filter(
           (pp) =>
-            searchTerm === "" ||
-            pp.parcel.title.toLowerCase().includes(searchTerm) ||
-            pp.project.title.toLowerCase().includes(searchTerm) ||
-            (pp.parcel.description?.toLowerCase().includes(searchTerm) ??
-              false) ||
-            pp.description_admin.toLowerCase().includes(searchTerm),
+            searchKeywords.length === 0 ||
+            searchKeywords.every((keyword) => match(pp, keyword)),
         ),
-    [parcelsProjects, selectedProjectId, selectedStatus, searchTerm],
+    [parcelsProjects, selectedProjectId, selectedStatus, searchKeywords],
   );
 
   if (!isMounted) {
