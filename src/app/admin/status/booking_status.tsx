@@ -5,12 +5,14 @@ import { Button } from "~/components/ui/button";
 import PopupCard from "~/components/popCard";
 import Dropdown from "~/components/shared/dropdown/ProjectDropdown";
 import StatusDropdown from "~/components/shared/dropdown/StatusDropdown";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { type ParcelProjectWithDetails } from "./page";
 import { api } from "~/trpc/react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { getStatusText } from "~/lib/function";
+import { parcelSelector } from "~/stores/slices/search";
+import { useSelector } from "react-redux";
 
 function Sta({
   parcelsProjects,
@@ -18,6 +20,8 @@ function Sta({
   parcelsProjects: ParcelProjectWithDetails[];
 }) {
   const router = useRouter();
+  const parcelReducer = useSelector(parcelSelector);
+  const searchTerm = parcelReducer.name.toLowerCase();
 
   const [isOpen, setIsOpen] = useState(false);
   const [currentParcelProject, setCurrentParcelProject] =
@@ -136,17 +140,30 @@ function Sta({
     return new Date(dateString).toLocaleDateString("en-GB", options);
   };
 
-  const filteredParcelsProjects = parcelsProjects
-    .filter((pp) =>
-      selectedProjectId && selectedProjectId != "all"
-        ? pp.project.project_id === selectedProjectId
-        : true,
-    )
-    .filter((pp) =>
-      selectedStatus && selectedStatus != "all"
-        ? pp.status === selectedStatus
-        : true,
-    );
+  const filteredParcelsProjects = useMemo(
+    () =>
+      parcelsProjects
+        .filter((pp) =>
+          selectedProjectId && selectedProjectId != "all"
+            ? pp.project.project_id === selectedProjectId
+            : true,
+        )
+        .filter((pp) =>
+          selectedStatus && selectedStatus != "all"
+            ? pp.status === selectedStatus
+            : true,
+        )
+        .filter(
+          (pp) =>
+            searchTerm === "" ||
+            pp.parcel.title.toLowerCase().includes(searchTerm) ||
+            pp.project.title.toLowerCase().includes(searchTerm) ||
+            (pp.parcel.description?.toLowerCase().includes(searchTerm) ??
+              false) ||
+            pp.description_admin.toLowerCase().includes(searchTerm),
+        ),
+    [parcelsProjects, selectedProjectId, selectedStatus, searchTerm],
+  );
 
   if (!isMounted) {
     return null; // or a loading indicator

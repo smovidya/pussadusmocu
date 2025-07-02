@@ -1,7 +1,7 @@
 "use client";
 
 import { type Parcel } from "@prisma/client";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { TypeDropdown } from "~/components/shared/dropdown/TypeDropdown";
 import { CreateParcel } from "~/components/parcels/create-parcel";
 import { Navbar } from "~/components/shared/nav/NavbarAdmin";
@@ -18,18 +18,26 @@ export function Parcels({ parcels }: ParcelProps) {
   const [selectedType, setSelectedType] = useState<string | null>(null);
   const [selectedGroup, setSelectedGroup] = useState<string | null>(null);
   const parcelReducer = useSelector(parcelSelector);
-  const name = parcelReducer.name;
+  const name = parcelReducer.name.toLowerCase();
 
-  const filteredParcelsProjects = parcels
-    .filter((pp) =>
-      selectedType && selectedType !== "all" ? pp.type === selectedType : true,
-    )
-    .filter((pp) =>
-      selectedGroup && selectedGroup !== "all"
-        ? pp.group === selectedGroup
-        : true,
-    )
-    .filter((pp) => (name !== "" ? pp.title.includes(name) : true));
+  const filteredParcelsProjects = useMemo(
+    () =>
+      parcels
+        .filter((pp) =>
+          selectedType && selectedType !== "all"
+            ? pp.type === selectedType
+            : true,
+        )
+        .filter((pp) =>
+          selectedGroup && selectedGroup !== "all"
+            ? pp.group === selectedGroup
+            : true,
+        )
+        .filter((pp) =>
+          name !== "" ? pp.title.toLowerCase().includes(name) : true,
+        ),
+    [selectedType, selectedGroup, parcels, name],
+  );
 
   return (
     <div className="font-noto-sans flex h-full w-full flex-col gap-2">
