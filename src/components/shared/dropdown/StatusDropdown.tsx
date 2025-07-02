@@ -9,6 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "~/components/ui/select";
+import { getStatusText } from "~/lib/function";
 
 type StatusDropdownProps = {
   setSelectedStatus: React.Dispatch<React.SetStateAction<string | null>>;
@@ -24,9 +25,9 @@ function StatusDropdown({ setSelectedStatus }: StatusDropdownProps) {
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="all">ทั้งหมด</SelectItem>
-          {Object.keys(BORROWING_STATUS).map((status) => (
+          {Object.values(BORROWING_STATUS).map((status) => (
             <SelectItem key={status} value={status}>
-              {BORROWING_STATUS[status]}
+              {getStatusText(status)} ({status})
             </SelectItem>
           ))}
         </SelectContent>
