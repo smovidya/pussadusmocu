@@ -13,7 +13,7 @@ import { ZodError } from "zod";
 import { db } from "~/server/db";
 import { type Ctx } from "./models/database.model";
 import { decrypt } from "~/lib/function";
-import { Student } from "@prisma/client";
+import type { Student } from "@prisma/client";
 import { getUser } from "./services/auth.service";
 
 /**
@@ -93,8 +93,8 @@ export const adminOnlyProcedure = publicProcedure.use(async (opts) => {
   const student =
     process.env.NODE_ENV === "development"
       ? await getUser(opts.ctx, {
-          student_id: student_id_from_cookie as string,
-        })
+        student_id: student_id_from_cookie as string,
+      })
       : (student_id_from_cookie as Student);
 
   if (!student?.isAdmin) {

@@ -1,4 +1,4 @@
-import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import { adminOnlyProcedure, createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import {
@@ -6,6 +6,7 @@ import {
   getProjectByStudentId,
   registerProject,
 } from "../services/project.service";
+import { Owner } from '@prisma/client';
 
 /**
  * TRPC Router for handling project-related operations.
@@ -24,6 +25,119 @@ export const projectRouter = createTRPCRouter({
       throw new TRPCError({
         code: "INTERNAL_SERVER_ERROR",
         message: "Failed to fetch parcels",
+        cause: error,
+      });
+    }
+  }),
+
+  /**
+   * Set the status of a project.
+   */
+  setProjectStatus: adminOnlyProcedure.input(z.object({
+    projectId: z.string(),
+    status: z.enum(["NOTSTART", "INPROGRESS", "COMPLETE", "EVALUATE"]),
+  })).mutation(async ({ ctx, input }) => {
+    const { projectId, status } = input;
+
+    // Validate project ID and status
+    if (!projectId || !status) {
+      throw new TRPCError({
+        code: "BAD_REQUEST",
+        message: "Project ID and status are required",
+      });
+    }
+
+    // Update the project status in the database
+    try {
+      const updatedProject = await ctx.db.project.update({
+        where: { project_id: projectId },
+        data: { status },
+      });
+      return updatedProject;
+    } catch (error) {
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: "Failed to update project status",
+        cause: error,
+      });
+    }
+  }),
+
+  /**
+   * Set the published status of a project.
+   */
+  setProjectPublished: adminOnlyProcedure.input(z.object({
+    projectId: z.string(),
+    isPublished: z.boolean(),
+  })).mutation(async ({ ctx, input }) => {
+    const { projectId, isPublished } = input;
+    // Validate project ID and published status
+    if (!projectId || typeof isPublished !== "boolean") {
+      throw new TRPCError({
+        code: "BAD_REQUEST",
+        message: "Project ID and published status are required",
+      });
+    }
+    // Update the project published status in the database
+    try {
+      const updatedProject = await ctx.db.project.update({
+        where: { project_id: projectId },
+        data: { published: isPublished },
+      });
+      return updatedProject;
+    } catch (error) {
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: "Failed to update project published status",
+        cause: error,
+      });
+    }
+  }),
+
+  getAllProjects: adminOnlyProcedure.query(async ({ ctx }) => {
+    try {
+      // Fetch all projects from the database
+      const projects = await ctx.db.project.findMany({
+        include: {
+          parcels: true,
+          students: true,
+        },
+      })
+      return projects;
+    } catch (error) {
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: "Failed to fetch all projects",
+        cause: error,
+      });
+    }
+  }),
+
+  setProjectOwner: adminOnlyProcedure.input(z.object({
+    projectId: z.string(),
+    owner: z.enum(Object.values(Owner) as [string, ...string[]]),
+  })).mutation(async ({ ctx, input }) => {
+    const { projectId, owner } = input;
+    // Validate project ID and owner ID
+    if (!projectId || !owner) {
+      throw new TRPCError({
+        code: "BAD_REQUEST",
+        message: "Project ID and owner ID are required",
+      });
+    }
+    // Update the project owner in the database
+    try {
+      const updatedProject = await ctx.db.project.update({
+        where: { project_id: projectId },
+        data: {
+          owner: owner as Owner,
+        },
+      });
+      return updatedProject;
+    } catch (error) {
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: "Failed to update project owner",
         cause: error,
       });
     }
