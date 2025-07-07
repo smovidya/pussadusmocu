@@ -93,8 +93,8 @@ export const adminOnlyProcedure = publicProcedure.use(async (opts) => {
   const student =
     process.env.NODE_ENV === "development"
       ? await getUser(opts.ctx, {
-        student_id: student_id_from_cookie as string,
-      })
+          student_id: student_id_from_cookie as string,
+        })
       : (student_id_from_cookie as Student);
 
   if (!student?.isAdmin) {

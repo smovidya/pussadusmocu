@@ -1,7 +1,12 @@
-import { type FC, useState } from 'react';
-import { Badge } from '~/components/ui/badge';
-import { Select, SelectContent, SelectItem, SelectTrigger } from '~/components/ui/select';
-import { toast } from '~/components/ui/use-toast';
+import { type FC, useState } from "react";
+import { Badge } from "~/components/ui/badge";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+} from "~/components/ui/select";
+import { toast } from "~/components/ui/use-toast";
 
 export function SingleBadgeSelector({
   options,
@@ -12,27 +17,33 @@ export function SingleBadgeSelector({
   onValueChange: (value: string) => Promise<void>;
   value: string;
 }) {
-  const [isLoading, setLoading] = useState<boolean>(false)
+  const [isLoading, setLoading] = useState<boolean>(false);
 
-  const handleStatusChange = (newValue: typeof options[number]['value']) => {
+  const handleStatusChange = (newValue: (typeof options)[number]["value"]) => {
     if (isLoading) return; // Prevent multiple submissions
     setLoading(true);
-    onValueChange(newValue).catch((error) => {
-      toast({
-        title: "เกิดข้อผิดพลาด",
-        description: (error instanceof Error ? error.message : "Unknown error"),
-        variant: "destructive",
+    onValueChange(newValue)
+      .catch((error) => {
+        toast({
+          title: "เกิดข้อผิดพลาด",
+          description: error instanceof Error ? error.message : "Unknown error",
+          variant: "destructive",
+        });
+      })
+      .finally(() => {
+        setLoading(false);
       });
-    }).finally(() => {
-      setLoading(false);
-    })
-  }
+  };
 
-  const selectedOption = options.find(option => option.value === value);
+  const selectedOption = options.find((option) => option.value === value);
 
   return (
     <Select value={value} onValueChange={handleStatusChange}>
-      <SelectTrigger size="sm" disabled={isLoading} className="border-none p-2 rounded-sm shadow-none hover:shadow-md hover:border transition-all">
+      <SelectTrigger
+        size="sm"
+        disabled={isLoading}
+        className="rounded-sm border-none p-2 shadow-none transition-all hover:border hover:shadow-md"
+      >
         {isLoading ? (
           <span className="text-gray-500">กำลังเปลี่ยนสถานะ...</span>
         ) : selectedOption ? (

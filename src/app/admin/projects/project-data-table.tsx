@@ -1,12 +1,12 @@
-import type { RouterOutputs } from '~/trpc/react';
+import type { RouterOutputs } from "~/trpc/react";
 import {
   type ColumnDef,
   type ColumnFiltersState,
   flexRender,
   getCoreRowModel,
   useReactTable,
-  getFilteredRowModel
-} from "@tanstack/react-table"
+  getFilteredRowModel,
+} from "@tanstack/react-table";
 
 import {
   Table,
@@ -15,15 +15,15 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "~/components/ui/table"
+} from "~/components/ui/table";
 
-import { useState } from 'react';
-import { Input } from '~/components/ui/input';
-import { ProjectStatusSelector } from './project-status-selector';
-import { PublishStatusSelector } from './publish-status-selector';
-import { OwnerSelector } from './owner-selector';
+import { useState } from "react";
+import { Input } from "~/components/ui/input";
+import { ProjectStatusSelector } from "./project-status-selector";
+import { PublishStatusSelector } from "./publish-status-selector";
+import { OwnerSelector } from "./owner-selector";
 
-type Project = RouterOutputs['project']['getProject'][number];
+type Project = RouterOutputs["project"]["getProject"][number];
 
 export const columns: ColumnDef<Project>[] = [
   {
@@ -38,21 +38,36 @@ export const columns: ColumnDef<Project>[] = [
     accessorKey: "status",
     header: "สถานะ",
     cell: ({ row }) => {
-      return <ProjectStatusSelector projectId={row.getValue("project_id")} status={row.getValue("status")} />
-    }
+      return (
+        <ProjectStatusSelector
+          projectId={row.getValue("project_id")}
+          status={row.getValue("status")}
+        />
+      );
+    },
   },
   {
     accessorKey: "published",
     header: "เผยแพร่อยู่",
     cell: ({ row }) => {
-      const published = row.getValue("published")
-      return <PublishStatusSelector projectId={row.getValue("project_id")} isPublished={published as boolean} />
-    }
+      const published = row.getValue("published");
+      return (
+        <PublishStatusSelector
+          projectId={row.getValue("project_id")}
+          isPublished={published as boolean}
+        />
+      );
+    },
   },
   {
     accessorKey: "owner",
     header: "เจ้าของโครงการ",
-    cell: ({ row }) => <OwnerSelector projectId={row.getValue("project_id")} owner={row.getValue("owner")} />
+    cell: ({ row }) => (
+      <OwnerSelector
+        projectId={row.getValue("project_id")}
+        owner={row.getValue("owner")}
+      />
+    ),
   },
   {
     accessorKey: "createdAt",
@@ -60,17 +75,17 @@ export const columns: ColumnDef<Project>[] = [
     cell: ({ row }) => {
       const date = new Date(row.getValue("createdAt"));
       return <span>{date.toLocaleDateString()}</span>;
-    }
+    },
   },
-]
+];
 
 export function ProjectDataTable({ projects }: { projects: Project[] }) {
   interface DataTableProps<TData, TValue> {
-    columns: ColumnDef<TData, TValue>[]
-    data: TData[]
+    columns: ColumnDef<TData, TValue>[];
+    data: TData[];
   }
 
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
   const table = useReactTable({
     data: projects,
@@ -80,8 +95,8 @@ export function ProjectDataTable({ projects }: { projects: Project[] }) {
     getFilteredRowModel: getFilteredRowModel(),
     state: {
       columnFilters,
-    }
-  })
+    },
+  });
 
   function DataTable<TData, TValue>({
     columns,
@@ -98,11 +113,11 @@ export function ProjectDataTable({ projects }: { projects: Project[] }) {
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
+                            header.column.columnDef.header,
+                            header.getContext(),
+                          )}
                     </TableHead>
-                  )
+                  );
                 })}
               </TableRow>
             ))}
@@ -116,14 +131,20 @@ export function ProjectDataTable({ projects }: { projects: Project[] }) {
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
                     </TableCell>
                   ))}
                 </TableRow>
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={columns.length} className="h-24 text-center">
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
                   ไม่พบโครงการ
                 </TableCell>
               </TableRow>
@@ -131,19 +152,21 @@ export function ProjectDataTable({ projects }: { projects: Project[] }) {
           </TableBody>
         </Table>
       </div>
-    )
+    );
   }
-  return <div>
-    <div className="flex items-center justify-between py-4">
-      <Input
-        placeholder="ค้นหาโครง"
-        value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
-        onChange={(event) =>
-          table.getColumn("title")?.setFilterValue(event.target.value)
-        }
-        className="max-w-sm"
-      />
+  return (
+    <div>
+      <div className="flex items-center justify-between py-4">
+        <Input
+          placeholder="ค้นหาโครง"
+          value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
+          onChange={(event) =>
+            table.getColumn("title")?.setFilterValue(event.target.value)
+          }
+          className="max-w-sm"
+        />
+      </div>
+      <DataTable columns={columns} data={projects} />
     </div>
-    <DataTable columns={columns} data={projects} />
-  </div>
+  );
 }
