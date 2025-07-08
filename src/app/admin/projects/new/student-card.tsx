@@ -11,14 +11,26 @@ import {
   CollapsibleTrigger,
 } from "~/components/ui/collapsible";
 import { ChevronsUpDown } from "lucide-react";
-import { useEffect } from 'react';
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '~/components/ui/form';
-import { Input } from '~/components/ui/input';
-import { Skeleton } from '~/components/ui/skeleton';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '~/components/ui/select';
-import { Label } from '~/components/ui/label';
-import { Checkbox } from '~/components/ui/checkbox';
-import { StudentSchema } from '~/server/api/models/auth.model';
+import { useEffect } from "react";
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "~/components/ui/form";
+import { Input } from "~/components/ui/input";
+import { Skeleton } from "~/components/ui/skeleton";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "~/components/ui/select";
+import { Label } from "~/components/ui/label";
+import { Checkbox } from "~/components/ui/checkbox";
+import { StudentSchema } from "~/server/api/models/auth.model";
 import { api } from "~/trpc/react";
 
 interface StudentCardProps {
@@ -57,11 +69,7 @@ function StudentFormFields({ control, index }: StudentFormFieldsProps) {
           <FormItem>
             <FormLabel className="text-xs">อีเมล</FormLabel>
             <FormControl>
-              <Input
-                placeholder="xxx@example.com"
-                type="email"
-                {...field}
-              />
+              <Input placeholder="xxx@example.com" type="email" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -138,7 +146,6 @@ function StudentFormFields({ control, index }: StudentFormFieldsProps) {
   );
 }
 
-
 export function StudentAutoFillForm({
   control,
   index,
@@ -154,17 +161,18 @@ export function StudentAutoFillForm({
     defaultValue: "",
   });
 
-  const studentUser = api.auth.getUser.useQuery(
-    {
-      student_id: studentId,
-    }
-  );
+  const studentUser = api.auth.getUser.useQuery({
+    student_id: studentId,
+  });
 
   useEffect(() => {
     if (studentUser.data) {
       setValue(`students.${index}.name`, studentUser.data.name ?? "");
       setValue(`students.${index}.email`, studentUser.data.email ?? "");
-      setValue(`students.${index}.department`, studentUser.data.department ?? "SMO");
+      setValue(
+        `students.${index}.department`,
+        studentUser.data.department ?? "SMO",
+      );
       setValue(`students.${index}.line_id`, studentUser.data.line_id ?? "");
       setValue(`students.${index}.isAdmin`, studentUser.data.isAdmin ?? false);
     }
@@ -174,7 +182,10 @@ export function StudentAutoFillForm({
     if (studentUser.data) {
       setValue(`students.${index}.name`, studentUser.data.name ?? "");
       setValue(`students.${index}.email`, studentUser.data.email ?? "");
-      setValue(`students.${index}.department`, studentUser.data.department ?? "SMO");
+      setValue(
+        `students.${index}.department`,
+        studentUser.data.department ?? "SMO",
+      );
       setValue(`students.${index}.line_id`, studentUser.data.line_id ?? "");
       setValue(`students.${index}.isAdmin`, studentUser.data.isAdmin ?? false);
     }
@@ -210,12 +221,14 @@ export function StudentAutoFillForm({
       )}
 
       {/* No student found message */}
-      {studentUser.isSuccess && studentUser.data === null && studentId.length === 10 && (
-        <p className="text-sm text-red-500">
-          ไม่พบข้อมูลนิสิต เพิ่มนิสิตโดยการใส่ข้อมูลด้านล่าง
-          นิสิตจะถูกเพิ่มเมื่อกดบันทึกโครงการ
-        </p>
-      )}
+      {studentUser.isSuccess &&
+        studentUser.data === null &&
+        studentId.length === 10 && (
+          <p className="text-sm text-red-500">
+            ไม่พบข้อมูลนิสิต เพิ่มนิสิตโดยการใส่ข้อมูลด้านล่าง
+            นิสิตจะถูกเพิ่มเมื่อกดบันทึกโครงการ
+          </p>
+        )}
 
       {/* Student found message with reset button */}
       {studentUser.data && (
@@ -227,7 +240,7 @@ export function StudentAutoFillForm({
             variant="link"
             type="button"
             onClick={handleResetToSystemData}
-            className="inline ml-2 p-0 h-auto"
+            className="ml-2 inline h-auto p-0"
           >
             รีเซ็ตกลับเป็นข้อมูลในระบบ
           </Button>
@@ -241,7 +254,6 @@ export function StudentAutoFillForm({
     </div>
   );
 }
-
 
 export function StudentCard({
   control,

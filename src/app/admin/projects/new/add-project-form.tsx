@@ -1,10 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  useFieldArray,
-  useForm,
-} from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
 import {
   ProjectOwnerEnumSchema,
@@ -30,9 +27,9 @@ import {
 import { Dice5 } from "lucide-react";
 import { StudentSchema } from "~/server/api/models/auth.model";
 import { StudentCard } from "./student-card";
-import { api } from '~/trpc/react';
-import { toast } from '~/components/ui/use-toast';
-import { useRouter } from 'next/navigation';
+import { api } from "~/trpc/react";
+import { toast } from "~/components/ui/use-toast";
+import { useRouter } from "next/navigation";
 
 export const formSchema = z.object({
   id: z.string(),
@@ -43,9 +40,8 @@ export const formSchema = z.object({
   students: z.array(StudentSchema),
 });
 
-
 export function AddProjectForm() {
-  const addProjectMutation = api.project.addProjectAndStudents.useMutation()
+  const addProjectMutation = api.project.addProjectAndStudents.useMutation();
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -65,39 +61,43 @@ export function AddProjectForm() {
   });
 
   function onSubmit(data: z.infer<typeof formSchema>) {
-    addProjectMutation.mutate({
-      project: {
-        id: data.id,
-        published: data.published,
-        name: data.name,
-        status: data.status,
-        owner: data.owner,
+    addProjectMutation.mutate(
+      {
+        project: {
+          id: data.id,
+          published: data.published,
+          name: data.name,
+          status: data.status,
+          owner: data.owner,
+        },
+        users: data.students.map((student) => ({
+          student_id: student.student_id,
+          name: student.name,
+          email: student.email,
+          department: student.department,
+          isAdmin: student.isAdmin,
+          line_id: student.line_id,
+        })),
       },
-      users: data.students.map((student) => ({
-        student_id: student.student_id,
-        name: student.name,
-        email: student.email,
-        department: student.department,
-        isAdmin: student.isAdmin,
-        line_id: student.line_id,
-      })),
-    }, {
-      onError(error) {
-        toast({
-          title: "เกิดข้อผิดพลาด",
-          description: error instanceof Error ? error.message : "Unknown error",
-          variant: "destructive",
-        })
+      {
+        onError(error) {
+          toast({
+            title: "เกิดข้อผิดพลาด",
+            description:
+              error instanceof Error ? error.message : "Unknown error",
+            variant: "destructive",
+          });
+        },
+        onSuccess(data) {
+          toast({
+            title: "โครงการถูกบันทึกแล้ว",
+            description: `โครงการ ${data.project.title} ถูกบันทึกสำเร็จ`,
+            variant: "default",
+          });
+          router.push("/admin/projects");
+        },
       },
-      onSuccess(data) {
-        toast({
-          title: "โครงการถูกบันทึกแล้ว",
-          description: `โครงการ ${data.project.title} ถูกบันทึกสำเร็จ`,
-          variant: "default",
-        });
-        router.push("/admin/projects");
-      },
-    })
+    );
   }
 
   return (
@@ -240,6 +240,6 @@ export function AddProjectForm() {
           บันทึกโครงการ
         </Button>
       </form>
-    </Form >
+    </Form>
   );
 }
