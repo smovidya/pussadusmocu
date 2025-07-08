@@ -78,12 +78,7 @@ export const FormSchema = z.object({
   unit: z.string(),
   type: ParcelTypeSchema,
   group: ParcelGroupSchema,
-  amount: z
-    .string()
-    .refine((val) => !isNaN(Number(val)) && Number(val) > 0, {
-      message: "Amount must be a positive number.",
-    })
-    .transform(Number),
+  amount: z.number().positive().min(1),
   available: z.boolean(),
   department: ParcelDepartmentSchema,
 });
@@ -91,12 +86,7 @@ export const FormSchema = z.object({
 export type FormSchemaType = z.infer<typeof FormSchema>;
 
 export const FormSchemaBooking = z.object({
-  amount: z
-    .string()
-    .refine((val) => !isNaN(Number(val)) && Number(val) > 0, {
-      message: "Amount must be a positive number.",
-    })
-    .transform(Number),
+  amount: z.number().positive().min(1),
   description: z.string(),
   project_id: z.string(),
 });
