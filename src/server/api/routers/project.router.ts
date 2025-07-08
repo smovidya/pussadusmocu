@@ -11,6 +11,8 @@ import {
   registerProject,
 } from "../services/project.service";
 import { Owner } from "@prisma/client";
+import { StudentSchema } from "../models/auth.model";
+import { ProjectSchema } from "../models/project.model";
 
 /**
  * TRPC Router for handling project-related operations.
@@ -114,6 +116,9 @@ export const projectRouter = createTRPCRouter({
           parcels: true,
           students: true,
         },
+        orderBy: {
+          createdAt: "desc",
+        },
       });
       return projects;
     } catch (error) {
@@ -193,5 +198,127 @@ export const projectRouter = createTRPCRouter({
     )
     .mutation(async ({ ctx, input }) => {
       return registerProject(ctx, input.student_id, input.project_id);
+    }),
+
+  addProjectAndStudents: adminOnlyProcedure
+    .input(
+      z.object({
+        users: z.array(StudentSchema),
+        project: ProjectSchema,
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { users, project } = input;
+      // check project ID
+      const existingProject = await ctx.db.project.findUnique({
+        where: { project_id: project.id },
+      });
+      if (existingProject) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "มีโปรเจคที่รหัสนี้อยู่แล้ว",
+        });
+      }
+      // Create the project
+      const newProject = await ctx.db.project.create({
+        data: {
+          title: project.name,
+          status: project.status,
+          owner: project.owner,
+          published: project.published,
+        },
+      });
+
+      const studentIds = await Promise.all(
+        users.map((s) =>
+          ctx.db.student.upsert({
+            where: { student_id: s.student_id },
+            update: {
+              name: s.name,
+              email: s.email,
+              department: s.department,
+              isAdmin: s.isAdmin,
+              line_id: s.line_id,
+            },
+            create: {
+              student_id: s.student_id,
+              name: s.name,
+              email: s.email ?? `${s.student_id}@student.chula.ac.th`,
+              department: s.department,
+              isAdmin: s.isAdmin,
+              line_id: s.line_id ?? "",
+            },
+          }),
+        ),
+      );
+
+      // Add students to the project
+      await ctx.db.project_Student.createMany({
+        data: studentIds.map((student) => ({
+          project_id: newProject.project_id,
+          student_id: student.student_id,
+        })),
+      });
+
+      return {
+        project: newProject,
+        students: studentIds,
+      };
+    }),
+  getProjectById: adminOnlyProcedure
+    .input(
+      z.object({
+        projectId: z.string(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      const { projectId } = input;
+      // Fetch the project by ID
+      try {
+        const project = await ctx.db.project.findUnique({
+          where: { project_id: projectId },
+          include: {
+            parcels: true,
+            students: true,
+          },
+        });
+        if (!project) {
+          throw new TRPCError({
+            code: "NOT_FOUND",
+            message: "Project not found",
+          });
+        }
+        return project;
+      } catch (error) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Failed to fetch project by ID",
+          cause: error,
+        });
+      }
+    }),
+  getStudentsByProjectId: adminOnlyProcedure
+    .input(
+      z.object({
+        projectId: z.string(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      const { projectId } = input;
+      try {
+        const students = await ctx.db.project_Student.findMany({
+          where: { project_id: projectId },
+          include: {
+            student: true,
+          },
+        });
+        return students;
+      } catch (error) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Failed to fetch students by project ID",
+          cause: error,
+        });
+      }
     }),
 });
