@@ -1,7 +1,7 @@
 import React from "react";
 import { Input } from "~/components/ui/input";
 import Image from "next/image";
-import { Archive, ShoppingCart } from "lucide-react";
+import { Archive, FolderKanban, ShoppingCart } from "lucide-react";
 import { selectedOption } from "~/stores/slices/search";
 import { useAppDispatch } from "~/stores/store";
 import { Button } from "~/components/ui/button";
@@ -39,26 +39,24 @@ export const Navbar: React.FC = () => {
         />
       </div>
 
-      <div className="flex items-center justify-start gap-1">
-        <Button
-          asChild
-          variant="ghost"
-          className="items-center gap-4 rounded-lg py-7 text-lg hover:bg-black/5"
-        >
+      <div className="flex items-center justify-start">
+        <Button asChild variant="ghost" className="gap-2">
           <Link href="/admin/home">
-            <Archive className="mb-0.5" />
+            <Archive className="size-5" />
             คลัง
           </Link>
         </Button>
 
-        <Button
-          asChild
-          variant="ghost"
-          className="items-center gap-4 rounded-lg py-7 text-lg hover:bg-black/5"
-        >
+        <Button asChild variant="ghost" className="gap-2">
           <Link href="/admin/status">
-            <ShoppingCart className="mb-0.5" />
+            <ShoppingCart className="size-5" />
             การยืม
+          </Link>
+        </Button>
+        <Button asChild variant="ghost" className="gap-2">
+          <Link href="/admin/projects">
+            <FolderKanban className="size-5" />
+            โครงการ
           </Link>
         </Button>
       </div>
