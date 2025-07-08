@@ -321,4 +321,75 @@ export const projectRouter = createTRPCRouter({
         });
       }
     }),
+  addStudentToProject: adminOnlyProcedure
+    .input(
+      z.object({
+        projectId: z.string(),
+        student: StudentSchema,
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { projectId, student } = input;
+
+      // Check if the project exists
+      const project = await ctx.db.project.findUnique({
+        where: { project_id: projectId },
+      });
+      if (!project) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Project not found",
+        });
+      }
+
+      // Upsert the student in the database
+      const studentId = await ctx.db.student.upsert({
+        where: { student_id: student.student_id },
+        update: {
+          name: student.name,
+          email: student.email ?? `${student.student_id}@student.chula.ac.th`,
+          department: student.department,
+          isAdmin: student.isAdmin,
+          line_id: student.line_id ?? "",
+        },
+        create: {
+          student_id: student.student_id,
+          name: student.name,
+          email: student.email ?? `${student.student_id}@student.chula.ac.th`,
+          department: student.department,
+          isAdmin: student.isAdmin,
+          line_id: student.line_id ?? "",
+        },
+      });
+
+      // Add the student to the project
+      try {
+        const existingProjectStudent = await ctx.db.project_Student.findFirst({
+          where: {
+            project_id: projectId,
+            student_id: studentId.student_id,
+          },
+        });
+        if (existingProjectStudent) {
+          throw new TRPCError({
+            code: "CONFLICT",
+            message: "Student is already added to this project",
+          });
+        }
+        const newProjectStudent = await ctx.db.project_Student.create({
+          data: {
+            project_id: projectId,
+            student_id: studentId.student_id,
+          },
+        });
+
+        return newProjectStudent;
+      } catch (error) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Failed to add student to project",
+          cause: error,
+        });
+      }
+    }),
 });
