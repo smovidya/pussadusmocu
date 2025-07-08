@@ -39,6 +39,7 @@ interface BlogProps {
 
 const ParcelAdmin = ({ parcel }: BlogProps) => {
   const form = useForm<FormSchemaType>({
+    // @ts-expect-error z.custom() didn't work well with zodResolver
     resolver: zodResolver(FormSchema),
     defaultValues: {
       parcel_id: parcel.parcel_id,
@@ -210,6 +211,7 @@ const ParcelAdmin = ({ parcel }: BlogProps) => {
       </DialogTrigger>
       <DialogContent className="font-noto-sans min-w-[700px] sm:max-w-[425px]">
         <form
+          // @ts-expect-error z.custom() didn't work well with zodResolver
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex w-full space-y-6"
         >
