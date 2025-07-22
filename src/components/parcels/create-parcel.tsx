@@ -251,7 +251,9 @@ export function CreateParcel() {
                 <Input
                   disabled={disabled}
                   type="number"
-                  {...form.register("amount")}
+                  {...form.register("amount", {
+                    valueAsNumber: true
+                  })}
                   className="col-span-3"
                 />
               </div>
