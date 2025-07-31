@@ -104,7 +104,7 @@ export function AddProjectForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="m-auto grid w-full grid-cols-1 gap-4 space-y-4 sm:grid-cols-2"
+        className="m-auto grid w-full grid-cols-1 gap-4 space-y-4"
       >
         <div>
           <FormField
@@ -204,20 +204,19 @@ export function AddProjectForm() {
               </FormItem>
             )}
           />
-        </div>
-        <div>
           <h2 className="mb-2 text-xl font-bold">นิสิตยืมพัสดุ</h2>
-          <p>กดขยายเพื่อแก้ไขรายละเอียด</p>
-          {fields.map((field, index) => (
-            <StudentCard
-              fieldId={field.id}
-              key={field.id}
-              control={form.control}
-              index={index}
-              remove={remove}
-              setValue={form.setValue}
-            />
-          ))}
+          <div className="flex flex-col gap-1 overflow-scroll w-full py-3">
+            {fields.map((field, index) => (
+              <StudentCard
+                fieldId={field.id}
+                key={field.id}
+                control={form.control}
+                index={index}
+                remove={remove}
+                setValue={form.setValue}
+              />
+            ))}
+          </div>
           <Button
             type="button"
             variant="outline"
@@ -231,7 +230,6 @@ export function AddProjectForm() {
                 line_id: "",
               })
             }
-            className="w-full"
           >
             เพิ่มนิสิต
           </Button>

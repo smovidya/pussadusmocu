@@ -2,21 +2,13 @@
 
 import { type Control, type UseFormSetValue, useWatch } from "react-hook-form";
 import { type z } from "zod";
-import { Card } from "~/components/ui/card";
 import { Button } from "~/components/ui/button";
 import { type formSchema } from "./add-project-form";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "~/components/ui/collapsible";
-import { ChevronsUpDown } from "lucide-react";
 import { useEffect } from "react";
 import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
@@ -48,15 +40,14 @@ interface StudentFormFieldsProps {
 
 function StudentFormFields({ control, index }: StudentFormFieldsProps) {
   return (
-    <div className="space-y-3">
+    <>
       <FormField
         control={control}
         name={`students.${index}.name`}
         render={({ field }) => (
           <FormItem>
-            <FormLabel className="text-xs">ชื่อ</FormLabel>
             <FormControl>
-              <Input placeholder="ชื่อนิสิต" {...field} />
+              <Input placeholder="ชื่อนิสิต" {...field} className="min-w-44" />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -67,9 +58,8 @@ function StudentFormFields({ control, index }: StudentFormFieldsProps) {
         name={`students.${index}.email`}
         render={({ field }) => (
           <FormItem>
-            <FormLabel className="text-xs">อีเมล</FormLabel>
             <FormControl>
-              <Input placeholder="xxx@example.com" type="email" {...field} />
+              <Input placeholder="xxx@example.com" type="email" {...field} className="min-w-44" />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -80,10 +70,9 @@ function StudentFormFields({ control, index }: StudentFormFieldsProps) {
         name={`students.${index}.department`}
         render={({ field }) => (
           <FormItem>
-            <FormLabel className="text-xs">ภาควิชา</FormLabel>
             <FormControl>
               <Select value={field.value} onValueChange={field.onChange}>
-                <SelectTrigger>
+                <SelectTrigger className="w-32">
                   <SelectValue placeholder="เลือกภาควิชา" />
                 </SelectTrigger>
                 <SelectContent>
@@ -104,9 +93,8 @@ function StudentFormFields({ control, index }: StudentFormFieldsProps) {
         name={`students.${index}.line_id`}
         render={({ field }) => (
           <FormItem>
-            <FormLabel className="text-xs">LINE ID</FormLabel>
             <FormControl>
-              <Input placeholder="line_id" {...field} />
+              <Input placeholder="line_id" {...field} className="min-w-44" />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -126,23 +114,15 @@ function StudentFormFields({ control, index }: StudentFormFieldsProps) {
                   onCheckedChange={(checked) => {
                     field.onChange(checked);
                   }}
-                />
-                <div className="grid gap-1.5 font-normal">
-                  <p className="text-sm leading-none font-medium">
-                    ตั้งเป็นผู้ดูแลระบบ
-                  </p>
-                  <p className="text-muted-foreground text-sm">
-                    ผู้ดูแลระบบคือผู้ที่มีสิทธิ์ในการจัดการโครงการบนเว็บไซต์นี้
-                    เช่น การแก้ไขข้อมูลนิสิต การลบโครงการ เป็นต้น
-                  </p>
-                </div>
+                /> Admin?
               </Label>
             </FormControl>
             <FormMessage />
-          </FormItem>
-        )}
+          </FormItem >
+        )
+        }
       />
-    </div>
+    </>
   );
 }
 
@@ -192,65 +172,67 @@ export function StudentAutoFillForm({
   };
 
   return (
-    <div className="space-y-3">
-      <FormField
-        control={control}
-        name={`students.${index}.student_id`}
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel className="text-xs">รหัสนิสิต</FormLabel>
-            <FormControl>
-              <Input placeholder="6xxxxxxx" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
+    <div className="flex flex-col">
+      <div className="flex flex-row items-center gap-2">
+        <FormField
+          control={control}
+          name={`students.${index}.student_id`}
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <Input placeholder="เลขนิสิต" className="min-w-28" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        {!studentUser.isLoading && (
+          <StudentFormFields control={control} index={index} />
         )}
-      />
+      </div>
 
-      {/* Loading state */}
-      {studentUser.isLoading && studentId.length === 10 && (
-        <>
-          <p className="text-sm text-blue-600">กำลังโหลดข้อมูลนิสิต...</p>
-          <Skeleton className="h-[200px] w-full" />
-        </>
-      )}
+      <div>
+        {/* Loading state */}
+        {studentUser.isLoading && studentId.length === 10 && (
+          <>
+            <p className="text-sm text-blue-600">กำลังโหลดข้อมูลนิสิต...</p>
+            <Skeleton className="h-[200px] w-full" />
+          </>
+        )}
 
-      {/* Error state */}
-      {studentUser.isError && studentUser.error && studentId.length === 10 && (
-        <p className="text-sm text-red-500">{studentUser.error.message}</p>
-      )}
+        {/* Error state */}
+        {studentUser.isError && studentUser.error && studentId.length === 10 && (
+          <p className="text-sm text-red-500">{studentUser.error.message}</p>
+        )}
 
-      {/* No student found message */}
-      {studentUser.isSuccess &&
-        studentUser.data === null &&
-        studentId.length === 10 && (
-          <p className="text-sm text-red-500">
-            ไม่พบข้อมูลนิสิต เพิ่มนิสิตโดยการใส่ข้อมูลด้านล่าง
-            นิสิตจะถูกเพิ่มเมื่อกดบันทึกโครงการ
+        {/* No student found message */}
+        {studentUser.isSuccess &&
+          studentUser.data === null &&
+          studentId.length === 10 && (
+            <p className="text-sm text-red-500">
+              ไม่พบข้อมูลนิสิต เพิ่มนิสิตโดยการใส่ข้อมูลที่เหลือด้านบน
+              นิสิตจะถูกเพิ่มเมื่อกดบันทึกโครงการ
+            </p>
+          )}
+
+        {/* Student found message with reset button */}
+        {studentUser.data && (
+          <p className="text-sm text-green-600">
+            มีข้อมูลนิสิตคนนี้ในระบบ
+            การแก้ไขข้อความจะเป็นการอัปเดตข้อมูลของนิสิตในระบบ
+            (หลังบันทึกโครงการแล้ว)
+            <Button
+              variant="link"
+              type="button"
+              onClick={handleResetToSystemData}
+              className="ml-2 inline h-auto p-0"
+            >
+              รีเซ็ตกลับเป็นข้อมูลในระบบ
+            </Button>
           </p>
         )}
-
-      {/* Student found message with reset button */}
-      {studentUser.data && (
-        <p className="text-sm text-green-600">
-          มีข้อมูลนิสิตคนนี้ในระบบ
-          การแก้ไขข้อความจะเป็นการอัปเดตข้อมูลของนิสิตในระบบ
-          (หลังบันทึกโครงการแล้ว)
-          <Button
-            variant="link"
-            type="button"
-            onClick={handleResetToSystemData}
-            className="ml-2 inline h-auto p-0"
-          >
-            รีเซ็ตกลับเป็นข้อมูลในระบบ
-          </Button>
-        </p>
-      )}
-
-      {/* Always show form fields as fallback */}
-      {!studentUser.isLoading && (
-        <StudentFormFields control={control} index={index} />
-      )}
+      </div>
     </div>
   );
 }
@@ -262,52 +244,23 @@ export function StudentCard({
   setValue,
   fieldId,
 }: StudentCardProps) {
-  const studentName = useWatch({
-    control,
-    name: `students.${index}.name`,
-    defaultValue: "",
-  });
-  const studentDepartment = useWatch({
-    control,
-    name: `students.${index}.department`,
-    defaultValue: "SMO",
-  });
-  const isAdmin = useWatch({
-    control,
-    name: `students.${index}.isAdmin`,
-    defaultValue: false,
-  });
 
   return (
-    <Card className="mb-1 p-2" key={fieldId}>
-      <Collapsible>
-        <div className="flex items-center justify-between">
-          <CollapsibleTrigger className="flex w-full items-center gap-2 text-sm font-bold text-gray-700">
-            <ChevronsUpDown className="size-4" />
-            <h3 className="text-left text-xs">
-              {index + 1}
-              {studentName && `: ${studentName}`}{" "}
-              {studentDepartment && `(${studentDepartment})`}
-              {isAdmin && " (ผู้ดูแลระบบ)"}
-            </h3>
-          </CollapsibleTrigger>
-          <Button
-            type="button"
-            variant="destructive"
-            size="sm"
-            onClick={() => remove(index)}
-          >
-            ลบ
-          </Button>
-        </div>
-        <CollapsibleContent>
-          <StudentAutoFillForm
-            control={control}
-            index={index}
-            setValue={setValue}
-          />
-        </CollapsibleContent>
-      </Collapsible>
-    </Card>
+    <div className="flex flex-row gap-2">
+      <Button
+        type="button"
+        size="icon"
+        variant="outline"
+        onClick={() => remove(index)}
+        className="shrink-0 self-start"
+      >
+        ลบ
+      </Button>
+      <StudentAutoFillForm
+        control={control}
+        index={index}
+        setValue={setValue}
+      />
+    </div>
   );
 }
