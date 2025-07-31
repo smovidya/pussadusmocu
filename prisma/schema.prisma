@@ -17,7 +17,7 @@ model Project {
   title      String            @default("title")
   status     Status            @default(NOTSTART)
   owner      Owner             @default(ETC)
-  students   Project_Student[]
+  students   Project_Student[] 
   parcels    Parcel_Project[]
 }
 
@@ -36,8 +36,8 @@ model Project_Student {
   id         String  @id @unique @default(uuid())
   student_id String
   project_id String
-  student    Student @relation(fields: [student_id], references: [student_id])
-  project    Project @relation(fields: [project_id], references: [project_id])
+  student    Student @relation(fields: [student_id], references: [student_id], onDelete: Cascade)
+  project    Project @relation(fields: [project_id], references: [project_id], onDelete: Cascade)
 }
 
 model Parcel {
@@ -64,9 +64,9 @@ model Parcel_Project {
   amount            Int              @default(0)
   description       String           @default("")
   status            BORROWING_STATUS @default(PENDING)
-  project           Project          @relation(fields: [project_id], references: [project_id])
-  parcel            Parcel           @relation(fields: [parcel_id], references: [parcel_id])
-  student           Student          @relation(fields: [student_id], references: [student_id])
+  project           Project          @relation(fields: [project_id], references: [project_id], onDelete: Cascade)
+  parcel            Parcel           @relation(fields: [parcel_id], references: [parcel_id], onDelete: Cascade)
+  student           Student          @relation(fields: [student_id], references: [student_id], onDelete: NoAction)
   startDate         DateTime         @default(now())
   endDate           DateTime         @default(now())
 }

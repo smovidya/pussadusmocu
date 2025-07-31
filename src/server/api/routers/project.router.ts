@@ -6,9 +6,11 @@ import {
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import {
+  deleteProject,
   getAllInProgressProject,
   getProjectByStudentId,
   registerProject,
+  removeStudentFromProject,
 } from "../services/project.service";
 import { Owner } from "@prisma/client";
 import { StudentSchema } from "../models/auth.model";
@@ -392,4 +394,51 @@ export const projectRouter = createTRPCRouter({
         });
       }
     }),
+  removeProject: adminOnlyProcedure
+    .input(z.object({ projectId: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const { projectId } = input;
+      // Validate project ID
+      if (!projectId) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Project ID is required",
+        });
+      }
+      // Delete the project from the database
+      try {
+        return await deleteProject(ctx, projectId);
+      } catch (error) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: `Failed to delete project: ${error.message}`,
+          cause: error,
+        });
+      }
+    }),
+  removeStudentFromProject: adminOnlyProcedure
+    .input(z.object({
+      projectId: z.string(),
+      studentId: z.string(),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const { projectId, studentId } = input;
+      // Validate project ID and student ID
+      if (!projectId || !studentId) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Project ID and student ID are required",
+        });
+      }
+      // Remove the student from the project
+      try {
+        return await removeStudentFromProject(ctx, projectId, studentId);
+      } catch (error) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Failed to remove student from project",
+          cause: error,
+        });
+      }
+    })
 });

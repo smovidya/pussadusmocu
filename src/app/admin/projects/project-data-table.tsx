@@ -22,6 +22,7 @@ import { Input } from "~/components/ui/input";
 import { ProjectStatusSelector } from "./project-status-selector";
 import { PublishStatusSelector } from "./publish-status-selector";
 import { OwnerSelector } from "./owner-selector";
+import { ProjectRowActions } from './project-actions';
 
 type Project = RouterOutputs["project"]["getProject"][number];
 
@@ -77,6 +78,13 @@ export const columns: ColumnDef<Project>[] = [
       return <span>{date.toLocaleDateString()}</span>;
     },
   },
+  {
+    accessorKey: "actions",
+    header: "",
+    cell: ({ row }) => {
+      return <ProjectRowActions projectId={row.getValue("project_id")} />;
+    }
+  }
 ];
 
 export function ProjectDataTable({ projects }: { projects: Project[] }) {
@@ -113,9 +121,9 @@ export function ProjectDataTable({ projects }: { projects: Project[] }) {
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext(),
-                          )}
+                          header.column.columnDef.header,
+                          header.getContext(),
+                        )}
                     </TableHead>
                   );
                 })}

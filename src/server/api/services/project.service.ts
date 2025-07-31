@@ -64,3 +64,40 @@ export const registerProject = async (
     },
   });
 };
+
+/**
+ * Deletes a project by its ID.
+ * @param ctx - The context containing the Prisma database client.
+ * @param project_id - The ID of the project to delete.
+ * @returns The deleted project.
+ */
+export const deleteProject = async (
+  ctx: Ctx,
+  project_id: string,
+) => {
+  return await ctx.db.project.deleteMany({
+    where: {
+      project_id: project_id,
+    },
+  });
+}
+
+/**
+ * Removes a student from a project by deleting the entry in the project_Student table.
+ * @param ctx - The context containing the Prisma database client.
+ * @param project_id - The ID of the project.
+ * @param student_id - The ID of the student to remove.
+ * @returns The deleted relation entry.
+ */
+export const removeStudentFromProject = async (
+  ctx: Ctx,
+  project_id: string,
+  student_id: string,
+) => {
+  return await ctx.db.project_Student.deleteMany({
+    where: {
+      project_id: project_id,
+      student_id: student_id,
+    },
+  });
+}
