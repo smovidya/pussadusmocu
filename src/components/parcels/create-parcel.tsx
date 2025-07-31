@@ -252,7 +252,7 @@ export function CreateParcel() {
                   disabled={disabled}
                   type="number"
                   {...form.register("amount", {
-                    valueAsNumber: true
+                    valueAsNumber: true,
                   })}
                   className="col-span-3"
                 />

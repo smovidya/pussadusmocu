@@ -294,7 +294,7 @@ const ParcelAdmin = ({ parcel }: BlogProps) => {
                   disabled={disabled}
                   type="text"
                   {...form.register("amount", {
-                    valueAsNumber: true
+                    valueAsNumber: true,
                   })}
                   className="col-span-3"
                 />

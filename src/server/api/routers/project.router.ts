@@ -417,10 +417,12 @@ export const projectRouter = createTRPCRouter({
       }
     }),
   removeStudentFromProject: adminOnlyProcedure
-    .input(z.object({
-      projectId: z.string(),
-      studentId: z.string(),
-    }))
+    .input(
+      z.object({
+        projectId: z.string(),
+        studentId: z.string(),
+      }),
+    )
     .mutation(async ({ ctx, input }) => {
       const { projectId, studentId } = input;
       // Validate project ID and student ID
@@ -440,5 +442,5 @@ export const projectRouter = createTRPCRouter({
           cause: error,
         });
       }
-    })
+    }),
 });

@@ -71,16 +71,13 @@ export const registerProject = async (
  * @param project_id - The ID of the project to delete.
  * @returns The deleted project.
  */
-export const deleteProject = async (
-  ctx: Ctx,
-  project_id: string,
-) => {
+export const deleteProject = async (ctx: Ctx, project_id: string) => {
   return await ctx.db.project.deleteMany({
     where: {
       project_id: project_id,
     },
   });
-}
+};
 
 /**
  * Removes a student from a project by deleting the entry in the project_Student table.
@@ -100,4 +97,4 @@ export const removeStudentFromProject = async (
       student_id: student_id,
     },
   });
-}
+};
