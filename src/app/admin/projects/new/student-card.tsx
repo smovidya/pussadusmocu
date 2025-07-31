@@ -3,7 +3,14 @@
 import { type Control, type UseFormSetValue, useWatch } from "react-hook-form";
 import { type z } from "zod";
 import { Button } from "~/components/ui/button";
+import { Card } from "~/components/ui/card";
 import { type formSchema } from "./add-project-form";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "~/components/ui/collapsible";
+import { ChevronsUpDown } from "lucide-react";
 import { useEffect } from "react";
 import {
   FormControl,
@@ -249,24 +256,48 @@ export function StudentCard({
   index,
   remove,
   setValue,
-  fieldId,
+  fieldId: _fieldId,
 }: StudentCardProps) {
+  const studentName = useWatch({
+    control,
+    name: `students.${index}.name`,
+    defaultValue: "",
+  });
+  const studentDepartment = useWatch({
+    control,
+    name: `students.${index}.department`,
+    defaultValue: "SMO",
+  });
+
   return (
-    <div className="flex flex-row gap-2">
-      <Button
-        type="button"
-        size="icon"
-        variant="outline"
-        onClick={() => remove(index)}
-        className="shrink-0 self-start"
-      >
-        ลบ
-      </Button>
-      <StudentAutoFillForm
-        control={control}
-        index={index}
-        setValue={setValue}
-      />
-    </div>
+    <Card className="mb-1 p-2">
+      <Collapsible>
+        <div className="flex items-center justify-between">
+          <CollapsibleTrigger className="flex w-full items-center gap-2 text-sm font-bold text-gray-700">
+            <ChevronsUpDown className="size-4" />
+            <h3 className="text-left text-xs">
+              นิสิต {index + 1}
+              {studentName && `: ${studentName}`}{" "}
+              {studentDepartment && `(${studentDepartment})`}
+            </h3>
+          </CollapsibleTrigger>
+          <Button
+            type="button"
+            variant="destructive"
+            size="sm"
+            onClick={() => remove(index)}
+          >
+            ลบ
+          </Button>
+        </div>
+        <CollapsibleContent>
+          <StudentAutoFillForm
+            control={control}
+            index={index}
+            setValue={setValue}
+          />
+        </CollapsibleContent>
+      </Collapsible>
+    </Card>
   );
 }

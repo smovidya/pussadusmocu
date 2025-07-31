@@ -1,40 +1,18 @@
-import { MoreHorizontal } from "lucide-react";
-import { Button } from "~/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "~/components/ui/dropdown-menu";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "~/components/ui/alert-dialog";
-import { toast } from "~/components/ui/use-toast";
-import { api } from "~/trpc/react";
+import { MoreHorizontal } from 'lucide-react';
+import { Button } from '~/components/ui/button';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '~/components/ui/dropdown-menu';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '~/components/ui/alert-dialog';
+import { toast } from '~/components/ui/use-toast';
+import { api } from '~/trpc/react';
+import Link from 'next/link';
 
-export function ProjectRowActions({
-  projectId,
-  projectName,
-}: {
-  projectId: string;
-  projectName?: string;
-}) {
+export function ProjectRowActions({ projectId }: { projectId: string }) {
   const utils = api.useUtils();
   const removeProject = api.project.removeProject.useMutation({
     onError(error, variables) {
       toast({
         title: "ลบโครงการล้มเหลว",
-        description: `ไม่สามารถลบโครงการ ${variables.projectId} ได้: ${error.message} ${error.cause ? `(${error.cause})` : ""}`,
+        description: `ไม่สามารถลบโครงการ ${variables.projectId} ได้: ${error.message}`,
         variant: "destructive",
       });
     },
@@ -70,6 +48,9 @@ export function ProjectRowActions({
         >
           คัดลอก ID โครงการ
         </DropdownMenuItem>
+        <Link href={`/admin/projects/edit/${projectId}`}>
+          <DropdownMenuItem>แก้ไขโครงการ</DropdownMenuItem>
+        </Link>
         <DropdownMenuSeparator />
         <AlertDialog>
           <AlertDialogTrigger asChild>
@@ -84,8 +65,8 @@ export function ProjectRowActions({
             <AlertDialogHeader>
               <AlertDialogTitle>ยืนยันการลบโครงการ</AlertDialogTitle>
               <AlertDialogDescription>
-                คุณแน่ใจหรือไม่ที่จะลบโครงการ &quot;{projectName}&quot;(
-                {projectId})? การดำเนินการนี้ไม่สามารถยกเลิกได้
+                คุณแน่ใจหรือไม่ที่จะลบโครงการ &quot;{projectId}&quot;? 
+                การดำเนินการนี้ไม่สามารถยกเลิกได้
                 และข้อมูลทั้งหมดของโครงการจะหายไปอย่างถาวร
               </AlertDialogDescription>
             </AlertDialogHeader>

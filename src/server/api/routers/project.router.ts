@@ -281,7 +281,11 @@ export const projectRouter = createTRPCRouter({
           where: { project_id: projectId },
           include: {
             parcels: true,
-            students: true,
+            students: {
+              include: {
+                student: true,
+              },
+            },
           },
         });
         if (!project) {
@@ -411,7 +415,7 @@ export const projectRouter = createTRPCRouter({
       } catch (error) {
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
-          message: `Failed to delete project: ${error.message}`,
+          message: `Failed to delete project: ${error instanceof Error ? error.message : 'Unknown error'}`,
           cause: error,
         });
       }
@@ -439,6 +443,103 @@ export const projectRouter = createTRPCRouter({
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
           message: "Failed to remove student from project",
+          cause: error,
+        });
+      }
+    }),
+
+  /**
+   * Update an existing project and its students
+   */
+  updateProject: adminOnlyProcedure
+    .input(
+      z.object({
+        projectId: z.string(),
+        users: z.array(StudentSchema),
+        project: ProjectSchema,
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { projectId, users, project } = input;
+      
+      try {
+        // Check if project exists
+        const existingProject = await ctx.db.project.findUnique({
+          where: { project_id: projectId },
+          include: { students: true },
+        });
+
+        if (!existingProject) {
+          throw new TRPCError({
+            code: "NOT_FOUND",
+            message: "ไม่พบโครงการที่ต้องการแก้ไข",
+          });
+        }
+
+        // Update the project
+        const updatedProject = await ctx.db.project.update({
+          where: { project_id: projectId },
+          data: {
+            title: project.name,
+            status: project.status,
+            owner: project.owner,
+            published: project.published,
+          },
+        });
+
+        // Remove existing student associations
+        await ctx.db.project_Student.deleteMany({
+          where: { project_id: projectId },
+        });
+
+        // Upsert students and create new associations
+        const studentIds = await Promise.all(
+          users.map((s) =>
+            ctx.db.student.upsert({
+              where: { student_id: s.student_id },
+              update: {
+                name: s.name,
+                email: s.email ?? "",
+                department: s.department,
+                line_id: s.line_id ?? "",
+                isAdmin: s.isAdmin ?? false,
+              },
+              create: {
+                student_id: s.student_id,
+                name: s.name,
+                email: s.email ?? "",
+                department: s.department,
+                line_id: s.line_id ?? "",
+                isAdmin: s.isAdmin ?? false,
+              },
+            }),
+          ),
+        );
+
+        // Create new Project_Student associations
+        await Promise.all(
+          studentIds.map((student) =>
+            ctx.db.project_Student.create({
+              data: {
+                project_id: projectId,
+                student_id: student.student_id,
+              },
+            }),
+          ),
+        );
+
+        return {
+          success: true,
+          project: updatedProject,
+          students: studentIds,
+        };
+      } catch (error) {
+        if (error instanceof TRPCError) {
+          throw error;
+        }
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Failed to update project",
           cause: error,
         });
       }

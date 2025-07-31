@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useFieldArray, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 import {
   ProjectOwnerEnumSchema,
@@ -26,7 +26,7 @@ import {
 } from "~/components/ui/select";
 import { Dice5 } from "lucide-react";
 import { StudentSchema } from "~/server/api/models/auth.model";
-import { StudentCard } from "./student-card";
+import { NewProjectStudentSpreadsheet } from "./new-project-student-spreadsheet";
 import { api } from "~/trpc/react";
 import { toast } from "~/components/ui/use-toast";
 import { useRouter } from "next/navigation";
@@ -53,11 +53,6 @@ export function AddProjectForm() {
       owner: "ETC",
       students: [],
     },
-  });
-
-  const { fields, append, remove } = useFieldArray({
-    control: form.control,
-    name: "students",
   });
 
   function onSubmit(data: z.infer<typeof formSchema>) {
@@ -205,34 +200,7 @@ export function AddProjectForm() {
             )}
           />
           <h2 className="mb-2 text-xl font-bold">นิสิตยืมพัสดุ</h2>
-          <div className="flex w-full flex-col gap-1 overflow-scroll py-3">
-            {fields.map((field, index) => (
-              <StudentCard
-                fieldId={field.id}
-                key={field.id}
-                control={form.control}
-                index={index}
-                remove={remove}
-                setValue={form.setValue}
-              />
-            ))}
-          </div>
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() =>
-              append({
-                student_id: "",
-                name: "",
-                email: "",
-                department: "SMO",
-                isAdmin: false,
-                line_id: "",
-              })
-            }
-          >
-            เพิ่มนิสิต
-          </Button>
+          <NewProjectStudentSpreadsheet control={form.control} setValue={form.setValue} />
         </div>
         <Button type="submit" className="sm:col-span-2">
           บันทึกโครงการ
