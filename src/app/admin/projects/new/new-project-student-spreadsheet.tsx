@@ -1,6 +1,11 @@
 "use client";
 
-import { type Control, useFieldArray, useWatch, type UseFormSetValue } from "react-hook-form";
+import {
+  type Control,
+  useFieldArray,
+  useWatch,
+  type UseFormSetValue,
+} from "react-hook-form";
 import { type z } from "zod";
 import { Button } from "~/components/ui/button";
 import {
@@ -48,7 +53,7 @@ interface StudentRowProps {
 
 function StudentRow({ control, setValue, index, onRemove }: StudentRowProps) {
   const [lastFetchedId, setLastFetchedId] = useState<string>("");
-  
+
   // Watch the student_id field for this specific row
   const studentId = useWatch({
     control,
@@ -61,22 +66,31 @@ function StudentRow({ control, setValue, index, onRemove }: StudentRowProps) {
     {
       enabled: studentId?.length === 10 && studentId !== lastFetchedId,
       retry: false,
-    }
+    },
   );
 
   useEffect(() => {
     // Auto-fill when student data is found
-    if (studentData && studentId?.length === 10 && studentId !== lastFetchedId) {
+    if (
+      studentData &&
+      studentId?.length === 10 &&
+      studentId !== lastFetchedId
+    ) {
       // Update form with fetched data
       setValue(`students.${index}.name`, studentData.name || "");
       setValue(`students.${index}.email`, studentData.email || "");
-      setValue(`students.${index}.department`, (studentData.department || "SMO") as z.infer<typeof StudentSchema>["department"]);
+      setValue(
+        `students.${index}.department`,
+        (studentData.department || "SMO") as z.infer<
+          typeof StudentSchema
+        >["department"],
+      );
       setValue(`students.${index}.line_id`, studentData.line_id || "");
       setValue(`students.${index}.isAdmin`, studentData.isAdmin || false);
-      
+
       setLastFetchedId(studentId);
     }
-    
+
     // Reset other fields when student_id changes (except when auto-filling)
     if (studentId !== lastFetchedId && studentId?.length !== 10) {
       // Only clear if not currently fetching and ID is not 10 chars
@@ -93,7 +107,7 @@ function StudentRow({ control, setValue, index, onRemove }: StudentRowProps) {
 
   return (
     <TableRow className="hover:bg-muted/30">
-      <TableCell className="p-2 border relative">
+      <TableCell className="relative border p-2">
         <FormField
           control={control}
           name={`students.${index}.student_id`}
@@ -104,10 +118,10 @@ function StudentRow({ control, setValue, index, onRemove }: StudentRowProps) {
                   <Input
                     placeholder="680xxxxx"
                     {...field}
-                    className="bg-transparent p-2 focus:bg-background focus:border-input"
+                    className="focus:bg-background focus:border-input bg-transparent p-2"
                   />
                   {isLoading && field.value?.length === 10 && (
-                    <Loader2 className="absolute right-2 top-1/2 transform -translate-y-1/2 h-4 w-4 animate-spin text-muted-foreground" />
+                    <Loader2 className="text-muted-foreground absolute top-1/2 right-2 h-4 w-4 -translate-y-1/2 transform animate-spin" />
                   )}
                 </div>
               </FormControl>
@@ -116,7 +130,7 @@ function StudentRow({ control, setValue, index, onRemove }: StudentRowProps) {
           )}
         />
       </TableCell>
-      <TableCell className="p-2 border">
+      <TableCell className="border p-2">
         <FormField
           control={control}
           name={`students.${index}.name`}
@@ -126,7 +140,7 @@ function StudentRow({ control, setValue, index, onRemove }: StudentRowProps) {
                 <Input
                   placeholder="ชื่อ-นามสกุล"
                   {...field}
-                  className="bg-transparent p-2 focus:bg-background focus:border-input"
+                  className="focus:bg-background focus:border-input bg-transparent p-2"
                 />
               </FormControl>
               <FormMessage />
@@ -134,7 +148,7 @@ function StudentRow({ control, setValue, index, onRemove }: StudentRowProps) {
           )}
         />
       </TableCell>
-      <TableCell className="p-2 border">
+      <TableCell className="border p-2">
         <FormField
           control={control}
           name={`students.${index}.email`}
@@ -145,7 +159,7 @@ function StudentRow({ control, setValue, index, onRemove }: StudentRowProps) {
                   placeholder="student@student.chula.ac.th"
                   type="email"
                   {...field}
-                  className="bg-transparent p-2 focus:bg-background focus:border-input"
+                  className="focus:bg-background focus:border-input bg-transparent p-2"
                 />
               </FormControl>
               <FormMessage />
@@ -153,7 +167,7 @@ function StudentRow({ control, setValue, index, onRemove }: StudentRowProps) {
           )}
         />
       </TableCell>
-      <TableCell className="p-2 border">
+      <TableCell className="border p-2">
         <FormField
           control={control}
           name={`students.${index}.department`}
@@ -161,7 +175,7 @@ function StudentRow({ control, setValue, index, onRemove }: StudentRowProps) {
             <FormItem>
               <FormControl>
                 <Select value={field.value} onValueChange={field.onChange}>
-                  <SelectTrigger className="bg-transparent p-2 focus:bg-background focus:border-input">
+                  <SelectTrigger className="focus:bg-background focus:border-input bg-transparent p-2">
                     <SelectValue placeholder="เลือก" />
                   </SelectTrigger>
                   <SelectContent>
@@ -178,7 +192,7 @@ function StudentRow({ control, setValue, index, onRemove }: StudentRowProps) {
           )}
         />
       </TableCell>
-      <TableCell className="p-2 border">
+      <TableCell className="border p-2">
         <FormField
           control={control}
           name={`students.${index}.line_id`}
@@ -188,7 +202,7 @@ function StudentRow({ control, setValue, index, onRemove }: StudentRowProps) {
                 <Input
                   placeholder="line_id"
                   {...field}
-                  className="bg-transparent p-2 focus:bg-background focus:border-input"
+                  className="focus:bg-background focus:border-input bg-transparent p-2"
                 />
               </FormControl>
               <FormMessage />
@@ -196,7 +210,7 @@ function StudentRow({ control, setValue, index, onRemove }: StudentRowProps) {
           )}
         />
       </TableCell>
-      <TableCell className="p-2 border text-center">
+      <TableCell className="border p-2 text-center">
         <FormField
           control={control}
           name={`students.${index}.isAdmin`}
@@ -216,13 +230,13 @@ function StudentRow({ control, setValue, index, onRemove }: StudentRowProps) {
           )}
         />
       </TableCell>
-      <TableCell className="p-2 border text-center">
+      <TableCell className="border p-2 text-center">
         <Button
           type="button"
           variant="ghost"
           size="sm"
           onClick={onRemove}
-          className="h-8 w-8 p-0 text-destructive hover:bg-destructive/10"
+          className="text-destructive hover:bg-destructive/10 h-8 w-8 p-0"
         >
           <Trash2 className="h-4 w-4" />
         </Button>
@@ -231,7 +245,10 @@ function StudentRow({ control, setValue, index, onRemove }: StudentRowProps) {
   );
 }
 
-export function NewProjectStudentSpreadsheet({ control, setValue }: StudentSpreadsheetProps) {
+export function NewProjectStudentSpreadsheet({
+  control,
+  setValue,
+}: StudentSpreadsheetProps) {
   const { fields, append, remove } = useFieldArray({
     control: control,
     name: "students",
@@ -273,7 +290,10 @@ export function NewProjectStudentSpreadsheet({ control, setValue }: StudentSprea
             <TableBody>
               {fields.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={7} className="h-24 text-center text-muted-foreground">
+                  <TableCell
+                    colSpan={7}
+                    className="text-muted-foreground h-24 text-center"
+                  >
                     ยังไม่มีนิสิต คลิก &quot;เพิ่มนิสิต&quot; เพื่อเริ่มต้น
                   </TableCell>
                 </TableRow>
@@ -292,7 +312,7 @@ export function NewProjectStudentSpreadsheet({ control, setValue }: StudentSprea
             </TableBody>
           </Table>
         </div>
-        
+
         <div className="mt-4 flex justify-start">
           <Button
             type="button"

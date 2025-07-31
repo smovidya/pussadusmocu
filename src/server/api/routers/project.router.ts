@@ -415,7 +415,7 @@ export const projectRouter = createTRPCRouter({
       } catch (error) {
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
-          message: `Failed to delete project: ${error instanceof Error ? error.message : 'Unknown error'}`,
+          message: `Failed to delete project: ${error instanceof Error ? error.message : "Unknown error"}`,
           cause: error,
         });
       }
@@ -461,7 +461,7 @@ export const projectRouter = createTRPCRouter({
     )
     .mutation(async ({ ctx, input }) => {
       const { projectId, users, project } = input;
-      
+
       try {
         // Check if project exists
         const existingProject = await ctx.db.project.findUnique({

@@ -1,10 +1,27 @@
-import { MoreHorizontal } from 'lucide-react';
-import { Button } from '~/components/ui/button';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '~/components/ui/dropdown-menu';
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '~/components/ui/alert-dialog';
-import { toast } from '~/components/ui/use-toast';
-import { api } from '~/trpc/react';
-import Link from 'next/link';
+import { MoreHorizontal } from "lucide-react";
+import { Button } from "~/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "~/components/ui/dropdown-menu";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "~/components/ui/alert-dialog";
+import { toast } from "~/components/ui/use-toast";
+import { api } from "~/trpc/react";
+import Link from "next/link";
 
 export function ProjectRowActions({ projectId }: { projectId: string }) {
   const utils = api.useUtils();
@@ -65,7 +82,7 @@ export function ProjectRowActions({ projectId }: { projectId: string }) {
             <AlertDialogHeader>
               <AlertDialogTitle>ยืนยันการลบโครงการ</AlertDialogTitle>
               <AlertDialogDescription>
-                คุณแน่ใจหรือไม่ที่จะลบโครงการ &quot;{projectId}&quot;? 
+                คุณแน่ใจหรือไม่ที่จะลบโครงการ &quot;{projectId}&quot;?
                 การดำเนินการนี้ไม่สามารถยกเลิกได้
                 และข้อมูลทั้งหมดของโครงการจะหายไปอย่างถาวร
               </AlertDialogDescription>

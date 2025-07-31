@@ -200,7 +200,10 @@ export function AddProjectForm() {
             )}
           />
           <h2 className="mb-2 text-xl font-bold">นิสิตยืมพัสดุ</h2>
-          <NewProjectStudentSpreadsheet control={form.control} setValue={form.setValue} />
+          <NewProjectStudentSpreadsheet
+            control={form.control}
+            setValue={form.setValue}
+          />
         </div>
         <Button type="submit" className="sm:col-span-2">
           บันทึกโครงการ

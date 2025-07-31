@@ -48,9 +48,13 @@ interface EditProjectFormProps {
 
 export function EditProjectForm({ projectId }: EditProjectFormProps) {
   const router = useRouter();
-  
+
   // Fetch existing project data
-  const { data: projectData, isLoading, error } = api.project.getProjectById.useQuery({
+  const {
+    data: projectData,
+    isLoading,
+    error,
+  } = api.project.getProjectById.useQuery({
     projectId: projectId,
   });
 
@@ -81,7 +85,9 @@ export function EditProjectForm({ projectId }: EditProjectFormProps) {
           student_id: studentProject.student.student_id,
           name: studentProject.student.name,
           email: studentProject.student.email,
-          department: studentProject.student.department as z.infer<typeof StudentSchema>["department"],
+          department: studentProject.student.department as z.infer<
+            typeof StudentSchema
+          >["department"],
           isAdmin: studentProject.student.isAdmin ?? false,
           line_id: studentProject.student.line_id ?? "",
         })),
@@ -180,8 +186,10 @@ export function EditProjectForm({ projectId }: EditProjectFormProps) {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         {/* Project Information Section */}
-        <div className="rounded-lg border p-6 bg-background">
-          <h2 className="text-xl font-bold mb-4 text-foreground">ข้อมูลโครงการ</h2>
+        <div className="bg-background rounded-lg border p-6">
+          <h2 className="text-foreground mb-4 text-xl font-bold">
+            ข้อมูลโครงการ
+          </h2>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <FormField
               control={form.control}
@@ -196,7 +204,9 @@ export function EditProjectForm({ projectId }: EditProjectFormProps) {
                         type="button"
                         variant="secondary"
                         onClick={() =>
-                          field.onChange(`proj-${Math.random().toString(36).substr(2, 9)}`)
+                          field.onChange(
+                            `proj-${Math.random().toString(36).substr(2, 9)}`,
+                          )
                         }
                         className="flex items-center gap-2"
                       >
@@ -237,7 +247,9 @@ export function EditProjectForm({ projectId }: EditProjectFormProps) {
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="NOTSTART">ยังไม่เริ่ม</SelectItem>
-                        <SelectItem value="INPROGRESS">กำลังดำเนินการ</SelectItem>
+                        <SelectItem value="INPROGRESS">
+                          กำลังดำเนินการ
+                        </SelectItem>
                         <SelectItem value="EVALUATE">กำลังประเมินผล</SelectItem>
                         <SelectItem value="COMPLETE">เสร็จสิ้น</SelectItem>
                       </SelectContent>
@@ -276,13 +288,10 @@ export function EditProjectForm({ projectId }: EditProjectFormProps) {
         </div>
 
         {/* Student Spreadsheet Section */}
-        <StudentSpreadsheet 
-          control={form.control}
-          setValue={form.setValue}
-        />
+        <StudentSpreadsheet control={form.control} setValue={form.setValue} />
 
         {/* Action Buttons */}
-        <div className="flex gap-2 justify-end">
+        <div className="flex justify-end gap-2">
           <Button
             type="button"
             variant="outline"
@@ -290,11 +299,10 @@ export function EditProjectForm({ projectId }: EditProjectFormProps) {
           >
             ยกเลิก
           </Button>
-          <Button 
-            type="submit"
-            disabled={updateProjectMutation.isPending}
-          >
-            {updateProjectMutation.isPending ? "กำลังอัปเดต..." : "อัปเดตโครงการ"}
+          <Button type="submit" disabled={updateProjectMutation.isPending}>
+            {updateProjectMutation.isPending
+              ? "กำลังอัปเดต..."
+              : "อัปเดตโครงการ"}
           </Button>
         </div>
       </form>
