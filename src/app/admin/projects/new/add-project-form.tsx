@@ -205,7 +205,7 @@ export function AddProjectForm() {
             )}
           />
           <h2 className="mb-2 text-xl font-bold">นิสิตยืมพัสดุ</h2>
-          <div className="flex flex-col gap-1 overflow-scroll w-full py-3">
+          <div className="flex w-full flex-col gap-1 overflow-scroll py-3">
             {fields.map((field, index) => (
               <StudentCard
                 fieldId={field.id}

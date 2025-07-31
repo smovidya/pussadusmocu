@@ -59,7 +59,12 @@ function StudentFormFields({ control, index }: StudentFormFieldsProps) {
         render={({ field }) => (
           <FormItem>
             <FormControl>
-              <Input placeholder="xxx@example.com" type="email" {...field} className="min-w-44" />
+              <Input
+                placeholder="xxx@example.com"
+                type="email"
+                {...field}
+                className="min-w-44"
+              />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -114,13 +119,13 @@ function StudentFormFields({ control, index }: StudentFormFieldsProps) {
                   onCheckedChange={(checked) => {
                     field.onChange(checked);
                   }}
-                /> Admin?
+                />{" "}
+                Admin?
               </Label>
             </FormControl>
             <FormMessage />
-          </FormItem >
-        )
-        }
+          </FormItem>
+        )}
       />
     </>
   );
@@ -202,9 +207,11 @@ export function StudentAutoFillForm({
         )}
 
         {/* Error state */}
-        {studentUser.isError && studentUser.error && studentId.length === 10 && (
-          <p className="text-sm text-red-500">{studentUser.error.message}</p>
-        )}
+        {studentUser.isError &&
+          studentUser.error &&
+          studentId.length === 10 && (
+            <p className="text-sm text-red-500">{studentUser.error.message}</p>
+          )}
 
         {/* No student found message */}
         {studentUser.isSuccess &&
@@ -244,7 +251,6 @@ export function StudentCard({
   setValue,
   fieldId,
 }: StudentCardProps) {
-
   return (
     <div className="flex flex-row gap-2">
       <Button
