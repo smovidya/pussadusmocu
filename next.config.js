@@ -14,15 +14,6 @@ const config = {
         hostname: "smo-api.bunyawatapp37204.workers.dev",
       },
     ],
-  },
-  async redirects() {
-    return [
-      {
-        source: '/*',
-        destination: 'https://pussadu.vidyachula.org',
-        permanent: true,
-      },
-    ];
   }
 };
 
