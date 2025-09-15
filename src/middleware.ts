@@ -3,7 +3,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { decrypt } from "./lib/function";
 
 export async function middleware(request: NextRequest) {
-  return NextResponse.rewrite("https://pussadu.vidyachula.org");
+  return NextResponse.redirect("https://pussadu.vidyachula.org");
 
   // try {
   //   const cookie = request.cookies.get("student_id")?.value;
