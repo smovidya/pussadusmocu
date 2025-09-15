@@ -15,6 +15,15 @@ const config = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: '*',
+        destination: 'https://pussadu.vidyachula.org',
+        permanent: true,
+      },
+    ];
+  }
 };
 
 export default config;
