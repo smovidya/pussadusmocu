@@ -18,7 +18,7 @@ const config = {
   async redirects() {
     return [
       {
-        source: '*',
+        source: '/*',
         destination: 'https://pussadu.vidyachula.org',
         permanent: true,
       },
